@@ -603,6 +603,9 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 			for (ControllerInterface<?> ci : controllers.get()) {
 				if (ci.isVisible()) {
 					ci.draw(graphics);
+                                        
+                                        // TODO: This shoud NOT be HERE !!
+					ci.updateInternalEvents(cp5.papplet);
 				}
 			}
 
