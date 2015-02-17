@@ -223,12 +223,7 @@ public class ColorPicker extends ControlGroup<ColorPicker> {
 
 
 	private class ColorField extends Canvas {
-
-		public void draw(PApplet theApplet) {
-			theApplet.fill(_myArrayValue[0], _myArrayValue[1], _myArrayValue[2], _myArrayValue[3]);
-			theApplet.rect(0, 44, getWidth(), 15);
-		}
-                
+               
 		public void draw(PGraphics graphics) {
 			graphics.fill(_myArrayValue[0], _myArrayValue[1], _myArrayValue[2], _myArrayValue[3]);
 			graphics.rect(0, 44, getWidth(), 15);

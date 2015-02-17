@@ -170,49 +170,6 @@ public class Label implements CDrawable {
 		return this;
 	}
 
-	public void draw(PApplet theApplet, int theX, int theY, ControllerInterface<?> theController) {
-		if (isVisible) {
-			getLabeltype().draw(this, theApplet, theX, theY, theController);
-		}
-	}
-
-	@Override public void draw(PApplet theApplet) {
-		if (isVisible) {
-			_myFontLabel.adjust(theApplet, this);
-			draw(theApplet, 0, 0);
-		}
-	}
-
-	public void draw(PApplet theApplet, int theX, int theY) {
-		if (isVisible) {
-			theApplet.pushMatrix();
-			theApplet.translate(_myControllerStyle.marginLeft, _myControllerStyle.marginTop);
-			theApplet.translate(theX, theY);
-
-			if (isColorBackground) {
-
-				float ww = getStyle().paddingRight + getStyle().paddingLeft;
-				if (getStyle().backgroundWidth > -1) {
-					ww += _myControllerStyle.backgroundWidth;
-				} else {
-					ww += _myFontLabel.getWidth();
-				}
-				float hh = getStyle().paddingBottom + getStyle().paddingTop;
-				if (getStyle().backgroundHeight > -1) {
-					hh += getStyle().backgroundHeight;
-				} else {
-					hh += _myFontLabel.getHeight();
-				}
-				theApplet.fill(_myColorBackground);
-				theApplet.rect(0, 1, ww, hh);
-			}
-			theApplet.translate(_myControllerStyle.paddingLeft, _myControllerStyle.paddingTop);
-			_myFontLabel.draw(theApplet, this);
-			theApplet.popMatrix();
-		}
-	}
-        
-        
 	public void draw(PGraphics graphics, int theX, int theY, ControllerInterface<?> theController) {
 		if (isVisible) {
 			getLabeltype().draw(this, graphics, theX, theY, theController);
@@ -467,8 +424,6 @@ public class Label implements CDrawable {
 
 	interface Labeltype {
 
-		public void draw(Label theLabel, PApplet theApplet, int theX, int theY, ControllerInterface<?> theController);
-		
                 public void draw(Label theLabel, PGraphics graphics, int theX, int theY, ControllerInterface<?> theController);
 
 		public int getWidth();
@@ -575,14 +530,6 @@ public class Label implements CDrawable {
 			graphics.translate(x, y);
 		}
 
-		public void draw(Label theLabel, PApplet theApplet, int theX, int theY, ControllerInterface<?> theController) {
-			_myFontLabel.adjust(theApplet, theLabel);
-			theApplet.pushMatrix();
-			align(theApplet, theController, alignX, alignY);
-			theLabel.draw(theApplet, theX, theY);
-			theApplet.popMatrix();
-		}
-                
 		public void draw(Label theLabel, PGraphics graphics, int theX, int theY, ControllerInterface<?> theController) {
 			_myFontLabel.adjust(graphics, theLabel);
 			graphics.pushMatrix();
@@ -609,11 +556,6 @@ public class Label implements CDrawable {
 	}
 
 	class MultilineLabel implements Labeltype {
-
-		@Override public void draw(Label theLabel, PApplet theApplet, int theX, int theY, ControllerInterface<?> theController) {
-			_myFontLabel.adjust(theApplet, theLabel);
-			theLabel.draw(theApplet, theX, theY);
-		}
                 
 		@Override public void draw(Label theLabel, PGraphics graphics, int theX, int theY, ControllerInterface<?> theController) {
 			_myFontLabel.adjust(graphics, theLabel);

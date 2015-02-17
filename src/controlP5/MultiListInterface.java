@@ -23,9 +23,8 @@
  */
 package controlP5;
 
-import processing.core.PApplet;
-
 import java.util.List;
+import processing.core.PGraphics;
 
 interface MultiListInterface {
 
@@ -39,7 +38,7 @@ interface MultiListInterface {
 
 	void updateLocation(float theX, float theY);
 
-	public void draw(PApplet theApplet);
+	public void draw(PGraphics graphics);
 
 	String name();
 

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 /**
  * <p>
@@ -168,10 +169,10 @@ public class ControlGroup<T> extends ControllerGroup<T> implements ControlListen
 	 * 
 	 * @see controlP5.ControllerGroup#preDraw(processing.core.PApplet)
 	 */
-	protected void preDraw(PApplet theApplet) {
+	protected void preDraw(PGraphics graphics) {
 		if (isOpen) {
-			theApplet.fill(_myBackgroundColor);
-			theApplet.rect(0, 0, _myWidth, _myBackgroundHeight - 1);
+			graphics.fill(_myBackgroundColor);
+			graphics.rect(0, 0, _myWidth, _myBackgroundHeight - 1);
 		}
 	}
 
@@ -180,21 +181,21 @@ public class ControlGroup<T> extends ControllerGroup<T> implements ControlListen
 	 * 
 	 * @see controlP5.ControllerGroup#postDraw(processing.core.PApplet)
 	 */
-	protected void postDraw(PApplet theApplet) {
+	protected void postDraw(PGraphics graphics) {
 		if (isBarVisible) {
-			theApplet.fill(isInside ? color.getForeground() : color.getBackground());
-			theApplet.rect(0, -1, _myWidth, -_myHeight);
-			_myLabel.draw(theApplet, 0, -_myHeight-1, this);
+			graphics.fill(isInside ? color.getForeground() : color.getBackground());
+			graphics.rect(0, -1, _myWidth, -_myHeight);
+			_myLabel.draw(graphics, 0, -_myHeight-1, this);
 			if (isCollapse && isArrowVisible) {
-				theApplet.fill(_myLabel.getColor());
-				theApplet.pushMatrix();
-				theApplet.translate(2,0);
+				graphics.fill(_myLabel.getColor());
+				graphics.pushMatrix();
+				graphics.translate(2,0);
 				if (isOpen) {
-					theApplet.triangle(_myWidth - 10, -_myHeight / 2 - 3, _myWidth - 4, -_myHeight / 2 - 3, _myWidth - 7, -_myHeight / 2);
+					graphics.triangle(_myWidth - 10, -_myHeight / 2 - 3, _myWidth - 4, -_myHeight / 2 - 3, _myWidth - 7, -_myHeight / 2);
 				} else {
-					theApplet.triangle(_myWidth - 10, -_myHeight / 2, _myWidth - 4, -_myHeight / 2, _myWidth - 7, -_myHeight / 2 - 3);
+					graphics.triangle(_myWidth - 10, -_myHeight / 2, _myWidth - 4, -_myHeight / 2, _myWidth - 7, -_myHeight / 2 - 3);
 				}
-				theApplet.popMatrix();
+				graphics.popMatrix();
 			}
 		}
 	}

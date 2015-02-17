@@ -81,13 +81,13 @@ public class Toggle extends Controller<Toggle> {
 
 	/**
 	 * 
-	 * @param theApplet PApplet
+	 * @param graphics PApplet
 	 */
-	@ControlP5.Invisible public void draw(PApplet theApplet) {
-		theApplet.pushMatrix();
-		theApplet.translate(position.x, position.y);
-		_myControllerView.display(theApplet, this);
-		theApplet.popMatrix();
+	@ControlP5.Invisible public void draw(PGraphics graphics) {
+		graphics.pushMatrix();
+		graphics.translate(position.x, position.y);
+		_myControllerView.display(graphics, this);
+		graphics.popMatrix();
 	}
 
 
@@ -250,19 +250,6 @@ public class Toggle extends Controller<Toggle> {
 
 	class ToggleView implements ControllerView<Toggle> {
 
-		public void display(PApplet theApplet, Toggle theController) {
-			if (isActive) {
-				theApplet.fill(isOn ? color.getActive() : color.getForeground());
-			}
-			else {
-				theApplet.fill(isOn ? color.getActive() : color.getBackground());
-			}
-			theApplet.rect(0, 0, width, height);
-			if (isLabelVisible) {
-				_myCaptionLabel.draw(theApplet, 0, 0, theController);
-			}
-		}
-                
 		public void display(PGraphics graphics, Toggle theController) {
 			if (isActive) {
 				graphics.fill(isOn ? color.getActive() : color.getForeground());
@@ -279,20 +266,6 @@ public class Toggle extends Controller<Toggle> {
 
 	class ToggleImageView implements ControllerView<Toggle> {
 
-		public void display(PApplet theApplet, Toggle theController) {
-			if (isActive) {
-				theApplet.image((availableImages[ACTIVE] == true) ? images[ACTIVE] : images[DEFAULT], 0, 0);
-			}
-			else {
-				if (isOn) {
-					theApplet.image((availableImages[ACTIVE] == true) ? images[ACTIVE] : images[DEFAULT], 0, 0);
-				}
-				else {
-					theApplet.image(images[DEFAULT], 0, 0);
-				}
-			}
-			theApplet.rect(0, 0, width, height);
-		}
 		public void display(PGraphics graphics, Toggle theController) {
 			if (isActive) {
 				graphics.image((availableImages[ACTIVE] == true) ? images[ACTIVE] : images[DEFAULT], 0, 0);
@@ -311,20 +284,6 @@ public class Toggle extends Controller<Toggle> {
 
 	class ToggleSwitchView implements ControllerView<Toggle> {
 
-		public void display(PApplet theApplet, Toggle theController) {
-			theApplet.fill(color.getBackground());
-			theApplet.rect(0, 0, width, height);
-			theApplet.fill(color.getActive());
-			if (isOn) {
-				theApplet.rect(0, 0, width / 2, height);
-			}
-			else {
-				theApplet.rect((width % 2 == 0 ? 0 : 1) + width / 2, 0, width / 2, height);
-			}
-			if (isLabelVisible) {
-				_myCaptionLabel.draw(theApplet, 0, 0, theController);
-			}
-		}
 		public void display(PGraphics graphics, Toggle theController) {
 			graphics.fill(color.getBackground());
 			graphics.rect(0, 0, width, height);

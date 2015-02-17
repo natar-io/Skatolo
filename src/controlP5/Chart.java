@@ -413,29 +413,6 @@ public class Chart extends Controller<Chart> {
 
 	public class ChartViewBar implements ControllerView<Chart> {
 
-		public void display(PApplet theApplet, Chart theController) {
-			theApplet.pushStyle();
-			theApplet.fill(getColor().getBackground());
-			theApplet.rect(0, 0, getWidth(), getHeight());
-			theApplet.noStroke();
-
-			Iterator<String> it = getDataSet().keySet().iterator();
-			String index = null;
-			float o = 0;
-			while (it.hasNext()) {
-				index = it.next();
-				float s = getDataSet(index).size();
-				for (int i = 0; i < s; i++) {
-					theApplet.fill(getDataSet(index).getColor(i));
-					float ww = ((width / s));
-					float hh = PApplet.map(getDataSet(index).get(i).getValue(), _myMin, _myMax, 0, getHeight());
-					theApplet.rect(o + i * ww, getHeight(), (ww / getDataSet().size()), -PApplet.min(getHeight(), PApplet.max(0, hh)));
-				}
-				o += ((width / s)) / getDataSet().size();
-			}
-			theApplet.popStyle();
-		}
-                
 		public void display(PGraphics graphics, Chart theController) {
 			graphics.pushStyle();
 			graphics.fill(getColor().getBackground());
@@ -462,36 +439,6 @@ public class Chart extends Controller<Chart> {
 
 	public class ChartViewBarCentered implements ControllerView<Chart> {
 
-		public void display(PApplet theApplet, Chart theController) {
-			theApplet.pushStyle();
-			theApplet.fill(getColor().getBackground());
-			theApplet.rect(0, 0, getWidth(), getHeight());
-			theApplet.noStroke();
-
-			Iterator<String> it = getDataSet().keySet().iterator();
-			String index = null;
-			float o = 0;
-			int n = 4;
-			int off = (getDataSet().size() - 1) * n;
-			while (it.hasNext()) {
-				index = it.next();
-				int s = getDataSet(index).size();
-				float step = (float) width / (float) (s);
-				float ww = step - (width % step);
-				ww -= 1;
-				ww = PApplet.max(1, ww);
-
-				for (int i = 0; i < s; i++) {
-					theApplet.fill(getDataSet(index).getColor(i));
-					ww = ((width / s) * 0.5f);
-					float hh = PApplet.map(getDataSet(index).get(i).getValue(), _myMin, _myMax, 0, getHeight());
-					theApplet.rect(-off / 2 + o + i * ((width / s)) + ww / 2, getHeight(), ww, -PApplet.min(getHeight(), PApplet.max(0, hh)));
-				}
-				o += n;
-			}
-			theApplet.popStyle();
-		}
-                
 		public void display(PGraphics graphics, Chart theController) {
 			graphics.pushStyle();
 			graphics.fill(getColor().getBackground());
@@ -525,31 +472,6 @@ public class Chart extends Controller<Chart> {
 
 	public class ChartViewLine implements ControllerView<Chart> {
 
-		public void display(PApplet theApplet, Chart theController) {
-
-			theApplet.pushStyle();
-			theApplet.fill(getColor().getBackground());
-			theApplet.rect(0, 0, getWidth(), getHeight());
-			theApplet.noFill();
-			Iterator<String> it = getDataSet().keySet().iterator();
-			String index = null;
-			while (it.hasNext()) {
-				index = it.next();
-				theApplet.stroke(getDataSet(index).getColor(0));
-				theApplet.strokeWeight(getDataSet(index).getStrokeWeight());
-
-				theApplet.beginShape();
-				float res = ((float) getWidth()) / (getDataSet(index).size() - 1);
-				for (int i = 0; i < getDataSet(index).size(); i++) {
-					float hh = PApplet.map(getDataSet(index).get(i).getValue(), _myMin, _myMax, getHeight(), 0);
-					theApplet.vertex(i * res, PApplet.min(getHeight(), PApplet.max(0, hh)));
-				}
-				theApplet.endShape();
-			}
-			theApplet.noStroke();
-			theApplet.popStyle();
-		}
-                
 		public void display(PGraphics graphics, Chart theController) {
 
 			graphics.pushStyle();
@@ -578,34 +500,6 @@ public class Chart extends Controller<Chart> {
 
 	public class ChartViewArea implements ControllerView<Chart> {
 
-		public void display(PApplet theApplet, Chart theController) {
-
-			theApplet.pushStyle();
-			theApplet.fill(getColor().getBackground());
-			theApplet.rect(0, 0, getWidth(), getHeight());
-			theApplet.noStroke();
-
-			Iterator<String> it = getDataSet().keySet().iterator();
-			String index = null;
-			while (it.hasNext()) {
-				index = it.next();
-				float res = ((float) getWidth()) / (getDataSet(index).size() - 1);
-
-				theApplet.fill(getDataSet(index).getColor(0));
-				theApplet.beginShape();
-				theApplet.vertex(0, getHeight());
-
-				for (int i = 0; i < getDataSet(index).size(); i++) {
-					float hh = PApplet.map(getDataSet(index).get(i).getValue(), _myMin, _myMax, getHeight(), 0);
-					theApplet.vertex(i * res, PApplet.min(getHeight(), PApplet.max(0, hh)));
-				}
-				theApplet.vertex(getWidth(), getHeight());
-				theApplet.endShape(PApplet.CLOSE);
-			}
-			theApplet.noStroke();
-			theApplet.popStyle();
-		}
-                
 		public void display(PGraphics graphics, Chart theController) {
 
 			graphics.pushStyle();
@@ -637,39 +531,6 @@ public class Chart extends Controller<Chart> {
 
 	public class ChartViewPie implements ControllerView<Chart> {
 
-		public void display(PApplet theApplet, Chart theController) {
-			theApplet.pushStyle();
-			theApplet.pushMatrix();
-
-			Iterator<String> it = getDataSet().keySet().iterator();
-			String index = null;
-			while (it.hasNext()) {
-				index = it.next();
-				float total = 0;
-				for (int i = 0; i < getDataSet(index).size(); i++) {
-					total += getDataSet(index).get(i).getValue();
-				}
-
-				float segment = TWO_PI / total;
-				float angle = -HALF_PI;
-
-				theApplet.noStroke();
-				for (int i = 0; i < getDataSet(index).size(); i++) {
-					theApplet.fill(getDataSet(index).getColor(i));
-					float nextAngle = angle + getDataSet(index).get(i).getValue() * segment;
-
-					// a tiny offset to even out render artifacts when in smooth() mode.
-					float a = PApplet.max(0, PApplet.map(getWidth(), 0, 200, 0.05f, 0.01f));
-
-					theApplet.arc(0, 0, getWidth(), getHeight(), angle - a, nextAngle);
-					angle = nextAngle;
-				}
-				theApplet.translate(0, (getHeight() + 10));
-			}
-			theApplet.popMatrix();
-			theApplet.popStyle();
-		}
-                
 		public void display(PGraphics graphics, Chart theController) {
 			graphics.pushStyle();
 			graphics.pushMatrix();

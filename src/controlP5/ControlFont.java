@@ -283,59 +283,6 @@ public class ControlFont {
 		return (_myTextHeight - height);
 	}
 
-	public void draw(PApplet theApplet, Label theLabel) {
-		PFont loadedFont = theApplet.g.textFont;
-		float loadedSize = theApplet.g.textSize;
-		if (loadedFont == null) {
-			theApplet.textSize(loadedSize); // forces default font
-			loadedFont = theApplet.g.textFont;
-		}
-		int loadedAlign = theApplet.g.textAlign;
-
-		theApplet.textFont(pfont, size);
-		theApplet.textAlign(theLabel.textAlign);
-		theApplet.fill(theLabel.getColor());
-		if (theLabel.isMultiline()) {
-			theApplet.fill(theLabel.getColor());
-			theApplet.textLeading(theLabel.getLineHeight());
-			theApplet.text(s, 0, 0, theLabel.getWidth(), theLabel.getHeight());
-		} else {
-			theApplet.translate(0, -top + 1);
-			debug(theApplet, theLabel);
-			theApplet.fill(theLabel.getColor());
-			theApplet.textLeading(theLabel.getLineHeight());
-			theApplet.text(theLabel.getTextFormatted(), 0, 0);
-			if (RENDER_2X) {
-				theApplet.text(theLabel.getTextFormatted(), 0, 0);
-			}
-		}
-
-		theApplet.textFont(loadedFont, loadedSize);
-		theApplet.textAlign(loadedAlign);
-	}
-
-	private void debug(PApplet theApplet, Label theLabel) {
-		if (DEBUG) {
-
-			theApplet.stroke(0, 255, 0); // BASELINE
-			theApplet.line(0, getBaseline(), theApplet.textWidth(theLabel.getText()), getBaseline());
-
-			theApplet.stroke(0, 0, 255); // TOP
-			theApplet.line(0, getTop(), theApplet.textWidth(theLabel.getText()), getTop());
-
-			theApplet.stroke(255, 255, 0); // BOTTOM
-			theApplet.line(0, getBottom(), theApplet.textWidth(theLabel.getText()), getBottom());
-
-			theApplet.stroke(255, 0, 0); // CENTER
-			theApplet.line(0, getCenter(), theApplet.textWidth(theLabel.getText()), getCenter());
-
-			theApplet.stroke(255, 128, 0); // CENTER_CAPS
-			theApplet.line(0, getTop() / 2, theApplet.textWidth(theLabel.getText()), getTop() / 2);
-
-			theApplet.noStroke();
-		}
-	}
-
 	public static int getWidthFor(String theText, Label theLabel, PApplet theApplet) {
 		theApplet.textFont(theLabel.getFont().pfont, theLabel.getFont().size);
 		return (int) theApplet.textWidth(theText);

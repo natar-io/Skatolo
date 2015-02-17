@@ -28,6 +28,7 @@ import java.util.List;
 
 import processing.core.PApplet;
 import processing.core.PFont;
+import processing.core.PGraphics;
 
 /**
  * a textarea can be used to leave notes, it uses the controlP5 BitFont to render text. Scrollbars
@@ -311,7 +312,7 @@ public class Textarea extends ControllerGroup<Textarea> implements ControlListen
 		return getStringValue();
 	}
 
-	@Override protected void preDraw(PApplet theApplet) {
+	@Override protected void preDraw(PGraphics graphics) {
 		if (isScrollbarVisible) {
 			_myScrollbar.setVisible(_myValueLabel.getOverflow() > 1);
 		}
@@ -319,16 +320,17 @@ public class Textarea extends ControllerGroup<Textarea> implements ControlListen
 			_myScrollbar.getPosition().x = _myWidth - _myScrollbarWidth + _myValueLabel.getStyle().paddingLeft
 					+ _myValueLabel.getStyle().paddingRight;
 			if (!isColorBackground) {
-				theApplet.noFill();
+				graphics.noFill();
 			} else {
 				int a = _myColorBackground >> 24 & 0xff;
-				theApplet.fill(_myColorBackground, a > 0 ? a : 255);
+				graphics.fill(_myColorBackground, a > 0 ? a : 255);
 			}
 			int ww = _myWidth + _myValueLabel.getStyle().paddingLeft + _myValueLabel.getStyle().paddingRight;
 			int hh = _myHeight + _myValueLabel.getStyle().paddingTop + _myValueLabel.getStyle().paddingBottom;
-			theApplet.rect(0, 0, ww, hh);
+			graphics.rect(0, 0, ww, hh);
 		}
 	}
+
 
 	// !!! add padding to the box.
 	// padding and margin doesnt work nicely with textarea yet!

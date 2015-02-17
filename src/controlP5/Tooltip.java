@@ -200,7 +200,7 @@ public class Tooltip {
 							theWindow.papplet().pushMatrix();
 							theWindow.papplet().translate(position.x, position.y);
 							theWindow.papplet().translate(offset.x, offset.y);
-							_myView.display(theWindow.papplet(), null);
+							_myView.display(theWindow.papplet().g, null); // TODO: Warning HERE !
 							theWindow.papplet().popMatrix();
 						}
 						if (_myMode < ControlP5.FADEOUT) {
@@ -435,23 +435,6 @@ public class Tooltip {
 
 	class TooltipView implements ControllerView<Controller<?>> {
 
-		public void display(PApplet theApplet, Controller<?> theController) {
-			_myHeight = _myLabel.getHeight();
-			theApplet.fill(_myBackgroundColor, _myAlpha);
-			theApplet.rect(0, 0, getWidth() + _myBorder * 2, _myHeight + _myBorder * 2);
-			theApplet.pushMatrix();
-			if (_myAlignH == ControlP5.RIGHT) {
-				theApplet.translate(6, 0);
-			} else {
-				theApplet.translate(getWidth() - 6, 0);
-			}
-			theApplet.triangle(0, 0, 4, -4, 8, 0);
-			theApplet.popMatrix();
-			int a = (int) (PApplet.map(_myAlpha, 0, _myMaxAlpha, 0, 255));
-			_myLabel.setColor(a << 24 | (_myColor >> 16) << 16 | (_myColor >> 8) << 8 | (_myColor >> 0) << 0);
-			_myLabel.draw(theApplet, 0, 0, theController);
-		}
-                
 		public void display(PGraphics graphics, Controller<?> theController) {
 			_myHeight = _myLabel.getHeight();
 			graphics.fill(_myBackgroundColor, _myAlpha);

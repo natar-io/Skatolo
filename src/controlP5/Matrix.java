@@ -405,38 +405,6 @@ public class Matrix extends Controller<Matrix> {
 
 	class MatrixView implements ControllerView<Matrix> {
 
-		public void display(PApplet theApplet, Matrix theController) {
-			theApplet.noStroke();
-			theApplet.fill(bg);
-			theApplet.rect(0, 0, width, height);
-			for (int x = 0; x < _myCellX; x++) {
-				for (int y = 0; y < _myCellY; y++) {
-
-					if (_myCells[x][y] == 1) {
-						theApplet.fill(color.getActive());
-						theApplet.rect(x * stepX, y * stepY, stepX - gapX, stepY - gapY);
-					} else {
-						theApplet.fill(color.getBackground());
-						theApplet.rect(x * stepX, y * stepY, stepX - gapX, stepY - gapY);
-					}
-				}
-			}
-			if (isInside()) {
-				int x = (int) ((theApplet.mouseX - position.x) / stepX);
-				int y = (int) ((theApplet.mouseY - position.y) / stepY);
-				if (x >= 0 && x < _myCellX && y >= 0 && y < _myCellY) {
-					theApplet.fill(_myCells[x][y] == 1 ? color.getActive() : color.getForeground());
-					theApplet.rect(x * stepX, y * stepY, stepX - gapX, stepY - gapY);
-				}
-			}
-			theApplet.fill(color.getActive());
-			theApplet.rect(cnt * stepX, 0, 1, height - gapY);
-			if (isLabelVisible) {
-				_myCaptionLabel.draw(theApplet, 0, 0, theController);
-			}
-		}
-                
-                
 		public void display(PGraphics graphics, Matrix theController) {
 			graphics.noStroke();
 			graphics.fill(bg);

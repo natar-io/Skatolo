@@ -32,6 +32,7 @@ import java.util.Map;
 
 import processing.core.PApplet;
 import processing.core.PFont;
+import processing.core.PGraphics;
 
 /**
  * A singleline input textfield, use arrow keys to go back and forth, use backspace to delete
@@ -315,71 +316,71 @@ public class Textfield extends Controller<Textfield> {
             return this;
     }
 
-    @Override public void draw(PApplet theApplet) {
+    @Override public void draw(PGraphics graphics) {
             if (changed) {
-                    updateLabel(theApplet);
+                    updateLabel(graphics);
                     changed = false;
             }
-            theApplet.pushStyle();
-            theApplet.fill(color.getBackground());
-            theApplet.pushMatrix();
-            theApplet.translate(position.x, position.y);
-            theApplet.rect(0, 0, width, height);
-            theApplet.noStroke();
+            graphics.pushStyle();
+            graphics.fill(color.getBackground());
+            graphics.pushMatrix();
+            graphics.translate(position.x, position.y);
+            graphics.rect(0, 0, width, height);
+            graphics.noStroke();
 
-            theApplet.fill(_myColorCursor);
-            theApplet.pushMatrix();
-            theApplet.pushStyle();
+            graphics.fill(_myColorCursor);
+            graphics.pushMatrix();
+            graphics.pushStyle();
 
             if (_myTextBufferIndexPosition > len - offset) {
                     // theApplet.textAlign(PApplet.RIGHT);
                     _myValueLabel.textAlign = PApplet.RIGHT;
-                    theApplet.translate(getWidth() - margin, 0);
+                    graphics.translate(getWidth() - margin, 0);
                     if (isTexfieldActive) {
-                            theApplet.rect(0, 0, cursorWidth, height);
+                            graphics.rect(0, 0, cursorWidth, height);
                     }
             } else {
                     // theApplet.textAlign(PApplet.LEFT);
                     _myValueLabel.textAlign = PApplet.LEFT;
-                    theApplet.translate(margin, 0);
+                    graphics.translate(margin, 0);
                     if (isTexfieldActive) {
-                            theApplet.rect(PApplet.max(0, PApplet.min(_myTextBufferIndexPosition, getWidth() - margin)), 0,
+                            graphics.rect(PApplet.max(0, PApplet.min(_myTextBufferIndexPosition, getWidth() - margin)), 0,
                                             cursorWidth, height);
                     }
             }
 
-            _myValueLabel.draw(theApplet, 0, 0, this);
-            theApplet.popStyle();
-            theApplet.popMatrix();
+            _myValueLabel.draw(graphics, 0, 0, this);
+            graphics.popStyle();
+            graphics.popMatrix();
 
-            theApplet.fill(isTexfieldActive ? color.getActive() : color.getForeground());
-            theApplet.rect(0, 0, width, 1);
-            theApplet.rect(0, height - 1, width, 1);
-            theApplet.rect(-1, 0, 1, height);
-            theApplet.rect(width, 0, 1, height);
-            _myCaptionLabel.draw(theApplet, 0, 0, this);
-            theApplet.popMatrix();
-            theApplet.popStyle();
+            graphics.fill(isTexfieldActive ? color.getActive() : color.getForeground());
+            graphics.rect(0, 0, width, 1);
+            graphics.rect(0, height - 1, width, 1);
+            graphics.rect(-1, 0, 1, height);
+            graphics.rect(width, 0, 1, height);
+            _myCaptionLabel.draw(graphics, 0, 0, this);
+            graphics.popMatrix();
+            graphics.popStyle();
     }
 
-    private void updateLabel(PApplet theApplet) {
+    private void updateLabel(PGraphics graphics) {
             if (_myInputFilter == InputFilter.BITFONT) {
                     setInputFilter(DEFAULT);
             }
             String str = passCheck(getText());
             String t1 = str;
             int off = margin * 2;
-            int ww = ControlFont.getWidthFor(str, _myValueLabel, theApplet);
+            int ww = ControlFont.getWidthFor(str, _myValueLabel, graphics);
             if ((ww < getWidth() - off)) {
                     _myTextBufferIndexPosition = ControlFont.getWidthFor(t1.substring(0, _myTextBufferIndex), _myValueLabel,
-                                    theApplet);
+                                    graphics);
                     len = getWidth();
             } else {
                     char[] c = str.toCharArray();
                     int mx = 0;
                     int n = 0;
                     for (int i = 0; i < c.length; i++) {
-                            n += theApplet.textWidth(c[i]);
+                            n += graphics.textWidth(c[i]);
                             if (n > _myValueLabel.getWidth() - off) {
                                     break;
                             }
@@ -394,7 +395,7 @@ public class Textfield extends Controller<Textfield> {
                     // needs fixing. TODO
                     for (int i = PApplet.max(mx, _myTextBufferIndex - 1); i >= 0; i--) {
                             try {
-                                    n += theApplet.textWidth(c[i]);
+                                    n += graphics.textWidth(c[i]);
                             } catch (Exception e) {
                             }
                             t1 = c[i] + t1;
@@ -404,7 +405,7 @@ public class Textfield extends Controller<Textfield> {
                             }
                     }
                     int strn = PApplet.max(0, PApplet.min(t1.length(), _myTextBufferIndex - _myTextBufferOverflow));
-                    _myTextBufferIndexPosition = ControlFont.getWidthFor(t1.substring(0, strn), _myValueLabel, theApplet);
+                    _myTextBufferIndexPosition = ControlFont.getWidthFor(t1.substring(0, strn), _myValueLabel, graphics);
             }
             _myValueLabel.setText(t1);
             changed = false;

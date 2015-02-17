@@ -429,9 +429,6 @@ public class Range extends Controller<Range> {
 	}
 
 	class RangeSpriteView implements ControllerView<Range> {
-		public void display(PApplet theApplet, Range theController) {
-			ControlP5.logger().log(Level.INFO, "RangeSpriteDisplay not available.");
-		}
 		public void display(PGraphics graphics, Range theController) {
 			ControlP5.logger().log(Level.INFO, "RangeSpriteDisplay not available.");
 		}
@@ -439,72 +436,6 @@ public class Range extends Controller<Range> {
 
 	class RangeView implements ControllerView<Range> {
 
-		public void display(PApplet theApplet, Range theController) {
-
-			int high = mode;
-
-			final float posX = _myParent.getAbsolutePosition().x + position.x;
-			int x0 = (int) (posX + minHandle);
-			int x1 = (int) (posX + maxHandle);
-
-			if (isInside() && high < 0) {
-				if (_myControlWindow.mouseX >= x0 - handleSize && _myControlWindow.mouseX < x0) {
-					high = LEFT;
-				} else if (_myControlWindow.mouseX >= x1 && _myControlWindow.mouseX < x1 + handleSize) {
-					high = RIGHT;
-				} else if (_myControlWindow.mouseX > x0 && _myControlWindow.mouseX < x1 && isDraggable) {
-					high = CENTER;
-				}
-			}
-
-			theApplet.pushMatrix();
-
-			theApplet.fill(color.getBackground());
-
-			theApplet.noStroke();
-
-			theApplet.rect(0, 0, width, height);
-
-			theApplet.fill(high == CENTER ? color.getActive() : color.getForeground());
-
-			if (isShowTickMarks) {
-				int n = handleSize / 2;
-				theApplet.rect(minHandle - n, 0, mr + handleSize, height);
-				theApplet.fill((isMinHandle || high == LEFT) ? color.getActive() : color.getForeground());
-				theApplet.triangle(minHandle - handleSize, 0, minHandle, 0, minHandle - n, height);
-				theApplet.fill((isMaxHandle || high == RIGHT) ? color.getActive() : color.getForeground());
-				theApplet.triangle(maxHandle, 0, maxHandle + handleSize, 0, maxHandle + n, height);
-			} else {
-				theApplet.rect(minHandle, 0, mr, height);
-				theApplet.fill((isMinHandle || high == LEFT) ? color.getActive() : color.getForeground());
-				theApplet.rect((minHandle - handleSize), 0, handleSize, height);
-				theApplet.fill((isMaxHandle || high == RIGHT) ? color.getActive() : color.getForeground());
-				theApplet.rect(maxHandle, 0, handleSize, height);
-
-			}
-
-			if (isLabelVisible) {
-				_myCaptionLabel.draw(theApplet, 0, 0, theController);
-				_myValueLabel.draw(theApplet, 0, 0, theController);
-				_myHighValueLabel.draw(theApplet, 0, 0, theController);
-			}
-
-			theApplet.popMatrix();
-
-			if (isShowTickMarks) {
-				theApplet.pushMatrix();
-				float x = (getWidth() - handleSize) / (getTickMarks().size() - 1);
-				theApplet.translate(handleSize / 2, getHeight());
-				theApplet.fill(_myColorTickMark);
-				for (TickMark tm : getTickMarks()) {
-					tm.draw(theApplet);
-					theApplet.translate(x, 0);
-				}
-				theApplet.popMatrix();
-			}
-		}
-                
-                
 		public void display(PGraphics graphics, Range theController) {
 
 			int high = mode;
@@ -572,9 +503,6 @@ public class Range extends Controller<Range> {
 	}
 
 	class RangeImageView implements ControllerView<Range> {
-		public void display(PApplet theApplet, Range theController) {
-			ControlP5.logger().log(Level.INFO, "RangeImageDisplay not implemented.");
-		}
 		public void display(PGraphics graphics, Range theController) {
 			ControlP5.logger().log(Level.INFO, "RangeImageDisplay not implemented.");
 		}

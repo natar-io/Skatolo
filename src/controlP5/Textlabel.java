@@ -141,20 +141,6 @@ public class Textlabel extends Controller<Textlabel> {
      *
      * @param theApplet PApplet
      */
-    public void draw(final PApplet theApplet) {
-        if (!disabled) {
-            theApplet.pushMatrix();
-            theApplet.translate(position.x, position.y);
-            _myValueLabel.draw(theApplet, 0, 0, this);
-            theApplet.popMatrix();
-        }
-    }
-
-    /**
-     * draw the textlabel.
-     *
-     * @param theApplet PApplet
-     */
     public void draw(final PGraphics graphics) {
         if (!disabled) {
             graphics.pushMatrix();
@@ -166,7 +152,7 @@ public class Textlabel extends Controller<Textlabel> {
 
     public void draw() {
         if (cp5.pgraphics == null) {
-            draw(cp5.papplet);
+            draw(cp5.papplet.g);
         } else {
             draw(cp5.pgraphics);
         }
@@ -176,7 +162,7 @@ public class Textlabel extends Controller<Textlabel> {
         if (cp5.pgraphics == null) {
             cp5.papplet.pushMatrix();
             cp5.papplet.translate(theX, theY);
-            draw(cp5.papplet);
+            draw(cp5.papplet.g);
             cp5.papplet.popMatrix();
         } else {
             cp5.pgraphics.pushMatrix();

@@ -188,16 +188,6 @@ public class MultiList extends Controller<MultiList> implements MultiListInterfa
 		}
 	}
 
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override @ControlP5.Invisible public void draw(PApplet theApplet) {
-		super.draw(theApplet);
-		update(theApplet);
-	}
-
-
 	/**
 	 * 
 	 * @param theApplet

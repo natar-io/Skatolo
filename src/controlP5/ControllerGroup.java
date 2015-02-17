@@ -547,25 +547,6 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 		return me;
 	}
 
-
-	/**
-	 * @exclude
-	 * @param theApplet PApplet
-	 */
-	@ControlP5.Invisible public final void draw(PApplet theApplet) {
-		if (isVisible) {
-			theApplet.pushMatrix();
-			theApplet.translate(position.x, position.y);
-			preDraw(theApplet);
-                        updateControllers(theApplet);
-			drawControllers(theApplet);
-			postDraw(theApplet);
-			if (_myValueLabel != null) {
-				_myValueLabel.draw(theApplet, 2, 2, this);
-			}
-			theApplet.popMatrix();
-		}
-	}
         
 	/**
          *  
@@ -611,32 +592,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 
 // Legacy, update & draw at the same place. 
         
-	protected void drawControllers(PApplet theApplet) {
-		if (isOpen) {
-
-			for (Canvas cc : _myCanvas) {
-				if (cc.mode() == Canvas.PRE) {
-					cc.draw(theApplet);
-				}
-			}
-			for (ControllerInterface<?> ci : controllers.get()) {
-				if (ci.isVisible()) {
-                                        ci.draw(theApplet);
-				}
-			}
-
-			for (CDrawable cd : controllers.getDrawables()) {
-				cd.draw(theApplet);
-			}
-
-			for (Canvas cc : _myCanvas) {
-				if (cc.mode() == Canvas.POST) {
-					cc.draw(theApplet);
-				}
-			}
-		}
-	}
-        
+	
 	protected void drawControllers(PGraphics graphics) {
 		if (isOpen) {
 			for (Canvas cc : _myCanvas) {
@@ -671,14 +627,6 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 			}
 
 		}
-	}
-
-
-	protected void preDraw(PApplet theApplet) {
-	}
-
-
-	protected void postDraw(PApplet theApplet) {
 	}
 
 	protected void preDraw(PGraphics graphics) {

@@ -89,7 +89,7 @@ public class ControlP5 extends ControlP5Base {
 	/**
 	 * @exclude
 	 */
-	@ControlP5.Invisible public static final String VERSION = "2.0.4";// "##version##";
+	@ControlP5.Invisible public static final String VERSION = "2.1.1";// "##version##";
 
 	/**
 	 * @exclude
@@ -266,7 +266,7 @@ public class ControlP5 extends ControlP5Base {
 	static int welcome = 0;
 
 	private void welcome() {
-		System.out.println("ControlP5 " + VERSION + " " + "infos, comments, questions at http://www.sojamo.de/libraries/controlP5");
+		System.out.println("ControlP5 " + VERSION + " " + "infos, comments, questions at https://github.com/potioc/ControlP5");
 	}
 
 	/**

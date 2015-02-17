@@ -42,11 +42,9 @@ public interface ControllerView<T> {
 	 * draw() function and will pass a reference of PApplet as well as the
 	 * Controller itself to your custom display class.
 	 * 
-	 * @param theApplet
+	 * @param graphics
 	 * @param theController
 	 */
-	public void display(PApplet theApplet, T theController);
-	
         public void display(PGraphics graphics, T theController);
 
 }

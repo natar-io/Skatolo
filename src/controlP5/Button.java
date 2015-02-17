@@ -273,30 +273,6 @@ public class Button extends Controller<Button> {
 
 	private class ButtonView implements ControllerView<Button> {
 
-		public void display(PApplet theApplet, Button theController) {
-			theApplet.noStroke();
-			if (isOn && isSwitch) {
-				theApplet.fill(color.getActive());
-			}
-			else {
-				if (getIsInside()) {
-					if (isPressed) {
-						theApplet.fill(color.getActive());
-					}
-					else {
-						theApplet.fill(color.getForeground());
-					}
-				}
-				else {
-					theApplet.fill(color.getBackground());
-				}
-			}
-			theApplet.rect(0, 0, width, height);
-			if (isLabelVisible) {
-				_myCaptionLabel.draw(theApplet, 0, 0, theController);
-			}
-		}
-                
 		public void display(PGraphics graphics, Button theController) {
 			graphics.noStroke();
 			if (isOn && isSwitch) {
@@ -323,24 +299,6 @@ public class Button extends Controller<Button> {
 	}
 
 	private class ButtonImageView implements ControllerView<Button> {
-
-		public void display(PApplet theApplet, Button theController) {
-			if (isOn && isSwitch) {
-				theApplet.image((availableImages[HIGHLIGHT] == true) ? images[HIGHLIGHT] : images[DEFAULT], 0, 0);
-				return;
-			}
-			if (getIsInside()) {
-				if (isPressed) {
-					theApplet.image((availableImages[ACTIVE] == true) ? images[ACTIVE] : images[DEFAULT], 0, 0);
-				}
-				else {
-					theApplet.image((availableImages[OVER] == true) ? images[OVER] : images[DEFAULT], 0, 0);
-				}
-			}
-			else {
-				theApplet.image(images[DEFAULT], 0, 0);
-			}
-		}
                 
 		public void display(PGraphics graphics, Button theController) {
 			if (isOn && isSwitch) {

@@ -24,6 +24,7 @@
 package controlP5;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 public class FrameRate extends Textlabel {
 
@@ -45,13 +46,13 @@ public class FrameRate extends Textlabel {
 	}
 
 
-	@Override public void draw(PApplet theApplet) {
+	@Override public void draw(PGraphics graphics) {
 		if ((cnt++) % _myInterval == 0) {
 			setText("" + PApplet.round(_myIntervalSum / _myInterval));
 			_myIntervalSum = 0;
 		}
-		_myIntervalSum += theApplet.frameRate;
-		super.draw(theApplet);
+		_myIntervalSum += cp5.papplet.frameRate;
+		super.draw(graphics);
 	}
 
 }

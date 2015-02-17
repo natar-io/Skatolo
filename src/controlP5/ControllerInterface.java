@@ -104,9 +104,6 @@ public interface ControllerInterface<T> {
 	@ControlP5.Invisible
 	public T updateInternalEvents(PApplet theApplet);
 
-	@ControlP5.Invisible
-	public void draw(PApplet theApplet);
-
         @ControlP5.Invisible
 	public void draw(PGraphics graphics);
 

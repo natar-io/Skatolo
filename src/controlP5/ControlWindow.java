@@ -56,6 +56,8 @@ public final class ControlWindow {
 
 	protected PApplet _myApplet;
 
+        protected PGraphics _myGraphics;
+
 	protected ControllerList _myTabs;
 
 	protected boolean isVisible = true;
@@ -125,6 +127,7 @@ public final class ControlWindow {
 		mouseoverlist = new ArrayList<ControllerInterface<?>>();
 		cp5 = theControlP5;
 		_myApplet = theApplet;
+                _myGraphics = theApplet.g;
 		isAutoDraw = true;
 		init();
 	}
@@ -543,7 +546,6 @@ public final class ControlWindow {
 	public void draw() {
 
 		_myFrameCount = _myApplet.frameCount;
-
 		if (cp5.blockDraw == false) {
 			if (cp5.isAndroid) {
 				mouseEvent(cp5.papplet.mouseX, cp5.papplet.mouseY, cp5.papplet.mousePressed);
@@ -555,30 +557,30 @@ public final class ControlWindow {
 				// TODO save stroke, noStroke, fill, noFill, strokeWeight
 				// parameters and restore after drawing controlP5 elements.
 
-				int myRectMode = _myApplet.g.rectMode;
+				int myRectMode = _myGraphics.rectMode;
 
-				int myEllipseMode = _myApplet.g.ellipseMode;
+				int myEllipseMode = _myGraphics.ellipseMode;
 
-				int myImageMode = _myApplet.g.imageMode;
+				int myImageMode = _myGraphics.imageMode;
 
-				_myApplet.pushStyle();
-				_myApplet.rectMode(PConstants.CORNER);
-				_myApplet.ellipseMode(PConstants.CORNER);
-				_myApplet.imageMode(PConstants.CORNER);
-				_myApplet.noStroke();
+				_myGraphics.pushStyle();
+				_myGraphics.rectMode(PConstants.CORNER);
+				_myGraphics.ellipseMode(PConstants.CORNER);
+				_myGraphics.imageMode(PConstants.CORNER);
+				_myGraphics.noStroke();
 
 				if (_myDrawable != null) {
-					_myDrawable.draw(_myApplet);
+					_myDrawable.draw(_myGraphics);
 				}
 
 				for (int i = 0; i < _myCanvas.size(); i++) {
 					if ((_myCanvas.get(i)).mode() == Canvas.PRE) {
-						(_myCanvas.get(i)).draw(_myApplet);
+						(_myCanvas.get(i)).draw(_myGraphics);
 					}
 				}
 
-				_myApplet.noStroke();
-				_myApplet.noFill();
+				_myGraphics.noStroke();
+				_myGraphics.noFill();
 				int myOffsetX = (int) getPositionOfTabs().x;
 				int myOffsetY = (int) getPositionOfTabs().y;
 				int myHeight = 0;
@@ -600,20 +602,20 @@ public final class ControlWindow {
 							((Tab) _myTabs.get(i)).setOffset(myOffsetX, myOffsetY);
 
 							if (((Tab) _myTabs.get(i)).isActive()) {
-								((Tab) _myTabs.get(i)).draw(_myApplet);
+								((Tab) _myTabs.get(i)).draw(_myGraphics);
 							}
 
 							if (((Tab) _myTabs.get(i)).updateLabel()) {
-								((Tab) _myTabs.get(i)).drawLabel(_myApplet);
+								((Tab) _myTabs.get(i)).drawLabel(_myGraphics);
 							}
 							myOffsetX += ((Tab) _myTabs.get(i)).width();
 						}
 					}
-					((ControllerInterface<?>) _myTabs.get(0)).draw(_myApplet);
+					((ControllerInterface<?>) _myTabs.get(0)).draw(_myGraphics);
 				}
 				for (int i = 0; i < _myCanvas.size(); i++) {
 					if ((_myCanvas.get(i)).mode() == Canvas.POST) {
-						(_myCanvas.get(i)).draw(_myApplet);
+						(_myCanvas.get(i)).draw(_myGraphics);
 					}
 				}
 
@@ -622,10 +624,10 @@ public final class ControlWindow {
 
 				// draw Tooltip here.
 				cp5.getTooltip().draw(this);
-				_myApplet.rectMode(myRectMode);
-				_myApplet.ellipseMode(myEllipseMode);
-				_myApplet.imageMode(myImageMode);
-				_myApplet.popStyle();
+				_myGraphics.rectMode(myRectMode);
+				_myGraphics.ellipseMode(myEllipseMode);
+				_myGraphics.imageMode(myImageMode);
+				_myGraphics.popStyle();
 			}
 		}
 
@@ -636,95 +638,10 @@ public final class ControlWindow {
 	 * @exclude draw content.
 	 */
 	public void draw(PGraphics graphics) {
-
-		_myFrameCount = _myApplet.frameCount;
-
-		if (cp5.blockDraw == false) {
-			if (cp5.isAndroid) {
-				mouseEvent(cp5.papplet.mouseX, cp5.papplet.mouseY, cp5.papplet.mousePressed);
-			} else {
-				updateEvents();
-			}
-			if (isVisible) {
-
-				// TODO save stroke, noStroke, fill, noFill, strokeWeight
-				// parameters and restore after drawing controlP5 elements.
-
-				int myRectMode = graphics.rectMode;
-
-				int myEllipseMode = graphics.ellipseMode;
-
-				int myImageMode = graphics.imageMode;
-
-				graphics.pushStyle();
-				graphics.rectMode(PConstants.CORNER);
-				graphics.ellipseMode(PConstants.CORNER);
-				graphics.imageMode(PConstants.CORNER);
-				graphics.noStroke();
-
-				if (_myDrawable != null) {
-					_myDrawable.draw(graphics);
-				}
-
-				for (int i = 0; i < _myCanvas.size(); i++) {
-					if ((_myCanvas.get(i)).mode() == Canvas.PRE) {
-						(_myCanvas.get(i)).draw(graphics);
-					}
-				}
-
-				graphics.noStroke();
-				graphics.noFill();
-				int myOffsetX = (int) getPositionOfTabs().x;
-				int myOffsetY = (int) getPositionOfTabs().y;
-				int myHeight = 0;
-				if (_myTabs.size() > 0) {
-					for (int i = 1; i < _myTabs.size(); i++) {
-						if (((Tab) _myTabs.get(i)).isVisible()) {
-							if (myHeight < ((Tab) _myTabs.get(i)).height()) {
-								myHeight = ((Tab) _myTabs.get(i)).height();
-							}
-
-							// conflicts with Android, getWidth not found TODO
-
-							// if (myOffsetX > (papplet().getWidth()) - ((Tab) _myTabs.get(i)).width()) {
-							// myOffsetY += myHeight + 1;
-							// myOffsetX = (int) getPositionOfTabs().x;
-							// myHeight = 0;
-							// }
-
-							((Tab) _myTabs.get(i)).setOffset(myOffsetX, myOffsetY);
-
-							if (((Tab) _myTabs.get(i)).isActive()) {
-								((Tab) _myTabs.get(i)).draw(graphics);
-							}
-
-							if (((Tab) _myTabs.get(i)).updateLabel()) {
-								((Tab) _myTabs.get(i)).drawLabel(graphics);
-							}
-							myOffsetX += ((Tab) _myTabs.get(i)).width();
-						}
-					}
-					((ControllerInterface<?>) _myTabs.get(0)).draw(graphics);
-				}
-				for (int i = 0; i < _myCanvas.size(); i++) {
-					if ((_myCanvas.get(i)).mode() == Canvas.POST) {
-						(_myCanvas.get(i)).draw(graphics);
-					}
-				}
-
-				pmouseX = mouseX;
-				pmouseY = mouseY;
-
-				// draw Tooltip here.
-				cp5.getTooltip().draw(this);
-				graphics.rectMode(myRectMode);
-				graphics.ellipseMode(myEllipseMode);
-				graphics.imageMode(myImageMode);
-				graphics.popStyle();
-			}
-		}
-
-	}
+                _myGraphics = graphics;
+                draw();
+        }
+       
 
 	/**
 	 * Adds a custom context to a ControlWindow. Use a custom class which implements the CDrawable interface

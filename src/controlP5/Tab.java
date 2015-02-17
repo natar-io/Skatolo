@@ -85,21 +85,6 @@ public class Tab extends ControllerGroup<Tab> {
 		isInside = inside();
 		return cp5.getWindow().getTabs().size() > 2;
 	}
-
-	protected void drawLabel(PApplet theApplet) {
-		if (autoWidth) {
-			_myWidth = _myLabel.getWidth() + padding * 2;
-		}
-		theApplet.pushMatrix();
-		theApplet.fill(isInside ? color.getForeground() : color.getBackground());
-		if (isActive) {
-			theApplet.fill(color.getActive());
-		}
-		theApplet.translate(_myOffsetX, _myOffsetY);
-		theApplet.rect(0, 0, _myWidth - 1, _myHeight);
-		_myLabel.draw(theApplet, padding, 0, this);
-		theApplet.popMatrix();
-	}
         
 	protected void drawLabel(PGraphics graphics) {
 		if (autoWidth) {

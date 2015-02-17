@@ -717,29 +717,6 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
 	 * @see controlP5.ControllerView
 	 * @param theApplet PApplet
 	 */
-	@ControlP5.Invisible public void draw(final PApplet theApplet) {
-
-		theApplet.pushMatrix();
-
-		theApplet.translate(position.x, position.y);
-
-		_myControllerView.display(theApplet, me);
-
-		theApplet.popMatrix();
-
-		// theApplet.pushMatrix();
-		// _myDebugDisplay.display(theApplet, this);
-		// theApplet.popMatrix();
-	}
-        
-	/**
-	 * the default draw function for each controller extending superclass Controller. This draw function will take care of default matrix
-	 * operations and will call the display function of the current ControllerView object active for this particular controller.
-	 * 
-	 * @exclude
-	 * @see controlP5.ControllerView
-	 * @param theApplet PApplet
-	 */
 	@ControlP5.Invisible public void draw(final PGraphics graphics) {
 
 		graphics.pushMatrix();
@@ -1717,14 +1694,6 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
 	 * @deprecated
 	 * @exclude
 	 */
-	@SuppressWarnings("unchecked") @Deprecated public T setDisplay(ControllerDisplay theDisplay) {
-		return setView(theDisplay);
-	}
-
-	/**
-	 * @deprecated
-	 * @exclude
-	 */
 	@SuppressWarnings("unchecked") @Deprecated public void setDisplay(ControllerDisplay theDisplay, int theMode) {
 		setView(theDisplay, theMode);
 	}
@@ -1997,21 +1966,6 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
 
 	class DebugView implements ControllerView<T> {
 
-		public void display(PApplet theApplet, T theController) {
-			if (inside()) {
-				theApplet.fill(255, 0, 0, 50);
-				theApplet.stroke(255, 0, 0);
-			} else {
-				theApplet.fill(255, 50);
-				theApplet.stroke(255);
-			}
-
-			theApplet.pushMatrix();
-			// theApplet.translate(position.x, position.y);
-			theApplet.rect(0, 0, width, height);
-			theApplet.popMatrix();
-		}
-                
 		public void display(PGraphics graphics, T theController) {
 			if (inside()) {
 				graphics.fill(255, 0, 0, 50);

@@ -250,36 +250,6 @@ public class Slider2D extends Controller<Slider2D> {
 
 	class Slider2DView implements ControllerView<Slider2D> {
 
-		public void display(PApplet theApplet, Slider2D theController) {
-
-			theApplet.noStroke();
-
-			if (theController.isInside()) {
-				theApplet.fill(theController.getColor().getForeground());
-			} else {
-				theApplet.fill(theController.getColor().getBackground());
-			}
-
-			theApplet.rect(0, 0, getWidth(), getHeight());
-
-			if (isCrosshairs) {
-				if (theController.isInside()) {
-					theApplet.fill(theController.getColor().getBackground());
-				} else {
-					theApplet.fill(theController.getColor().getForeground());
-				}
-				theApplet.rect(0, (int) (getCursorY() + getCursorHeight() / 2), (int) getWidth(), 1);
-				theApplet.rect((int) (getCursorX() + getCursorWidth() / 2), 0, 1, (int) getHeight());
-			}
-
-			theApplet.fill(theController.getColor().getActive());
-			theApplet.rect((int) getCursorX(), (int) getCursorY(), (int) getCursorWidth(), (int) getCursorHeight());
-
-			getCaptionLabel().draw(theApplet, 0, 0, theController);
-			getValueLabel().draw(theApplet, 0, 0, theController);
-		}
-                
-                
 		public void display(PGraphics graphics, Slider2D theController) {
 
 			graphics.noStroke();

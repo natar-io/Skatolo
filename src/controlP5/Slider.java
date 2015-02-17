@@ -549,47 +549,6 @@ public class Slider extends Controller<Slider> {
 			setValue(PApplet.map(f, 0, 1, _myMinReal, _myMaxReal));
 		}
 
-		public void display(PApplet theApplet, Slider theController) {
-			theApplet.fill(getColor().getBackground());
-			theApplet.noStroke();
-			if ((getColor().getBackground() >> 24 & 0xff) > 0) {
-				theApplet.rect(0, 0, getWidth(), getHeight());
-			}
-			theApplet.fill(getIsInside() ? getColor().getActive() : getColor().getForeground());
-			if (getSliderMode() == FIX) {
-				theApplet.rect(0, getHeight(), getWidth(), -getValuePosition());
-			} else {
-				if (isShowTickMarks) {
-					theApplet.triangle(getWidth(), getHeight() - getValuePosition(), getWidth(), getHeight() - getValuePosition() - getHandleSize(), 0, getHeight() - getValuePosition()
-							- getHandleSize() / 2);
-				} else {
-					theApplet.rect(0, getHeight() - getValuePosition() - getHandleSize(), getWidth(), getHandleSize());
-				}
-			}
-
-			if (isLabelVisible) {
-				getCaptionLabel().draw(theApplet, 0, 0, theController);
-				theApplet.pushMatrix();
-				theApplet.translate(0, (int) PApplet.map(_myValue, _myMax, _myMin, 0, getHeight() - _myValueLabel.getHeight()));
-				getValueLabel().draw(theApplet, 0, 0, theController);
-				theApplet.popMatrix();
-			}
-
-			if (isShowTickMarks) {
-				theApplet.pushMatrix();
-				theApplet.pushStyle();
-				theApplet.translate(-4, (getSliderMode() == FIX) ? 0 : getHandleSize() / 2);
-				theApplet.fill(_myColorTickMark);
-				float x = (getHeight() - ((getSliderMode() == FIX) ? 0 : getHandleSize())) / (getTickMarks().size() - 1);
-				for (TickMark tm : getTickMarks()) {
-					tm.draw(theApplet, getDirection());
-					theApplet.translate(0, x);
-				}
-				theApplet.popStyle();
-				theApplet.popMatrix();
-			}
-		}
-                
 		public void display(PGraphics graphics, Slider theController) {
 			graphics.fill(getColor().getBackground());
 			graphics.noStroke();
@@ -658,46 +617,6 @@ public class Slider extends Controller<Slider> {
 			setValue(PApplet.map(f, 0, 1, _myMinReal, _myMaxReal));
 		}
 
-		public void display(PApplet theApplet, Slider theController) {
-			theApplet.fill(getColor().getBackground());
-			theApplet.noStroke();
-			if ((getColor().getBackground() >> 24 & 0xff) > 0) {
-				theApplet.rect(0, 0, getWidth(), getHeight());
-			}
-			theApplet.fill(getIsInside() ? getColor().getActive() : getColor().getForeground());
-			if (getSliderMode() == FIX) {
-				theApplet.rect(0, 0, getValuePosition(), getHeight());
-			} else {
-				if (isShowTickMarks) {
-					theApplet.triangle(getValuePosition(), 0, getValuePosition() + getHandleSize(), 0, getValuePosition() + _myHandleSize / 2, getHeight());
-				} else {
-					theApplet.rect(getValuePosition(), 0, getHandleSize(), getHeight());
-				}
-
-			}
-			theApplet.fill(255);
-
-			if (isLabelVisible) {
-				getValueLabel().draw(theApplet, 0, 0, theController);
-				getCaptionLabel().draw(theApplet, 0, 0, theController);
-			}
-
-			if (isShowTickMarks) {
-				theApplet.pushMatrix();
-				theApplet.pushStyle();
-				theApplet.translate((getSliderMode() == FIX) ? 0 : getHandleSize() / 2, getHeight());
-				theApplet.fill(_myColorTickMark);
-				theApplet.noStroke();
-				float x = (getWidth() - ((getSliderMode() == FIX) ? 0 : getHandleSize())) / (getTickMarks().size() - 1);
-				for (TickMark tm : getTickMarks()) {
-					tm.draw(theApplet, getDirection());
-					theApplet.translate(x, 0);
-				}
-				theApplet.popStyle();
-				theApplet.popMatrix();
-			}
-		}
-                
 		public void display(PGraphics graphics, Slider theController) {
 			graphics.fill(getColor().getBackground());
 			graphics.noStroke();

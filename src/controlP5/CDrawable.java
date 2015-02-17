@@ -31,11 +31,7 @@ import processing.core.PGraphics;
  */
 public interface CDrawable {
 
-	/**
-	 * @param theApplet PApplet
-	 */
-	public void draw(PApplet theApplet);
-	
+
         /**
 	 */
 	public void draw(PGraphics graphics);

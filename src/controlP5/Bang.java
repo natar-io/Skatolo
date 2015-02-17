@@ -168,24 +168,6 @@ import processing.core.PGraphics;
 
 	private class BangView implements ControllerView<Bang> {
 
-		public void display(PApplet theApplet, Bang theController) {
-			if (isActive) {
-				theApplet.fill(color.getActive());
-			}
-			else {
-				theApplet.fill(color.getForeground());
-			}
-
-			if (cnt < 0) {
-				theApplet.fill(color.getForeground());
-				cnt++;
-			}
-			theApplet.rect(0, 0, width, height);
-			if (isLabelVisible) {
-				_myCaptionLabel.draw(theApplet, 0, 0, theController);
-			}
-		}
-                
 		public void display(PGraphics graphics, Bang theController) {
 			if (isActive) {
 				graphics.fill(color.getActive());
@@ -207,22 +189,6 @@ import processing.core.PGraphics;
 
 	private class BangImageView implements ControllerView<Bang> {
 
-		public void display(PApplet theApplet, Bang theController) {
-			if (isActive) {
-				theApplet.image((availableImages[ACTIVE] == true) ? images[ACTIVE] : images[DEFAULT], 0, 0);
-			}
-			else {
-				theApplet.image((availableImages[OVER] == true) ? images[OVER] : images[DEFAULT], 0, 0);
-			}
-			if (cnt < 0) {
-				theApplet.image((availableImages[OVER] == true) ? images[OVER] : images[DEFAULT], 0, 0);
-				cnt++;
-			}
-			if (!isActive && cnt >= 0) {
-				theApplet.image(images[DEFAULT], 0, 0);
-			}
-		}
-                
 		public void display(PGraphics graphics, Bang theController) {
 			if (isActive) {
 				graphics.image((availableImages[ACTIVE] == true) ? images[ACTIVE] : images[DEFAULT], 0, 0);
