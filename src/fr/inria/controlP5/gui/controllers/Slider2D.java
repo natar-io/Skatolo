@@ -21,8 +21,12 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.group.ControllerGroup;
+import fr.inria.controlP5.gui.Label;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -61,7 +65,7 @@ public class Slider2D extends Controller<Slider2D> {
 		theControlP5.register(theControlP5.papplet, theName, this);
 	}
 
-	protected Slider2D(ControlP5 theControlP5, ControllerGroup<?> theParent, String theName, int theX, int theY, int theWidth, int theHeight) {
+	public Slider2D(ControlP5 theControlP5, ControllerGroup<?> theParent, String theName, int theX, int theY, int theWidth, int theHeight) {
 		super(theControlP5, theParent, theName, theX, theY, theWidth, theHeight);
 		_myArrayValue = new float[] { 0.0f, 0.0f };
 		_myMinX = 0;
@@ -77,7 +81,7 @@ public class Slider2D extends Controller<Slider2D> {
 	 * 
 	 * @see controlP5.Controller#updateInternalEvents(processing.core.PApplet)
 	 */
-	@ControlP5.Invisible public Slider2D updateInternalEvents(PApplet theApplet) {
+	 public Slider2D updateInternalEvents(PApplet theApplet) {
 		if (isInside()) {
 			if (!cp5.isAltDown()) {
 				float tX = PApplet.constrain(_myControlWindow.mouseX - (_myParent.getAbsolutePosition().x + position.x), 0, width - cursorWidth);
@@ -92,7 +96,7 @@ public class Slider2D extends Controller<Slider2D> {
 		return this;
 	}
 
-	Slider2D updateValue() {
+	public Slider2D updateValue() {
 		return setValue(0);
 	}
 
@@ -233,7 +237,7 @@ public class Slider2D extends Controller<Slider2D> {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override @ControlP5.Invisible public Slider2D updateDisplayMode(int theMode) {
+	@Override public Slider2D updateDisplayMode(int theMode) {
 		_myDisplayMode = theMode;
 		switch (theMode) {
 		case (DEFAULT):

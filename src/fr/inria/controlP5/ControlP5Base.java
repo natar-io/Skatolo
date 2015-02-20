@@ -21,8 +21,43 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5;
 
+import fr.inria.controlP5.gui.ControllerInterface;
+import fr.inria.controlP5.gui.Tooltip;
+import fr.inria.controlP5.events.FieldChangedListener;
+import fr.inria.controlP5.gui.layout.ControllerLayout;
+import fr.inria.controlP5.gui.layout.ControllerAutomator;
+import fr.inria.controlP5.extra.Println;
+import fr.inria.controlP5.gui.CColor;
+import fr.inria.controlP5.file.ControllerProperties;
+import fr.inria.controlP5.gui.ControlWindow;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.controllers.MultiList;
+import fr.inria.controlP5.gui.controllers.Numberbox;
+import fr.inria.controlP5.gui.controllers.Toggle;
+import fr.inria.controlP5.gui.controllers.Matrix;
+import fr.inria.controlP5.gui.group.ControllerGroup;
+import fr.inria.controlP5.gui.group.ColorPicker;
+import fr.inria.controlP5.gui.controllers.FrameRate;
+import fr.inria.controlP5.gui.controllers.Knob;
+import fr.inria.controlP5.gui.controllers.Textfield;
+import fr.inria.controlP5.gui.controllers.Textlabel;
+import fr.inria.controlP5.gui.group.Tab;
+import fr.inria.controlP5.gui.controllers.Slider;
+import fr.inria.controlP5.gui.controllers.Range;
+import fr.inria.controlP5.gui.controllers.Slider2D;
+import fr.inria.controlP5.gui.group.Textarea;
+import fr.inria.controlP5.gui.controllers.Button;
+import fr.inria.controlP5.gui.controllers.Chart;
+import fr.inria.controlP5.gui.controllers.Bang;
+import fr.inria.controlP5.gui.group.ControlGroup;
+import fr.inria.controlP5.gui.group.ListBox;
+import fr.inria.controlP5.gui.group.CheckBox;
+import fr.inria.controlP5.gui.group.RadioButton;
+import fr.inria.controlP5.gui.group.DropdownList;
+import fr.inria.controlP5.gui.group.Group;
+import fr.inria.controlP5.gui.group.Accordion;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -53,7 +88,7 @@ public class ControlP5Base implements ControlP5Constants {
 
 	protected Map<String, FieldChangedListener> _myFieldChangedListenerMap = new HashMap<String, FieldChangedListener>();
 
-	protected Map<KeyCode, List<ControlKey>> keymap = new HashMap<KeyCode, List<ControlKey>>();
+	public Map<KeyCode, List<ControlKey>> keymap = new HashMap<KeyCode, List<ControlKey>>();
 
 	protected ControllerGroup<?> currentGroupPointer;
 
@@ -538,7 +573,7 @@ public class ControlP5Base implements ControlP5Constants {
 		Controller.autoSpacing.z = theZ;
 	}
 
-	@SuppressWarnings("static-access") protected void linebreak(Controller<?> theController, boolean theFlag, int theW, int theH, PVector theSpacing) {
+	@SuppressWarnings("static-access") public void linebreak(Controller<?> theController, boolean theFlag, int theW, int theH, PVector theSpacing) {
 		if (currentGroupPointer.autoPosition.x + theController.autoSpacing.x + theW > cp5.papplet.width) {
 			currentGroupPointer.autoPosition.y += currentGroupPointer.tempAutoPositionHeight;
 			currentGroupPointer.autoPosition.x = currentGroupPointer.autoPositionOffsetX;
@@ -727,7 +762,7 @@ public class ControlP5Base implements ControlP5Constants {
 	 * 
 	 * @exclude
 	 */
-	@ControlP5.Invisible public <C> C addGroup(final Object theObject, final String theIndex, final String theName, final Class<C> theClass, int theX, int theY, int theW, int theH) {
+	public <C> C addGroup(final Object theObject, final String theIndex, final String theName, final Class<C> theClass, int theX, int theY, int theW, int theH) {
 		ControlGroup<?> c = null;
 		if (theClass.equals(DropdownList.class)) {
 			c = addDropdownList(theName, theX, theY, theW, theH);
@@ -1042,7 +1077,7 @@ public class ControlP5Base implements ControlP5Constants {
 		return cp5;
 	}
 
-	protected int modifiers;
+	public int modifiers;
 
 	public boolean isShiftDown() {
 		return (modifiers & Event.SHIFT & (cp5.isShortcuts() ? -1 : 1)) != 0;
@@ -1060,11 +1095,11 @@ public class ControlP5Base implements ControlP5Constants {
 		return (modifiers & Event.ALT & (cp5.isShortcuts() ? -1 : 1)) != 0;
 	}
 
-	static class KeyCode {
+	public static class KeyCode {
 
 		final char[] chars;
 
-		KeyCode(char... theChars) {
+		public KeyCode(char... theChars) {
 			chars = theChars;
 			Arrays.sort(chars);
 		}

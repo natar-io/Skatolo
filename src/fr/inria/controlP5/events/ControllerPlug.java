@@ -21,8 +21,10 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.events;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.ControlP5Constants;
 import java.lang.reflect.Method;
 import java.lang.reflect.Field;
 import java.security.AccessControlException;
@@ -168,15 +170,15 @@ public class ControllerPlug {
 		}
 	}
 
-	protected Object getValue() {
+	public Object getValue() {
 		return _myValue;
 	}
 
-	protected Object getObject() {
+	public Object getObject() {
 		return _myObject;
 	}
 
-	protected String getName() {
+	public String getName() {
 		return _myName;
 	}
 
@@ -192,7 +194,7 @@ public class ControllerPlug {
 		return _myAcceptClassList;
 	}
 
-	protected Class<?> getClassType() {
+	public Class<?> getClassType() {
 		return _myParameterClass;
 	}
 

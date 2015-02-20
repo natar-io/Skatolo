@@ -21,8 +21,16 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.group;
 
+import fr.inria.controlP5.gui.controllers.Button;
+import fr.inria.controlP5.gui.CColor;
+import fr.inria.controlP5.events.ControlEvent;
+import fr.inria.controlP5.events.ControlListener;
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.ControlP5Constants;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.controllers.Slider;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -86,7 +94,7 @@ public class ListBox extends ControlGroup<ListBox> implements ControlListener {
 	}
 
 
-	protected ListBox(ControlP5 theControlP5, ControllerGroup<?> theGroup, String theName, int theX, int theY, int theW, int theH) {
+	public ListBox(ControlP5 theControlP5, ControllerGroup<?> theGroup, String theName, int theX, int theY, int theW, int theH) {
 		super(theControlP5, theGroup, theName, theX, theY, theW, 9);
 
 		items = new ArrayList<ListBoxItem>();
@@ -160,12 +168,12 @@ public class ListBox extends ControlGroup<ListBox> implements ControlListener {
 	}
 
 
-	@ControlP5.Invisible public float getScrollPosition() {
+	public float getScrollPosition() {
 		return _myScrollbar.getValue();
 	}
 
 
-	@ControlP5.Invisible public void scrolled(int theStep) {
+	public void scrolled(int theStep) {
 		float step = 1.0f / items.size();
 		scroll((1 - getScrollPosition()) + (theStep * step));
 	}
@@ -193,7 +201,7 @@ public class ListBox extends ControlGroup<ListBox> implements ControlListener {
 	}
 
 
-	@ControlP5.Invisible public ListBox updateListBoxItems() {
+	public ListBox updateListBoxItems() {
 		scroll();
 		return this;
 	}
@@ -249,7 +257,7 @@ public class ListBox extends ControlGroup<ListBox> implements ControlListener {
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@Override @ControlP5.Invisible public ListBox updateInternalEvents(PApplet theApplet) {
+	@Override public ListBox updateInternalEvents(PApplet theApplet) {
 		boolean xx = cp5.getWindow().mouseX > getAbsolutePosition().x && cp5.getWindow().mouseX < getAbsolutePosition().x + _myWidth;
 		// there is a 1px gap between bar and controllers, so -1 the top-y-position
 		boolean yy = cp5.getWindow().mouseY > getAbsolutePosition().y - 1 && cp5.getWindow().mouseY < getAbsolutePosition().y + _myBackgroundHeight;
@@ -469,7 +477,7 @@ public class ListBox extends ControlGroup<ListBox> implements ControlListener {
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@ControlP5.Invisible public void controlEvent(ControlEvent theEvent) {
+	public void controlEvent(ControlEvent theEvent) {
 		if (theEvent.getController() instanceof Button) {
 			try {
 				_myValue = theEvent.getController().getValue();
@@ -512,7 +520,7 @@ public class ListBox extends ControlGroup<ListBox> implements ControlListener {
 	 * 
 	 * @exclude {@inheritDoc}
 	 */
-	@ControlP5.Invisible public void keyEvent(final KeyEvent theEvent) {
+	public void keyEvent(final KeyEvent theEvent) {
 		super.keyEvent(theEvent);
 		float x = getAbsolutePosition().x;
 		float y = getAbsolutePosition().y;
@@ -639,7 +647,7 @@ public class ListBox extends ControlGroup<ListBox> implements ControlListener {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override @ControlP5.Invisible public ListBox setColorValue(int theColor) {
+	@Override public ListBox setColorValue(int theColor) {
 		super.setColorValue(theColor);
 		for (int i = 0; i < items.size(); i++) {
 			(items.get(i)).getColor().setValueLabel(theColor);

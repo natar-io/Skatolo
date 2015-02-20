@@ -21,8 +21,11 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.events;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.ControlP5Constants;
+import fr.inria.controlP5.gui.Controller;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -64,9 +67,9 @@ public class ControlBroadcaster {
 
 	private static Map<Class<?>, Method[]> methodcache = new HashMap<Class<?>, Method[]>();
 
-	boolean broadcast = true;
+	public boolean broadcast = true;
 
-	protected ControlBroadcaster(ControlP5 theControlP5) {
+	public ControlBroadcaster(ControlP5 theControlP5) {
 		cp5 = theControlP5;
 		_myControlListeners = new ArrayList<ControlListener>();
 		_myControllerCallbackListeners = new ConcurrentHashMap<CallbackListener, Controller<?>>();
@@ -330,11 +333,11 @@ public class ControlBroadcaster {
 
 	}
 
-	protected String getEventMethod() {
+	public String getEventMethod() {
 		return _myEventMethod;
 	}
 
-	protected void invokeAction(CallbackEvent theEvent) {
+	public void invokeAction(CallbackEvent theEvent) {
 		boolean invoke;
 		for (Map.Entry<CallbackListener, Controller<?>> entry : _myControllerCallbackListeners.entrySet()) {
 			invoke = (entry.getValue().getClass().equals(EmptyController.class)) ? true : (entry.getValue().equals(theEvent.getController())) ? true : false;

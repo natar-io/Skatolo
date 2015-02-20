@@ -21,8 +21,13 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.group.ControllerGroup;
+import fr.inria.controlP5.gui.Label;
+import fr.inria.controlP5.gui.TickMark;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
@@ -60,9 +65,9 @@ public class Slider extends Controller<Slider> {
 
 	protected boolean isSnapToTickMarks;
 
-	protected static int autoWidth = 99;
+	public static int autoWidth = 99;
 
-	protected static int autoHeight = 9;
+	public static int autoHeight = 9;
 
 	protected float scrollSensitivity = 0.1f;
 
@@ -122,7 +127,7 @@ public class Slider extends Controller<Slider> {
 
 	}
 
-	@ControlP5.Invisible @Override public void init() {
+	@Override public void init() {
 		// need to override init here since _myValue will only be a 
 		// normalized value here but _myDefaultValue needs to be absolute.
 		// by normalizing _myValue the range of values can be from 'big-to-small'
@@ -183,7 +188,7 @@ public class Slider extends Controller<Slider> {
 	 * @see ControllerInterface.updateInternalEvents
 	 * 
 	 */
-	@ControlP5.Invisible public Slider updateInternalEvents(PApplet theApplet) {
+	public Slider updateInternalEvents(PApplet theApplet) {
 		if (isVisible) {
 			if (isMousePressed && !cp5.isAltDown()) {
 				_myView.updateInternalEvents(theApplet);
@@ -290,7 +295,7 @@ public class Slider extends Controller<Slider> {
 	 * @param theRotationValue
 	 * @return Slider
 	 */
-	@ControlP5.Invisible public Slider scrolled(int theRotationValue) {
+	public Slider scrolled(int theRotationValue) {
 		if (isVisible) {
 			float f = _myValue;
 			float steps = isSnapToTickMarks ? (1.0f / getNumberOfTickMarks()) : scrollSensitivity * 0.1f;
@@ -469,7 +474,7 @@ public class Slider extends Controller<Slider> {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override @ControlP5.Invisible public Slider linebreak() {
+	@Override public Slider linebreak() {
 		cp5.linebreak(this, true, autoWidth, autoHeight, autoSpacing);
 		return this;
 	}
@@ -492,7 +497,7 @@ public class Slider extends Controller<Slider> {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override @ControlP5.Invisible public Slider updateDisplayMode(int theMode) {
+	@Override public Slider updateDisplayMode(int theMode) {
 		_myDisplayMode = theMode;
 		switch (theMode) {
 		case (DEFAULT):

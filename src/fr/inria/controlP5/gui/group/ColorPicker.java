@@ -21,8 +21,15 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.group;
 
+import fr.inria.controlP5.gui.Canvas;
+import fr.inria.controlP5.events.ControlEvent;
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.ControlP5Constants;
+import fr.inria.controlP5.events.ControllerPlug;
+import fr.inria.controlP5.gui.controllers.Slider;
+import fr.inria.controlP5.gui.group.ControlGroup;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -66,7 +73,7 @@ public class ColorPicker extends ControlGroup<ColorPicker> {
 	}
 
 
-	protected ColorPicker(ControlP5 theControlP5, ControllerGroup<?> theParent, String theName, int theX, int theY, int theWidth, int theHeight) {
+	public ColorPicker(ControlP5 theControlP5, ControllerGroup<?> theParent, String theName, int theX, int theY, int theWidth, int theHeight) {
 		super(theControlP5, theParent, theName, theX, theY, theWidth, theHeight);
 		isBarVisible = false;
 		isCollapse = false;
@@ -159,7 +166,7 @@ public class ColorPicker extends ControlGroup<ColorPicker> {
 	}
 
 
-	@Override @ControlP5.Invisible public void controlEvent(ControlEvent theEvent) {
+	@Override public void controlEvent(ControlEvent theEvent) {
 		if (broadcast) {
 			_myArrayValue[theEvent.getId()] = theEvent.getValue();
 			broadcast();

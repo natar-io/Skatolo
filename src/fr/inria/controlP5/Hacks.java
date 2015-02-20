@@ -21,7 +21,7 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
@@ -32,7 +32,7 @@ import java.util.List;
 
 import processing.core.PVector;
 
-public class CP {
+public class Hacks {
 
 	/**
 	 * borrowed from http://www.javapractices.com/Topic96.cjp
@@ -261,7 +261,7 @@ public class CP {
 	}
 
 
-	protected static String formatGetClass(Class<?> c) {
+	public static String formatGetClass(Class<?> c) {
 		if (c == null)
 			return null;
 		final String pattern = "class ";
@@ -408,7 +408,7 @@ public class CP {
 	}
 
 
-	static String join(List<String> list, String delimiter) {
+	static public String join(List<String> list, String delimiter) {
 		StringBuilder b = new StringBuilder();
 		for (String item : list) {
 			b.append(item).append(delimiter);

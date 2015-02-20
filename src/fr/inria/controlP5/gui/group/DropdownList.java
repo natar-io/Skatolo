@@ -21,8 +21,16 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.group;
 
+import fr.inria.controlP5.gui.controllers.Button;
+import fr.inria.controlP5.gui.CColor;
+import fr.inria.controlP5.events.ControlEvent;
+import fr.inria.controlP5.events.ControlListener;
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.ControlP5Constants;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.controllers.Slider;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -81,7 +89,7 @@ public class DropdownList extends ControlGroup<DropdownList> {
 		theControlP5.register(theControlP5.papplet, theName, this);
 	}
 
-	protected DropdownList(ControlP5 theControlP5, ControllerGroup<?> theGroup, String theName, int theX, int theY, int theW, int theH) {
+	public DropdownList(ControlP5 theControlP5, ControllerGroup<?> theGroup, String theName, int theX, int theY, int theW, int theH) {
 		super(theControlP5, theGroup, theName, theX, theY, theW, 9);
 
 		items = new ArrayList<ListBoxItem>();
@@ -177,11 +185,11 @@ public class DropdownList extends ControlGroup<DropdownList> {
 		return this;
 	}
 
-	@ControlP5.Invisible public float getScrollPosition() {
+	public float getScrollPosition() {
 		return _myScrollbar.getValue();
 	}
 
-	@ControlP5.Invisible public void scrolled(int theStep) {
+	public void scrolled(int theStep) {
 		float step = 1.0f / items.size();
 		scroll((1 - getScrollPosition()) + (theStep * step));
 	}
@@ -206,7 +214,7 @@ public class DropdownList extends ControlGroup<DropdownList> {
 		}
 	}
 
-	@ControlP5.Invisible public DropdownList updateListBoxItems() {
+	public DropdownList updateListBoxItems() {
 		scroll();
 		return this;
 	}
@@ -257,7 +265,7 @@ public class DropdownList extends ControlGroup<DropdownList> {
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@Override @ControlP5.Invisible public DropdownList updateInternalEvents(PApplet theApplet) {
+	@Override public DropdownList updateInternalEvents(PApplet theApplet) {
 		boolean xx = cp5.getWindow().mouseX > getAbsolutePosition().x && cp5.getWindow().mouseX < getAbsolutePosition().x + _myWidth;
 		// there is a 1px gap between bar and controllers, so -1 the top-y-position
 		boolean yy = cp5.getWindow().mouseY > getAbsolutePosition().y - 1
@@ -459,7 +467,7 @@ public class DropdownList extends ControlGroup<DropdownList> {
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@ControlP5.Invisible public void controlEvent(ControlEvent theEvent) {
+	public void controlEvent(ControlEvent theEvent) {
 		if (theEvent.getController() instanceof Button) {
 			try {
 				_myValue = theEvent.getController().getValue();
@@ -490,7 +498,7 @@ public class DropdownList extends ControlGroup<DropdownList> {
 	 * 
 	 * @exclude {@inheritDoc}
 	 */
-	@ControlP5.Invisible public void keyEvent(final KeyEvent theEvent) {
+	public void keyEvent(final KeyEvent theEvent) {
 		super.keyEvent(theEvent);
 		float x = getAbsolutePosition().x;
 		float y = getAbsolutePosition().y;
@@ -609,7 +617,7 @@ public class DropdownList extends ControlGroup<DropdownList> {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override @ControlP5.Invisible public DropdownList setColorValue(int theColor) {
+	@Override public DropdownList setColorValue(int theColor) {
 		super.setColorValue(theColor);
 		for (int i = 0; i < items.size(); i++) {
 			(items.get(i)).getColor().setValueLabel(theColor);

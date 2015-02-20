@@ -21,8 +21,13 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.group;
 
+import fr.inria.controlP5.events.ControlEvent;
+import fr.inria.controlP5.events.ControlListener;
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.ControlP5Constants;
+import fr.inria.controlP5.gui.Label;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +78,6 @@ public class ControlGroup<T> extends ControllerGroup<T> implements ControlListen
 		_myHeight = theH;
 	}
 
-	@ControlP5.Invisible
 	public void mousePressed() {
 		if (isBarVisible && isCollapse) {
 			if (!cp5.isAltDown()) {
@@ -205,7 +209,6 @@ public class ControlGroup<T> extends ControllerGroup<T> implements ControlListen
 	 * 
 	 * @see controlP5.ControlListener#controlEvent(controlP5.ControlEvent)
 	 */
-	@ControlP5.Invisible
 	public void controlEvent(ControlEvent theEvent) {
 		if (theEvent.getController().getName().equals(getName() + "close")) {
 			hide();
@@ -218,7 +221,6 @@ public class ControlGroup<T> extends ControllerGroup<T> implements ControlListen
 	 * 
 	 * @return String
 	 */
-	@ControlP5.Invisible
 	public String stringValue() {
 		return Float.toString(_myValue);
 	}

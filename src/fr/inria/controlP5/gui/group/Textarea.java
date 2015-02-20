@@ -21,8 +21,15 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.group;
 
+import fr.inria.controlP5.Hacks;
+import fr.inria.controlP5.events.ControlEvent;
+import fr.inria.controlP5.ControlFont;
+import fr.inria.controlP5.events.ControlListener;
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.Label;
+import fr.inria.controlP5.gui.controllers.Slider;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,7 +48,7 @@ public class Textarea extends ControllerGroup<Textarea> implements ControlListen
 
 	protected String _myText;
 
-	protected Slider _myScrollbar;
+	public Slider _myScrollbar;
 
 	protected int _myColorBackground = 0x000000;
 
@@ -78,7 +85,7 @@ public class Textarea extends ControllerGroup<Textarea> implements ControlListen
 	 * @param theW int
 	 * @param theH int
 	 */
-	protected Textarea(ControlP5 theControlP5, ControllerGroup<?> theGroup, String theName, String theText, int theX,
+	public Textarea(ControlP5 theControlP5, ControllerGroup<?> theGroup, String theName, String theText, int theX,
 			int theY, int theW, int theH) {
 		super(theControlP5, theGroup, theName, theX, theY);
 		_myWidth = theW;
@@ -198,7 +205,7 @@ public class Textarea extends ControllerGroup<Textarea> implements ControlListen
 		_myValueLabel.setOffsetYratio(_myScrollValue);
 	}
 
-	@ControlP5.Invisible public void scrolled(int theStep) {
+	public void scrolled(int theStep) {
 		if (_myScrollbar.isVisible()) {
 			int lines = (_myValueLabel.getTextHeight() / _myValueLabel.getLineHeight());
 			float step = 1.0f / lines;
@@ -206,7 +213,7 @@ public class Textarea extends ControllerGroup<Textarea> implements ControlListen
 		}
 	}
 
-	@ControlP5.Invisible public float getScrollPosition() {
+	public float getScrollPosition() {
 		return _myScrollbar.getValue();
 	}
 
@@ -300,7 +307,7 @@ public class Textarea extends ControllerGroup<Textarea> implements ControlListen
 		}
 
 		List<String> strs = Arrays.asList(str.split("\n"));
-		return setText(CP.join(strs.subList(Math.max(0, strs.size() - max), strs.size()), "\n"));
+		return setText(Hacks.join(strs.subList(Math.max(0, strs.size() - max), strs.size()), "\n"));
 	}
 
 	/**

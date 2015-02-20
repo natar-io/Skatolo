@@ -21,8 +21,11 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.group.ControllerGroup;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -135,7 +138,7 @@ public class Matrix extends Controller<Matrix> {
 		return _myInterval;
 	}
 
-	@ControlP5.Invisible public Matrix updateInternalEvents(PApplet theApplet) {
+	public Matrix updateInternalEvents(PApplet theApplet) {
 		setIsInside(inside());
 
 		if (getIsInside()) {
@@ -177,11 +180,11 @@ public class Matrix extends Controller<Matrix> {
 		isActive = true;
 	}
 
-	protected void onLeave() {
+	public void onLeave() {
 		isActive = false;
 	}
 
-	@ControlP5.Invisible public void mousePressed() {
+	public void mousePressed() {
 		isActive = getIsInside();
 		if (getIsInside()) {
 			isPressed = true;
@@ -192,7 +195,7 @@ public class Matrix extends Controller<Matrix> {
 		mouseReleased();
 	}
 
-	@ControlP5.Invisible public void mouseReleased() {
+	public void mouseReleased() {
 		if (isActive) {
 			isActive = false;
 		}
@@ -388,7 +391,7 @@ public class Matrix extends Controller<Matrix> {
 		return this;
 	}
 
-	@Override @ControlP5.Invisible public Matrix updateDisplayMode(int theMode) {
+	@Override public Matrix updateDisplayMode(int theMode) {
 		_myDisplayMode = theMode;
 		switch (theMode) {
 		case (DEFAULT):
@@ -423,13 +426,13 @@ public class Matrix extends Controller<Matrix> {
 			}
 			if (isInside()) {
                             
-                            // TODO: URGENT ?>  mouseX & MouseY BROKEN ?! Input inside display ?!!!
-//				int x = (int) ((graphics.mouseX - position.x) / stepX);
-//				int y = (int) ((graphics.mouseY - position.y) / stepY);
-//				if (x >= 0 && x < _myCellX && y >= 0 && y < _myCellY) {
-//					graphics.fill(_myCells[x][y] == 1 ? color.getActive() : color.getForeground());
-//					graphics.rect(x * stepX, y * stepY, stepX - gapX, stepY - gapY);
-//				}
+                            // TODO: mouseX & mouseY here ? Why ?!
+                            int x = (int) ((cp5.papplet.mouseX - position.x) / stepX);
+                            int y = (int) ((cp5.papplet.mouseY - position.y) / stepY);
+                            if (x >= 0 && x < _myCellX && y >= 0 && y < _myCellY) {
+					graphics.fill(_myCells[x][y] == 1 ? color.getActive() : color.getForeground());
+					graphics.rect(x * stepX, y * stepY, stepX - gapX, stepY - gapY);
+                            }
 			}
 			graphics.fill(color.getActive());
 			graphics.rect(cnt * stepX, 0, 1, height - gapY);

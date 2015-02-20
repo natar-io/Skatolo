@@ -21,8 +21,12 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.group;
 
+import fr.inria.controlP5.events.ControlEvent;
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.ControlP5Constants;
+import fr.inria.controlP5.gui.ControlWindow;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PVector;
@@ -41,7 +45,7 @@ public class Tab extends ControllerGroup<Tab> {
 
 	protected int _myOffsetY = -1000;
 
-	protected boolean isActive = false;
+	public boolean isActive = false;
 
 	private boolean isAlwaysActive = false;
 
@@ -72,21 +76,21 @@ public class Tab extends ControllerGroup<Tab> {
 		_myLabel.align(LEFT, CENTER).setPadding(0, 0);
 	}
 
-	protected void setOffset(int theValueX, int theValueY) {
+	public void setOffset(int theValueX, int theValueY) {
 		_myOffsetX = theValueX;
 		_myOffsetY = theValueY;
 	}
 
-	protected int height() {
+	public int height() {
 		return _myHeight;
 	}
 
-	protected boolean updateLabel() {
+	public boolean updateLabel() {
 		isInside = inside();
 		return cp5.getWindow().getTabs().size() > 2;
 	}
         
-	protected void drawLabel(PGraphics graphics) {
+	public void drawLabel(PGraphics graphics) {
 		if (autoWidth) {
 			_myWidth = _myLabel.getWidth() + padding * 2;
 		}
@@ -113,7 +117,7 @@ public class Tab extends ControllerGroup<Tab> {
 		return this;
 	}
 
-	protected int width() {
+	public int width() {
 		return _myWidth;
 	}
 
@@ -140,7 +144,6 @@ public class Tab extends ControllerGroup<Tab> {
 	/**
 	 * {@inheritDoc}
 	 */
-	@ControlP5.Invisible
 	public void mousePressed() {
 		cp5.getWindow().activateTab(this);
 		if (isEventActive) {

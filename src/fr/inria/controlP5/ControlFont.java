@@ -21,8 +21,9 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5;
 
+import fr.inria.controlP5.gui.Label;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

@@ -21,8 +21,21 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui;
 
+import fr.inria.controlP5.ControlFont;
+import fr.inria.controlP5.ControlKey;
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.ControlP5Base;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.controllers.Numberbox;
+import fr.inria.controlP5.gui.group.ControllerGroup;
+import fr.inria.controlP5.gui.controllers.Knob;
+import fr.inria.controlP5.gui.group.Tab;
+import fr.inria.controlP5.gui.controllers.Slider;
+import fr.inria.controlP5.gui.group.Textarea;
+import fr.inria.controlP5.gui.group.ListBox;
+import fr.inria.controlP5.gui.group.DropdownList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -32,7 +45,7 @@ import processing.core.PConstants;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
-import controlP5.ControlP5Base.KeyCode;
+import fr.inria.controlP5.ControlP5Base.KeyCode;
 import processing.core.PGraphics;
 
 /**
@@ -60,7 +73,7 @@ public final class ControlWindow {
 
 	protected ControllerList _myTabs;
 
-	protected boolean isVisible = true;
+	public boolean isVisible = true;
 
 	protected boolean isInit = false;
 
@@ -68,7 +81,7 @@ public final class ControlWindow {
 
 	protected CDrawable _myDrawable;
 
-	protected boolean isAutoDraw;
+	public boolean isAutoDraw;
 
 	protected boolean isUpdate;
 
@@ -98,21 +111,21 @@ public final class ControlWindow {
 
 	private boolean isMouseOver;
 
-	protected int mouseX;
+	public int mouseX;
 
-	protected int mouseY;
+	public int mouseY;
 
-	protected int pmouseX;
+	public int pmouseX;
 
-	protected int pmouseY;
+	public int pmouseY;
 
 	protected boolean mousePressed;
 
-	protected boolean mouselock;
+	public boolean mouselock;
 
-	protected char key;
+	public char key;
 
-	protected int keyCode;
+	public int keyCode;
 
 	private boolean[] keys = new boolean[525];
 
@@ -201,7 +214,7 @@ public final class ControlWindow {
 		return getTab(theTab);
 	}
 
-	protected ControlWindow activateTab(Tab theTab) {
+	public ControlWindow activateTab(Tab theTab) {
 		for (int i = 1; i < _myTabs.size(); i++) {
 			if (_myTabs.get(i) == theTab) {
 				if (!((Tab) _myTabs.get(i)).isActive) {
@@ -277,7 +290,7 @@ public final class ControlWindow {
 		return this;
 	}
 
-	protected void updateFont(ControlFont theControlFont) {
+	public void updateFont(ControlFont theControlFont) {
 		for (int i = 0; i < _myTabs.size(); i++) {
 			((Tab) _myTabs.get(i)).updateFont(theControlFont);
 		}
@@ -286,7 +299,7 @@ public final class ControlWindow {
 	/**
 	 * @exclude
 	 */
-	@ControlP5.Invisible public void updateEvents() {
+	public void updateEvents() {
 		handleMouseOver();
 		handleMouseWheelMoved();
 		if (_myTabs.size() <= 0) {
@@ -354,7 +367,7 @@ public final class ControlWindow {
 		return this;
 	}
 
-	protected ControlWindow setMouseOverController(ControllerInterface<?> theController) {
+	public ControlWindow setMouseOverController(ControllerInterface<?> theController) {
 		if (!mouseoverlist.contains(theController) && isVisible && theController.isVisible()) {
 			mouseoverlist.add(theController);
 		}
@@ -524,7 +537,7 @@ public final class ControlWindow {
 					c[n++] = ((char) i);
 				}
 			}
-			KeyCode code = new KeyCode(c);
+			ControlP5Base.KeyCode code = new ControlP5Base.KeyCode(c);
 
 			if (cp5.keymap.containsKey(code)) {
 				for (ControlKey ck : cp5.keymap.get(code)) {
@@ -683,7 +696,7 @@ public final class ControlWindow {
 		}
 	}
 
-	void setMouseWheelRotation(int theRotation) {
+	public void setMouseWheelRotation(int theRotation) {
 		if (isMouseOver()) {
 			mouseWheelMoved = theRotation;
 		}
@@ -1029,7 +1042,7 @@ public final class ControlWindow {
 	 * @exclude
 	 * @param theCoordinates
 	 */
-	@ControlP5.Invisible public void multitouch(int[][] theCoordinates) {
+	public void multitouch(int[][] theCoordinates) {
 		// removed
 	}
 

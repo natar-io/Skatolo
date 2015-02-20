@@ -21,8 +21,11 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.file;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.ControllerInterface;
+import fr.inria.controlP5.Hacks;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -702,12 +705,12 @@ public class ControllerProperties {
 			// http://code.google.com/p/json-simple/wiki/MappingBetweenJSONAndJavaEntities
 			String s = "\t<property>\n";
 			s += "\t\t<address>" + theProperty.getAddress() + "</address>\n";
-			s += "\t\t<class>" + CP.formatGetClass(theProperty.getController().getClass()) + "</class>\n";
+			s += "\t\t<class>" + Hacks.formatGetClass(theProperty.getController().getClass()) + "</class>\n";
 			s += "\t\t<setter>" + theProperty.getSetter() + "</setter>\n";
 			s += "\t\t<getter>" + theProperty.getGetter() + "</getter>\n";
-			s += "\t\t<type>" + CP.formatGetClass(theProperty.getType()) + "</type>\n";
+			s += "\t\t<type>" + Hacks.formatGetClass(theProperty.getType()) + "</type>\n";
 			s += "\t\t<value>" + cdata(OPEN, theProperty.getValue().getClass())
-					+ (theProperty.getValue().getClass().isArray() ? CP.arrayToString(theProperty.getValue()) : theProperty.getValue())
+					+ (theProperty.getValue().getClass().isArray() ? Hacks.arrayToString(theProperty.getValue()) : theProperty.getValue())
 					+ cdata(CLOSE, theProperty.getValue().getClass()) + "</value>\n";
 			s += "\t</property>\n";
 			return s;

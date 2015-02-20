@@ -21,7 +21,10 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.group;
+
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.group.RadioButton;
 
 /*
  * Backwards compatibility, cp5magic for example uses it. 

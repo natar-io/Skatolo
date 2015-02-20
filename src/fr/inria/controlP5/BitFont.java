@@ -21,7 +21,7 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
@@ -131,16 +131,16 @@ public class BitFont extends PFont {
 		PImage tex;
 
 		// read width
-		int w = CP.byteArrayToInt(new byte[] { bytes[0], bytes[1] });
+		int w = Hacks.byteArrayToInt(new byte[] { bytes[0], bytes[1] });
 
 		// read height
-		int h = CP.byteArrayToInt(new byte[] { bytes[2], bytes[3] });
+		int h = Hacks.byteArrayToInt(new byte[] { bytes[2], bytes[3] });
 
 		// read size of chars
-		int s = CP.byteArrayToInt(new byte[] { bytes[4], bytes[5] });
+		int s = Hacks.byteArrayToInt(new byte[] { bytes[4], bytes[5] });
 
 		// read first ascii char
-		int c = CP.byteArrayToInt(new byte[] { bytes[6], bytes[7] });
+		int c = Hacks.byteArrayToInt(new byte[] { bytes[6], bytes[7] });
 
 		tex = new PImage(w, h, PApplet.ALPHA);
 
@@ -148,7 +148,7 @@ public class BitFont extends PFont {
 		int off = 8 + s;
 		for (int i = off; i < bytes.length; i++) {
 			for (int j = 0; j < 8; j++) {
-				tex.pixels[(i - off) * 8 + j] = CP.getBit(bytes[i], j) == 1 ? 0xff000000 : 0xffffffff;
+				tex.pixels[(i - off) * 8 + j] = Hacks.getBit(bytes[i], j) == 1 ? 0xff000000 : 0xffffffff;
 			}
 		}
 

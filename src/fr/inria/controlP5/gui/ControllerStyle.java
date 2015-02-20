@@ -21,7 +21,7 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui;
 
 import java.io.Serializable;
 

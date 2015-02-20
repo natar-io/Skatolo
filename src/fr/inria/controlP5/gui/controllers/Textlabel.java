@@ -21,8 +21,14 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
+import fr.inria.controlP5.Hacks;
+import fr.inria.controlP5.ControlFont;
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.Label;
+import fr.inria.controlP5.gui.group.Tab;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,7 +55,7 @@ public class Textlabel extends Controller<Textlabel> {
      * @param theX int
      * @param theY int
      */
-    protected Textlabel(final ControlP5 theControlP5, final Tab theParent, final String theName, final String theValue, final int theX,
+    public Textlabel(final ControlP5 theControlP5, final Tab theParent, final String theName, final String theValue, final int theX,
             final int theY) {
         super(theControlP5, theParent, theName, theX, theY, 200, 20);
         _myStringValue = theValue;
@@ -62,13 +68,13 @@ public class Textlabel extends Controller<Textlabel> {
      * @param theX int
      * @param theY int
      */
-    protected Textlabel(final String theValue, final int theX, final int theY) {
+    public Textlabel(final String theValue, final int theX, final int theY) {
         super("", theX, theY);
         _myStringValue = theValue;
         setup();
     }
 
-    protected Textlabel(final String theValue, final int theX, final int theY, final int theW, final int theH, final int theColor) {
+    public Textlabel(final String theValue, final int theX, final int theY, final int theW, final int theH, final int theColor) {
         super("", theX, theY);
         _myStringValue = theValue;
         _myValueLabel = new Label(cp5, _myStringValue, theW, theH, theColor);
@@ -201,7 +207,7 @@ public class Textlabel extends Controller<Textlabel> {
         }
 
         List<String> strs = Arrays.asList(str.split("\n"));
-        return setText(CP.join(strs.subList(Math.max(0, strs.size() - max), strs.size()), "\n"));
+        return setText(Hacks.join(strs.subList(Math.max(0, strs.size() - max), strs.size()), "\n"));
     }
 
     @Override

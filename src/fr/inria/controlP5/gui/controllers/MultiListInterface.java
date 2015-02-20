@@ -21,7 +21,7 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
 import java.util.List;
 import processing.core.PGraphics;

@@ -21,8 +21,11 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.group.ControllerGroup;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import processing.core.PApplet;
@@ -72,7 +75,7 @@ public class Chart extends Controller<Chart> {
 	}
 
 
-	protected Chart(ControlP5 theControlP5, ControllerGroup<?> theParent, String theName, float theX, float theY, int theWidth, int theHeight) {
+	public Chart(ControlP5 theControlP5, ControllerGroup<?> theParent, String theName, float theX, float theY, int theWidth, int theHeight) {
 		super(theControlP5, theParent, theName, theX, theY, theWidth, theHeight);
 		setRange(0, theHeight);
 		_myDataSet = new LinkedHashMap<String, ChartDataSet>();
@@ -383,7 +386,7 @@ public class Chart extends Controller<Chart> {
 	/**
 	 * @exclude
 	 */
-	@Override @ControlP5.Invisible public Chart updateDisplayMode(int theMode) {
+	@Override public Chart updateDisplayMode(int theMode) {
 		return updateViewMode(theMode);
 	}
 
@@ -391,7 +394,7 @@ public class Chart extends Controller<Chart> {
 	/**
 	 * @exclude
 	 */
-	@ControlP5.Invisible public Chart updateViewMode(int theMode) {
+	public Chart updateViewMode(int theMode) {
 		_myDisplayMode = theMode;
 		switch (theMode) {
 		case (DEFAULT):

@@ -21,8 +21,16 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
+import fr.inria.controlP5.Hacks;
+import fr.inria.controlP5.events.ControlEvent;
+import fr.inria.controlP5.events.ControlListener;
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.ControlP5Constants;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.controllers.MultiListInterface;
+import fr.inria.controlP5.gui.group.Tab;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +102,7 @@ public class MultiList extends Controller<MultiList> implements MultiListInterfa
 	}
 
 
-	@ControlP5.Invisible public void setup() {
+	public void setup() {
 		mostRecent = this;
 		isVisible = true;
 		updateRect(position.x, position.y, width, _myDefaultButtonHeight);
@@ -128,7 +136,7 @@ public class MultiList extends Controller<MultiList> implements MultiListInterfa
 	 * @param theX float
 	 * @param theY float
 	 */
-	@ControlP5.Invisible public void updateLocation(float theX, float theY) {
+	public void updateLocation(float theX, float theY) {
 		position.x += theX;
 		position.y += theY;
 		updateRect(position.x, position.y, width, _myDefaultButtonHeight);
@@ -180,7 +188,7 @@ public class MultiList extends Controller<MultiList> implements MultiListInterfa
 	/**
 	 * @param theEvent
 	 */
-	@Override @ControlP5.Invisible public void controlEvent(ControlEvent theEvent) {
+	@Override public void controlEvent(ControlEvent theEvent) {
 		if (theEvent.getController() instanceof MultiListButton) {
 			_myValue = theEvent.getController().getValue();
 			ControlEvent myEvent = new ControlEvent(this);
@@ -193,7 +201,7 @@ public class MultiList extends Controller<MultiList> implements MultiListInterfa
 	 * @param theApplet
 	 * @return boolean
 	 */
-	@ControlP5.Invisible public boolean update(PApplet theApplet) {
+	public boolean update(PApplet theApplet) {
 		if (!isOccupied) {
 			cnt++;
 			if (cnt == closeDelay) {
@@ -222,7 +230,7 @@ public class MultiList extends Controller<MultiList> implements MultiListInterfa
 	 * 
 	 * @param theFlag boolean
 	 */
-	@ControlP5.Invisible public void occupied(boolean theFlag) {
+	public void occupied(boolean theFlag) {
 		isOccupied = theFlag;
 		cnt = 0;
 	}
@@ -231,8 +239,8 @@ public class MultiList extends Controller<MultiList> implements MultiListInterfa
 	/**
 	 * @return boolean
 	 */
-	@ControlP5.Invisible public boolean observe() {
-		return CP.inside(_myRect, _myControlWindow.mouseX, _myControlWindow.mouseY);
+	public boolean observe() {
+		return Hacks.inside(_myRect, _myControlWindow.mouseX, _myControlWindow.mouseY);
 	}
 
 

@@ -21,8 +21,12 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.group.ControllerGroup;
+import fr.inria.controlP5.gui.group.Tab;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -64,7 +68,7 @@ public class Button extends Controller<Button> {
 	}
 
 
-	protected Button(ControlP5 theControlP5, ControllerGroup<?> theParent, String theName, float theDefaultValue, int theX, int theY, int theWidth, int theHeight) {
+	public Button(ControlP5 theControlP5, ControllerGroup<?> theParent, String theName, float theDefaultValue, int theX, int theY, int theWidth, int theHeight) {
 		super(theControlP5, theParent, theName, theX, theY, theWidth, theHeight);
 		_myValue = theDefaultValue;
 		_myCaptionLabel.align(LEFT, CENTER);
@@ -84,7 +88,7 @@ public class Button extends Controller<Button> {
 	}
 
 
-	@Override protected void onLeave() {
+	@Override public void onLeave() {
 		isActive = false;
 	}
 
@@ -92,7 +96,7 @@ public class Button extends Controller<Button> {
 	/**
 	 * @exclude
 	 */
-	@Override @ControlP5.Invisible public void mousePressed() {
+	@Override public void mousePressed() {
 		isActive = getIsInside();
 		isPressed = true;
 		if (activateBy == PRESSED) {
@@ -104,7 +108,7 @@ public class Button extends Controller<Button> {
 	/**
 	 * @exclude
 	 */
-	@Override @ControlP5.Invisible public void mouseReleased() {
+	@Override public void mouseReleased() {
 		isPressed = false;
 		if (activateBy == RELEASE) {
 			activate();
@@ -146,7 +150,7 @@ public class Button extends Controller<Button> {
 	/**
 	 * @exclude
 	 */
-	@Override @ControlP5.Invisible public void mouseReleasedOutside() {
+	@Override public void mouseReleasedOutside() {
 		mouseReleased();
 	}
 
@@ -245,7 +249,7 @@ public class Button extends Controller<Button> {
 	/**
 	 * @exclude
 	 */
-	@Override @ControlP5.Invisible public Button updateDisplayMode(int theMode) {
+	@Override public Button updateDisplayMode(int theMode) {
 		return updateViewMode(theMode);
 	}
 
@@ -253,7 +257,7 @@ public class Button extends Controller<Button> {
 	/**
 	 * @exclude
 	 */
-	@ControlP5.Invisible public Button updateViewMode(int theMode) {
+	 public Button updateViewMode(int theMode) {
 		_myDisplayMode = theMode;
 		switch (theMode) {
 		case (DEFAULT):

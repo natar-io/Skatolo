@@ -21,7 +21,7 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
 /**
  * Used by Chart, single chart data is stored here including value, (label) text, and color.

@@ -21,8 +21,9 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.file;
 
+import fr.inria.controlP5.gui.ControllerInterface;
 import java.io.Serializable;
 
 /**
@@ -116,7 +117,7 @@ public class ControllerProperty implements Serializable, Cloneable {
 		return address + " " + setter + ", " + getter;
 	}
 
-	void setAddress(String theAddress) {
+	public void setAddress(String theAddress) {
 		address = theAddress;
 	}
 

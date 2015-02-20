@@ -21,8 +21,14 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.group;
 
+import fr.inria.controlP5.events.ControlEvent;
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.ControlP5Constants;
+import fr.inria.controlP5.events.ControllerPlug;
+import fr.inria.controlP5.gui.Label;
+import fr.inria.controlP5.gui.controllers.Toggle;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -504,7 +510,7 @@ public class RadioButton extends ControlGroup<RadioButton> {
 	 * 
 	 * @exclude
 	 */
-	@ControlP5.Invisible @Override public void controlEvent(ControlEvent theEvent) {
+	@Override public void controlEvent(ControlEvent theEvent) {
 		if (!isMultipleChoice) {
 			if (noneSelectedAllowed == false && theEvent.getController().getValue() < 1) {
 				if (theEvent.getController() instanceof Toggle) {

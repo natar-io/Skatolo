@@ -21,8 +21,10 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui;
 
+import fr.inria.controlP5.ControlFont;
+import fr.inria.controlP5.ControlP5;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PGraphics;
@@ -71,7 +73,7 @@ public class Label implements CDrawable {
 
 	protected int alignY = ControlP5.LEFT;
 
-	protected int textAlign = ControlP5.LEFT;
+	public int textAlign = ControlP5.LEFT;
 
 	public static int paddingX = 4;
 
@@ -119,12 +121,12 @@ public class Label implements CDrawable {
 		_myControllerStyle = new ControllerStyle();
 	}
 
-	Label setLabeltype(Labeltype theType) {
+	public Label setLabeltype(Labeltype theType) {
 		_myLabeltype = theType;
 		return this;
 	}
 
-	Labeltype getLabeltype() {
+	public Labeltype getLabeltype() {
 		return _myLabeltype;
 	}
 
@@ -322,11 +324,11 @@ public class Label implements CDrawable {
 		return this;
 	}
 
-	protected boolean isChanged() {
+	public boolean isChanged() {
 		return changed;
 	}
 
-	protected Label setChanged(boolean theValue) {
+	public Label setChanged(boolean theValue) {
 		changed = theValue;
 		return this;
 	}
@@ -422,7 +424,7 @@ public class Label implements CDrawable {
 		return new Label(this);
 	}
 
-	interface Labeltype {
+	public interface Labeltype {
 
                 public void draw(Label theLabel, PGraphics graphics, int theX, int theY, ControllerInterface<?> theController);
 
@@ -435,14 +437,14 @@ public class Label implements CDrawable {
 		public String getTextFormatted();
 	}
 
-	class SinglelineTextfield extends SinglelineLabel {
+	public class SinglelineTextfield extends SinglelineLabel {
 
 		public String getTextFormatted() {
 			return _myText;
 		}
 	}
 
-	class SinglelineLabel implements Labeltype {
+	public class SinglelineLabel implements Labeltype {
 
 		private void align(PApplet theApplet, ControllerInterface<?> theController, int theAlignX, int theAlignY) {
 			int x = 0;

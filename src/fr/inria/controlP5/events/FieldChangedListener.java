@@ -21,8 +21,9 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.events;
 
+import fr.inria.controlP5.ControlP5;
 import java.lang.reflect.Field;
 
 /**
@@ -32,7 +33,7 @@ import java.lang.reflect.Field;
  * 
  * @see controlP5.Controller#listen(boolean)
  */
-class FieldChangedListener {
+public class FieldChangedListener {
 
 	private FieldValue value;
 
@@ -122,7 +123,7 @@ class FieldChangedListener {
 		}
 	}
 
-	void update() {
+	public void update() {
 		value.check();
 	}
 }

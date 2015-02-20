@@ -21,8 +21,15 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.CColor;
+import fr.inria.controlP5.file.ControllerProperty;
+import fr.inria.controlP5.events.ControlListener;
+import fr.inria.controlP5.gui.ControlWindow;
+import fr.inria.controlP5.gui.group.ControllerGroup;
+import fr.inria.controlP5.gui.group.Tab;
 import processing.event.KeyEvent;
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -37,7 +44,6 @@ import processing.core.PVector;
 public interface ControllerInterface<T> {
 
 	
-	@ControlP5.Invisible
 	public void init();
 
 	public int getWidth();
@@ -64,10 +70,8 @@ public interface ControllerInterface<T> {
 
 	public PVector getPosition();
 
-	@ControlP5.Invisible
 	public T setPosition(float theX, float theY);
 
-	@ControlP5.Invisible
 	public T setPosition(PVector thePVector);
 
 	public PVector getAbsolutePosition();
@@ -88,10 +92,8 @@ public interface ControllerInterface<T> {
 
 	public boolean isUpdate();
 
-	@ControlP5.Invisible
 	public T updateEvents();
 
-	@ControlP5.Invisible
 	public void continuousUpdateEvents();
 
 	/**
@@ -101,10 +103,8 @@ public interface ControllerInterface<T> {
 	 * 
 	 * 
 	 */
-	@ControlP5.Invisible
 	public T updateInternalEvents(PApplet theApplet);
 
-        @ControlP5.Invisible
 	public void draw(PGraphics graphics);
 
 	public T add(ControllerInterface<?> theElement);
@@ -123,10 +123,8 @@ public interface ControllerInterface<T> {
 
 	public boolean setMousePressed(boolean theStatus);
 
-	@ControlP5.Invisible
 	public void keyEvent(KeyEvent theEvent);
 
-	@ControlP5.Invisible
 	public T setAddress(String theAddress);
 
 	public T setId(int theValue);
@@ -158,10 +156,8 @@ public interface ControllerInterface<T> {
 	public T moveTo(ControllerGroup<?> theGroup);
 
 
-	@ControlP5.Invisible
 	public int getPickingColor();
 
-	@ControlP5.Invisible
 	public ControllerInterface<?> parent();
 
 	public ControllerProperty getProperty(String thePropertyName);

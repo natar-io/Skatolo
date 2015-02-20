@@ -21,7 +21,9 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.events;
+
+import fr.inria.controlP5.gui.Controller;
 
 /**
  * <p>
@@ -37,7 +39,7 @@ public class CallbackEvent {
 	private final Controller<?> _myController;
 
 
-	CallbackEvent(Controller<?> theController, int theAction) {
+	public CallbackEvent(Controller<?> theController, int theAction) {
 		_myController = theController;
 		_myAction = theAction;
 	}

@@ -21,8 +21,13 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
+import fr.inria.controlP5.ControlFont;
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.group.ControllerGroup;
+import fr.inria.controlP5.gui.Label;
 import processing.event.KeyEvent;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -248,7 +253,7 @@ public class Textfield extends Controller<Textfield> {
             return this;
     }
 
-    @Override protected void updateFont(ControlFont theControlFont) {
+    @Override public void updateFont(ControlFont theControlFont) {
             super.updateFont(theControlFont);
             changed = true;
     }

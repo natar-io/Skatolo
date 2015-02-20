@@ -21,8 +21,13 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.controllers.ControllerView;
+import fr.inria.controlP5.gui.Label;
+import fr.inria.controlP5.gui.ControlWindow;
+import fr.inria.controlP5.gui.Controller;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,7 +83,7 @@ public class Tooltip {
 
 	private int _myColor = 0x00000000;
 
-	Tooltip(ControlP5 theControlP5) {
+	public Tooltip(ControlP5 theControlP5) {
 		cp5 = theControlP5;
 		position = new PVector(-1000, -1000);
 		currentPosition = new PVector();

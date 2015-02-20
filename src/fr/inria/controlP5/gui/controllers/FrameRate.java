@@ -21,8 +21,11 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.controllers.Textlabel;
+import fr.inria.controlP5.gui.group.Tab;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -35,7 +38,7 @@ public class FrameRate extends Textlabel {
 	private int cnt = 0;
 
 
-	protected FrameRate(final ControlP5 theControlP5, final Tab theParent, final String theValue, final int theX, final int theY) {
+	public FrameRate(final ControlP5 theControlP5, final Tab theParent, final String theValue, final int theX, final int theY) {
 		super(theControlP5, theParent, "framerate", "-", theX, theY);
 	}
 

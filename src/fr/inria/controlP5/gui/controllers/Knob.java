@@ -21,8 +21,12 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.ControlP5Constants;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.group.ControllerGroup;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PVector;
@@ -75,7 +79,7 @@ public class Knob extends Controller<Knob> {
 
 	public static int autoHeight = 39;
 
-	protected PVector autoSpacing = new PVector(10, 20, 0);
+	public PVector autoSpacing = new PVector(10, 20, 0);
 
 	private float scrollSensitivity = 1.0f / resolution;
 
@@ -303,7 +307,7 @@ public class Knob extends Controller<Knob> {
 	/**
 	 * @exclude
 	 */
-	@Override @ControlP5.Invisible public Knob updateInternalEvents(PApplet theApplet) {
+	@Override public Knob updateInternalEvents(PApplet theApplet) {
 		if (isMousePressed && !cp5.isAltDown()) {
 			if (isActive) {
 				float c = (_myDragDirection == HORIZONTAL) ? _myControlWindow.mouseX - _myControlWindow.pmouseX : _myControlWindow.mouseY - _myControlWindow.pmouseY;
@@ -323,7 +327,7 @@ public class Knob extends Controller<Knob> {
 	}
 
 
-	protected void onLeave() {
+	public void onLeave() {
 		isActive = false;
 	}
 
@@ -331,7 +335,7 @@ public class Knob extends Controller<Knob> {
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@Override @ControlP5.Invisible public void mousePressed() {
+	@Override public void mousePressed() {
 		float x = _myParent.getAbsolutePosition().x + position.x + _myRadius;
 		float y = _myParent.getAbsolutePosition().y + position.y + _myRadius;
 		if (PApplet.dist(x, y, _myControlWindow.mouseX, _myControlWindow.mouseY) < _myRadius) {
@@ -355,7 +359,7 @@ public class Knob extends Controller<Knob> {
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@Override @ControlP5.Invisible public void mouseReleasedOutside() {
+	@Override public void mouseReleasedOutside() {
 		isActive = false;
 	}
 
@@ -446,7 +450,7 @@ public class Knob extends Controller<Knob> {
 	 * Changes the value of the knob when hovering and using the mouse wheel or the scroll function
 	 * of a multi-touch track pad.
 	 */
-	@ControlP5.Invisible public Knob scrolled(int theRotationValue) {
+	public Knob scrolled(int theRotationValue) {
 		float f = getValue();
 		float steps = isSnapToTickMarks ? (1.0f / getNumberOfTickMarks()) : scrollSensitivity;
 		f += (getMax() - getMin()) * (-theRotationValue * steps);
@@ -458,7 +462,7 @@ public class Knob extends Controller<Knob> {
 	/**
 	 * @exclude
 	 */
-	@Override @ControlP5.Invisible public Knob update() {
+	@Override public Knob update() {
 		setValue(_myValue);
 		return this;
 	}
@@ -485,7 +489,7 @@ public class Knob extends Controller<Knob> {
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@Override @ControlP5.Invisible public Knob updateDisplayMode(int theMode) {
+	@Override public Knob updateDisplayMode(int theMode) {
 		_myDisplayMode = theMode;
 		switch (theMode) {
 		case (DEFAULT):
@@ -613,7 +617,7 @@ public class Knob extends Controller<Knob> {
 	 * @exclude
 	 * @deprecated
 	 */
-	@Deprecated @ControlP5.Invisible public Knob setSensitivity(float theValue) {
+	@Deprecated public Knob setSensitivity(float theValue) {
 		scrollSensitivity = theValue;
 		return this;
 	}

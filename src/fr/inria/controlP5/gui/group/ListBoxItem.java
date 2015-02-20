@@ -21,8 +21,10 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.group;
 
+import fr.inria.controlP5.gui.CColor;
+import fr.inria.controlP5.ControlP5;
 import java.lang.reflect.Method;
 
 /**

@@ -21,7 +21,13 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.events;
+
+import fr.inria.controlP5.gui.ControllerInterface;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.group.ControllerGroup;
+import fr.inria.controlP5.gui.group.Tab;
+import fr.inria.controlP5.gui.group.ControlGroup;
 
 /**
  * controlP5 is a processing gui library.
@@ -80,7 +86,7 @@ public class ControlEvent {
 	 * 
 	 * @param theController Controller
 	 */
-	protected ControlEvent(Controller<?> theController) {
+	public ControlEvent(Controller<?> theController) {
 		_myController = theController;
 		isTab = false;
 		isController = true;

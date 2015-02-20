@@ -21,8 +21,12 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui;
 
+import fr.inria.controlP5.ControlP5Constants;
+import fr.inria.controlP5.gui.CDrawable;
+import fr.inria.controlP5.gui.Label;
+import fr.inria.controlP5.gui.Controller;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 

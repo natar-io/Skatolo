@@ -21,8 +21,22 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.layout;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.ControllerInterface;
+import fr.inria.controlP5.events.ControlEvent;
+import fr.inria.controlP5.events.ControlListener;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.controllers.Numberbox;
+import fr.inria.controlP5.gui.controllers.Toggle;
+import fr.inria.controlP5.gui.controllers.Knob;
+import fr.inria.controlP5.gui.controllers.Textlabel;
+import fr.inria.controlP5.gui.controllers.Textfield;
+import fr.inria.controlP5.gui.controllers.Slider;
+import fr.inria.controlP5.gui.controllers.Bang;
+import fr.inria.controlP5.gui.group.ListBox;
+import fr.inria.controlP5.gui.group.DropdownList;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -37,7 +51,7 @@ import java.util.Set;
  * derived from cp5magic by Karsten Schmidt http://hg.postspectacular.com/cp5magic/wiki/Home
  */
 
-class ControllerAutomator {
+public class ControllerAutomator {
 
 	static Map<Set<Class<?>>, Class<? extends Controller<?>>> mapping = new HashMap<Set<Class<?>>, Class<? extends Controller<?>>>();
 
@@ -77,7 +91,7 @@ class ControllerAutomator {
 	private ControlP5 cp5;
 
 
-	ControllerAutomator(ControlP5 c) {
+	public ControllerAutomator(ControlP5 c) {
 		cp5 = c;
 	}
 
@@ -106,7 +120,7 @@ class ControllerAutomator {
 	 * @param theAddressSpace
 	 * @param ts
 	 */
-	void addControllersFor(final String theAddressSpace, final Object t) {
+	public void addControllersFor(final String theAddressSpace, final Object t) {
 
 		if (t instanceof List<?>) {
 			return;

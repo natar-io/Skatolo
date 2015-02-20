@@ -21,7 +21,9 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
+
+import fr.inria.controlP5.gui.Controller;
 
 
 /**
@@ -41,7 +43,7 @@ public abstract class ControlBehavior {
 
 	protected boolean isActive = true;
 
-	protected void init(Controller<?> theController) {
+	public void init(Controller<?> theController) {
 		_myController = theController;
 	}
 

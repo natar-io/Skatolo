@@ -21,7 +21,7 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.extra;
 
 /**
  * control timer is a timer that can be used for example as a stop watch or a duration timer.

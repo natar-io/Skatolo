@@ -21,7 +21,11 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.group;
+
+import fr.inria.controlP5.events.ControlEvent;
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.ControllerInterface;
 
 /**
  * <p>
@@ -55,7 +59,7 @@ package controlP5;
 		theControlP5.register(theControlP5.papplet, theName, this);
 	}
 
-	Accordion(ControlP5 theControlP5, Tab theTab, String theName, int theX, int theY, int theW) {
+	public Accordion(ControlP5 theControlP5, Tab theTab, String theName, int theX, int theY, int theW) {
 		super(theControlP5, theTab, theName, theX, theY, theW, 9);
 		hideBar();
 	}
@@ -191,7 +195,7 @@ package controlP5;
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@Override @ControlP5.Invisible public void controlEvent(ControlEvent theEvent) {
+	@Override public void controlEvent(ControlEvent theEvent) {
 		if (theEvent.isGroup()) {
 			int n = 0;
 			for (ControllerInterface<?> cg : controllers.get()) {

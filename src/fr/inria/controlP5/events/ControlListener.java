@@ -21,7 +21,7 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.events;
 
 /**
  * ControlListener is an interface that can be implemented by a custom class to

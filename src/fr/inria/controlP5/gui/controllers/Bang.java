@@ -21,9 +21,13 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.group.ControllerGroup;
+import fr.inria.controlP5.gui.Label;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -56,7 +60,7 @@ import processing.core.PGraphics;
 	}
 
 
-	protected Bang(ControlP5 theControlP5, ControllerGroup<?> theParent, String theName, float theX, float theY, int theWidth, int theHeight) {
+	public Bang(ControlP5 theControlP5, ControllerGroup<?> theParent, String theName, float theX, float theY, int theWidth, int theHeight) {
 		super(theControlP5, theParent, theName, theX, theY, theWidth, theHeight);
 		_myCaptionLabel.setPadding(0, Label.paddingY).align(LEFT, BOTTOM_OUTSIDE);
 		_myValue = 1;
@@ -69,7 +73,7 @@ import processing.core.PGraphics;
 	}
 
 
-	@Override protected void onLeave() {
+	@Override public void onLeave() {
 		isActive = false;
 	}
 
@@ -140,7 +144,7 @@ import processing.core.PGraphics;
 	/**
 	 * @exclude
 	 */
-	@Override @ControlP5.Invisible public Bang updateDisplayMode(int theMode) {
+	@Override public Bang updateDisplayMode(int theMode) {
 		updateViewMode(theMode);
 		return this;
 	}
@@ -149,7 +153,7 @@ import processing.core.PGraphics;
 	/**
 	 * @exclude
 	 */
-	@ControlP5.Invisible public Bang updateViewMode(int theMode) {
+	public Bang updateViewMode(int theMode) {
 		_myDisplayMode = theMode;
 		switch (theMode) {
 		case (DEFAULT):

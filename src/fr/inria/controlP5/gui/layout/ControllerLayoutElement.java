@@ -21,13 +21,14 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.layout;
 
+import fr.inria.controlP5.gui.ControllerInterface;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-class ControllerLayoutElement implements Serializable, Cloneable {
+public class ControllerLayoutElement implements Serializable, Cloneable {
 	
 	private static final long serialVersionUID = -5006855922546529005L;
 

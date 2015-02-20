@@ -21,8 +21,9 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui;
 
+import fr.inria.controlP5.ControlP5;
 import java.io.Serializable;
 
 /**
@@ -63,7 +64,7 @@ import java.io.Serializable;
 	int maskB = 0xffffff00;
 
 
-	protected CColor set(CColor theColor) {
+	public CColor set(CColor theColor) {
 		colorBackground = theColor.colorBackground;
 		colorForeground = theColor.colorForeground;
 		colorActive = theColor.colorActive;
@@ -78,7 +79,7 @@ import java.io.Serializable;
 	}
 
 
-	protected CColor copyTo(ControllerInterface<?> theControl) {
+	public CColor copyTo(ControllerInterface<?> theControl) {
 		theControl.setColorBackground(colorBackground);
 		theControl.setColorForeground(colorForeground);
 		theControl.setColorActive(colorActive);

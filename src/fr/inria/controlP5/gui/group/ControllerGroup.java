@@ -21,8 +21,25 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.group;
 
+import fr.inria.controlP5.gui.CColor;
+import fr.inria.controlP5.gui.CDrawable;
+import fr.inria.controlP5.Hacks;
+import fr.inria.controlP5.gui.Canvas;
+import fr.inria.controlP5.events.ControlEvent;
+import fr.inria.controlP5.ControlFont;
+import fr.inria.controlP5.events.ControlListener;
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.ControlP5Constants;
+import fr.inria.controlP5.gui.ControlWindow;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.ControllerInterface;
+import fr.inria.controlP5.gui.ControllerList;
+import fr.inria.controlP5.file.ControllerProperty;
+import fr.inria.controlP5.gui.Label;
+import fr.inria.controlP5.gui.group.Tab;
+import fr.inria.controlP5.gui.controllers.Button;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +74,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 
 	protected int _myId = -1;
 
-	protected CColor color = new CColor();
+	public CColor color = new CColor();
 
 	protected boolean isMousePressed = false;
 
@@ -101,11 +118,11 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 
 	protected int _myPickingColor = 0x6600ffff;
 
-	protected PVector autoPosition = new PVector(10, 30, 0);
+	public PVector autoPosition = new PVector(10, 30, 0);
 
-	protected float tempAutoPositionHeight = 0;
+	public float tempAutoPositionHeight = 0;
 
-	protected float autoPositionOffsetX = 10;
+	public float autoPositionOffsetX = 10;
 
 	private String _myAddress = "";
 
@@ -164,14 +181,14 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@ControlP5.Invisible public void init() {
+	public void init() {
 	}
 
 
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@ControlP5.Invisible @Override public ControllerInterface<?> getParent() {
+	@Override public ControllerInterface<?> getParent() {
 		return _myParent;
 	}
 
@@ -329,7 +346,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	}
 
 
-	protected void updateFont(ControlFont theControlFont) {
+	public void updateFont(ControlFont theControlFont) {
 		_myLabel.updateFont(theControlFont);
 		if (_myValueLabel != null) {
 			_myValueLabel.updateFont(theControlFont);
@@ -345,7 +362,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	}
 
 
-	@ControlP5.Invisible public PVector getAbsolutePosition() {
+	public PVector getAbsolutePosition() {
 		return new PVector(absolutePosition.x, absolutePosition.y);
 	}
 
@@ -353,7 +370,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@ControlP5.Invisible public T setAbsolutePosition(PVector thePVector) {
+	public T setAbsolutePosition(PVector thePVector) {
 		absolutePosition.set(thePVector.x, thePVector.y, thePVector.z);
 		return me;
 	}
@@ -406,7 +423,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@ControlP5.Invisible public void continuousUpdateEvents() {
+	public void continuousUpdateEvents() {
 		if (controllers.size() <= 0) {
 			return;
 		}
@@ -461,7 +478,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@ControlP5.Invisible public T updateEvents() {
+	public T updateEvents() {
 		if (isOpen) {
 			for (int i = controllers.size() - 1; i >= 0; i--) {
 				((ControllerInterface<?>) controllers.get(i)).updateEvents();
@@ -511,7 +528,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@ControlP5.Invisible public T updateInternalEvents(PApplet theApplet) {
+	public T updateInternalEvents(PApplet theApplet) {
 		return me;
 	}
 
@@ -554,7 +571,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
          * @param graphics  graphics context
 	 * @param theApplet PApplet for events
 	 */
-	@ControlP5.Invisible public final void draw(PApplet theApplet, PGraphics graphics) {
+	public final void draw(PApplet theApplet, PGraphics graphics) {
 		if (isVisible) {
 			graphics.pushMatrix();
 			graphics.translate(position.x, position.y);
@@ -574,7 +591,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
          * @exclude
          * @param graphics  graphics context
 	 */
-	@ControlP5.Invisible public final void draw(PGraphics graphics) {
+	public final void draw(PGraphics graphics) {
 		if (isVisible) {
 			graphics.pushMatrix();
 			graphics.translate(position.x, position.y);
@@ -720,7 +737,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	 * @param theElement CDrawable
 	 * @return ControllerGroup
 	 */
-	@ControlP5.Invisible public T addDrawable(CDrawable theElement) {
+	public T addDrawable(CDrawable theElement) {
 		controllers.addDrawable(theElement);
 		return me;
 	}
@@ -799,7 +816,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	 * @exclude
 	 * @param theEvent KeyEvent
 	 */
-	@ControlP5.Invisible public void keyEvent(KeyEvent theEvent) {
+	public void keyEvent(KeyEvent theEvent) {
 		for (int i = 0; i < controllers.size(); i++) {
 			((ControllerInterface<?>) controllers.get(i)).keyEvent(theEvent);
 		}
@@ -841,7 +858,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	}
 
 
-	protected void mouseReleased() {
+	public void mouseReleased() {
 	}
 
 
@@ -853,7 +870,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	}
 
 
-	protected void onScroll(int theAmount) {
+	public void onScroll(int theAmount) {
 	}
 
 
@@ -1042,7 +1059,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	/**
 	 * TODO redesign or deprecate remove the close button.
 	 */
-	@ControlP5.Invisible public T removeCloseButton() {
+	public T removeCloseButton() {
 		if (_myCloseButton == null) {
 			_myCloseButton.remove();
 		}
@@ -1098,7 +1115,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	/**
 	 * TODO redesign or deprecate add a close button to the controlbar of this controlGroup.
 	 */
-	@ControlP5.Invisible public T addCloseButton() {
+	public T addCloseButton() {
 		if (_myCloseButton == null) {
 			_myCloseButton = new Button(cp5, this, getName() + "close", 1, _myWidth + 1, -10, 12, 9);
 			_myCloseButton.setCaptionLabel("X");
@@ -1111,7 +1128,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	/**
 	 * @exclude {@inheritDoc}
 	 */
-	@ControlP5.Invisible public int getPickingColor() {
+	public int getPickingColor() {
 		return _myPickingColor;
 	}
 
@@ -1390,7 +1407,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 
 	public String getInfo() {
 		return "type:\tControllerGroup" + "\nname:\t" + _myName + "\n" + "label:\t" + _myLabel.getText() + "\n" + "id:\t" + _myId + "\n" + "value:\t" + _myValue + "\n" + "arrayvalue:\t"
-				+ CP.arrayToString(_myArrayValue) + "\n" + "position:\t" + position + "\n" + "absolute:\t" + absolutePosition + "\n" + "width:\t" + getWidth() + "\n" + "height:\t" + getHeight()
+				+ Hacks.arrayToString(_myArrayValue) + "\n" + "position:\t" + position + "\n" + "absolute:\t" + absolutePosition + "\n" + "width:\t" + getWidth() + "\n" + "height:\t" + getHeight()
 				+ "\n" + "color:\t" + getColor() + "\n" + "visible:\t" + isVisible + "\n" + "moveable:\t" + isMoveable + "\n";
 	}
 
@@ -1470,7 +1487,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
 	/**
 	 * @exclude
 	 */
-	@ControlP5.Invisible @Deprecated public ControllerInterface<?> parent() {
+	@Deprecated public ControllerInterface<?> parent() {
 		return _myParent;
 	}
 

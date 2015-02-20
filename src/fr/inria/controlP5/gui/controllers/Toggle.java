@@ -21,8 +21,12 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.Label;
+import fr.inria.controlP5.gui.group.Tab;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PVector;
@@ -37,7 +41,7 @@ public class Toggle extends Controller<Toggle> {
 
 	protected int cnt;
 
-	protected boolean isOn = false;
+	public boolean isOn = false;
 
 	protected float internalValue = -1;
 
@@ -45,7 +49,7 @@ public class Toggle extends Controller<Toggle> {
 
 	public static int autoHeight = 19;
 
-	protected PVector autoSpacing = new PVector(10, 20, 0);
+	public PVector autoSpacing = new PVector(10, 20, 0);
 
 
 	/**
@@ -83,7 +87,7 @@ public class Toggle extends Controller<Toggle> {
 	 * 
 	 * @param graphics PApplet
 	 */
-	@ControlP5.Invisible public void draw(PGraphics graphics) {
+	public void draw(PGraphics graphics) {
 		graphics.pushMatrix();
 		graphics.translate(position.x, position.y);
 		_myControllerView.display(graphics, this);
@@ -96,7 +100,7 @@ public class Toggle extends Controller<Toggle> {
 	}
 
 
-	protected void onLeave() {
+	public void onLeave() {
 		isActive = false;
 	}
 
@@ -104,7 +108,7 @@ public class Toggle extends Controller<Toggle> {
 	/**
 	 * {@inheritDoc}
 	 */
-	@ControlP5.Invisible public void mousePressed() {
+	public void mousePressed() {
 		setState(!isOn);
 		isActive = false;
 	}
@@ -163,13 +167,13 @@ public class Toggle extends Controller<Toggle> {
 	}
 
 
-	protected void deactivate() {
+	public void deactivate() {
 		isOn = false;
 		_myValue = (isOn == false) ? 0 : 1;
 	}
 
 
-	protected void activate() {
+	public void activate() {
 		isOn = true;
 		_myValue = (isOn == false) ? 0 : 1;
 	}
@@ -206,12 +210,12 @@ public class Toggle extends Controller<Toggle> {
 	 * 
 	 * @param theInternalValue
 	 */
-	@ControlP5.Invisible public void setInternalValue(float theInternalValue) {
+	public void setInternalValue(float theInternalValue) {
 		internalValue = theInternalValue;
 	}
 
 
-	@ControlP5.Invisible public float internalValue() {
+	public float internalValue() {
 		return internalValue;
 	}
 
@@ -228,7 +232,7 @@ public class Toggle extends Controller<Toggle> {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override @ControlP5.Invisible public Toggle updateDisplayMode(int theState) {
+	@Override public Toggle updateDisplayMode(int theState) {
 		_myDisplayMode = theState;
 		switch (theState) {
 		case (DEFAULT):

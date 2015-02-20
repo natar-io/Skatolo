@@ -21,8 +21,9 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
+import fr.inria.controlP5.gui.CColor;
 import java.util.ArrayList;
 import java.util.ListIterator;
 

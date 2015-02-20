@@ -21,8 +21,15 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.layout;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.ControllerInterface;
+import fr.inria.controlP5.gui.CColor;
+import fr.inria.controlP5.gui.group.ColorPicker;
+import fr.inria.controlP5.gui.group.ListBox;
+import fr.inria.controlP5.gui.group.RadioButton;
+import fr.inria.controlP5.gui.group.DropdownList;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -36,7 +43,7 @@ import java.util.logging.Logger;
 
 import processing.core.PVector;
 
-class ControllerLayout {
+public class ControllerLayout {
 
 	private ControlP5 cp5;
 
@@ -55,7 +62,7 @@ class ControllerLayout {
 		datatypes.put(CColor.class, CColor.class);
 	}
 
-	ControllerLayout(ControlP5 theControlP5) {
+	public ControllerLayout(ControlP5 theControlP5) {
 		cp5 = theControlP5;
 	}
 

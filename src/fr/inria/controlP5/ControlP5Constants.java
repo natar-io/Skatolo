@@ -21,9 +21,10 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5;
 
 
+import fr.inria.controlP5.events.ControlEvent;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.URLEncoder;

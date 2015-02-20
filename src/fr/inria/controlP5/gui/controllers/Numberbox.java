@@ -21,8 +21,12 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.Label;
+import fr.inria.controlP5.gui.group.Tab;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PVector;
@@ -68,7 +72,7 @@ public class Numberbox extends Controller<Numberbox> {
 
 	public static int autoHeight = 19;
 
-	protected PVector autoSpacing = new PVector(10, 20, 0);
+	public PVector autoSpacing = new PVector(10, 20, 0);
 
 	protected float scrollSensitivity = 0.1f;
 
@@ -111,7 +115,6 @@ public class Numberbox extends Controller<Numberbox> {
 	 * 
 	 * @see ControllerInterfalce.updateInternalEvents
 	 */
-	@ControlP5.Invisible
 	public Numberbox updateInternalEvents(PApplet theApplet) {
 		if (isActive) {
 			if (!cp5.isAltDown()) {
@@ -131,7 +134,6 @@ public class Numberbox extends Controller<Numberbox> {
 	 * @see controlP5.Controller#mousePressed()
 	 */
 	@Override
-	@ControlP5.Invisible
 	public void mousePressed() {
 		isActive = true;
 	}
@@ -142,7 +144,6 @@ public class Numberbox extends Controller<Numberbox> {
 	 * @see controlP5.Controller#mouseReleased()
 	 */
 	@Override
-	@ControlP5.Invisible
 	public void mouseReleased() {
 		isActive = false;
 	}
@@ -153,7 +154,6 @@ public class Numberbox extends Controller<Numberbox> {
 	 * @see controlP5.Controller#mouseReleasedOutside()
 	 */
 	@Override
-	@ControlP5.Invisible
 	public void mouseReleasedOutside() {
 		mouseReleased();
 	}
@@ -230,7 +230,6 @@ public class Numberbox extends Controller<Numberbox> {
 	 * @param theRotationValue
 	 * @return Numberbox
 	 */
-	@ControlP5.Invisible
 	public Numberbox scrolled(int theRotationValue) {
 		float f = getValue();
 		f += (_myMultiplier == 1) ? (theRotationValue * scrollSensitivity) : theRotationValue * _myMultiplier;
@@ -278,7 +277,6 @@ public class Numberbox extends Controller<Numberbox> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	@ControlP5.Invisible
 	public Numberbox updateDisplayMode(int theMode) {
 		_myDisplayMode = theMode;
 		switch (theMode) {

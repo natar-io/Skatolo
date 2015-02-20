@@ -21,8 +21,9 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui;
 
+import fr.inria.controlP5.gui.ControlWindow;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 

@@ -21,8 +21,22 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5;
 
+import fr.inria.controlP5.events.CallbackListener;
+import fr.inria.controlP5.gui.ControllerInterface;
+import fr.inria.controlP5.gui.Tooltip;
+import fr.inria.controlP5.events.FieldChangedListener;
+import fr.inria.controlP5.gui.CColor;
+import fr.inria.controlP5.file.ControllerProperty;
+import fr.inria.controlP5.events.ControlListener;
+import fr.inria.controlP5.events.ControlBroadcaster;
+import fr.inria.controlP5.gui.Canvas;
+import fr.inria.controlP5.gui.ControlWindow;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.group.ControllerGroup;
+import fr.inria.controlP5.gui.controllers.Textfield;
+import fr.inria.controlP5.gui.group.Tab;
 import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -42,7 +56,7 @@ import processing.core.PFont;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
-import controlP5.ControlWindow.Pointer;
+import fr.inria.controlP5.gui.ControlWindow.Pointer;
 import processing.core.PGraphics;
 
 /**
@@ -61,7 +75,7 @@ public class ControlP5 extends ControlP5Base {
 	/**
 	 * @exclude
 	 */
-	@ControlP5.Invisible public ControlWindow controlWindow;
+	public ControlWindow controlWindow;
 
 	public final static CColor RETRO = new CColor(0xff00698c, 0xff003652, 0xff08a2cf, 0xffffffff, 0xffffffff);
 
@@ -74,27 +88,27 @@ public class ControlP5 extends ControlP5Base {
 	/**
 	 * @exclude
 	 */
-	@ControlP5.Invisible static CColor color = new CColor(CP5BLUE);
+	static public CColor color = new CColor(CP5BLUE);
 
 	/**
 	 * @exclude
 	 */
-	@ControlP5.Invisible public PApplet papplet;
+	public PApplet papplet;
 	
         /**
 	 * @exclude
 	 */
-	@ControlP5.Invisible public PGraphics pgraphics;
+	public PGraphics pgraphics;
 
 	/**
 	 * @exclude
 	 */
-	@ControlP5.Invisible public static final String VERSION = "2.1.1";// "##version##";
+	public static final String VERSION = "2.1.1";// "##version##";
 
 	/**
 	 * @exclude
 	 */
-	@ControlP5.Invisible public static boolean isApplet = false;
+	public static boolean isApplet = false;
 
 	public static final int standard58 = 0;
 
@@ -120,7 +134,7 @@ public class ControlP5 extends ControlP5Base {
 	/**
 	 * @exclude
 	 */
-	@ControlP5.Invisible public static final Logger logger = Logger.getLogger(ControlP5.class.getName());
+	public static final Logger logger = Logger.getLogger(ControlP5.class.getName());
 
 	private Map<String, ControllerInterface<?>> _myControllerMap;
 
@@ -128,27 +142,27 @@ public class ControlP5 extends ControlP5Base {
 
 	protected ControlWindow window;
 
-	protected boolean isMoveable = false;
+	public boolean isMoveable = false;
 
-	protected boolean isAutoInitialization = false;
+	public boolean isAutoInitialization = false;
 
 	protected boolean isGlobalControllersAlwaysVisible = true;
 
-	protected boolean isTabEventsActive;
+	public boolean isTabEventsActive;
 
 	protected boolean isUpdate;
 
 	protected boolean isControlFont;
 
-	protected ControlFont controlFont;
+	public ControlFont controlFont;
 
-	static protected final PFont BitFontStandard56 = new BitFont(CP.decodeBase64(BitFont.standard56base64));
+	static protected final PFont BitFontStandard56 = new BitFont(Hacks.decodeBase64(BitFont.standard56base64));
 
-	static protected final PFont BitFontStandard58 = new BitFont(CP.decodeBase64(BitFont.standard58base64));
+	static protected final PFont BitFontStandard58 = new BitFont(Hacks.decodeBase64(BitFont.standard58base64));
 
-	protected ControlFont defaultFont = new ControlFont(BitFontStandard58);
+	public ControlFont defaultFont = new ControlFont(BitFontStandard58);
 
-	protected ControlFont defaultFontForText = new ControlFont(BitFontStandard56);
+	public ControlFont defaultFontForText = new ControlFont(BitFontStandard56);
 
 	/**
 	 * from version 0.7.2 onwards shortcuts are disabled by default. shortcuts can be enabled using controlP5.enableShortcuts();
@@ -163,7 +177,7 @@ public class ControlP5 extends ControlP5Base {
 
 	protected boolean isAnnotation;
 
-	boolean isAndroid = false;
+	public boolean isAndroid = false;
 
 	/**
 	 * Create a new instance of controlP5.
@@ -623,7 +637,7 @@ public class ControlP5 extends ControlP5Base {
 	 * @see controlP5.ControlP5#getAll(Class)
 	 * @return List<ControllerInterface>
 	 */
-	@ControlP5.Invisible public List<ControllerInterface<?>> getList() {
+	public List<ControllerInterface<?>> getList() {
 		LinkedList<ControllerInterface<?>> l = new LinkedList<ControllerInterface<?>>();
 		l.addAll(controlWindow.getTabs().get());
 		l.addAll(getAll());
@@ -687,7 +701,7 @@ public class ControlP5 extends ControlP5Base {
 	/**
 	 * @exclude
 	 */
-	@ControlP5.Invisible public void pre() {
+	public void pre() {
 		Iterator<FieldChangedListener> itr = _myFieldChangedListenerMap.values().iterator();
 		while (itr.hasNext()) {
 			itr.next().update();
@@ -699,7 +713,7 @@ public class ControlP5 extends ControlP5Base {
 	 * 
 	 * @exclude
 	 */
-	@ControlP5.Invisible public void draw() {
+	public void draw() {
 		if(!isAutoDraw()) {
 			controlWindow.draw();
 		}
@@ -710,7 +724,7 @@ public class ControlP5 extends ControlP5Base {
 	 * 
 	 * @exclude
 	 */
-	@ControlP5.Invisible public void draw(PGraphics graphics) {
+	public void draw(PGraphics graphics) {
 		if(!isAutoDraw()) {
 			controlWindow.draw(graphics);
 		}
@@ -915,7 +929,7 @@ public class ControlP5 extends ControlP5Base {
 		return false;
 	}
 
-	String checkPropertiesPath(String theFilePath) {
+	public String checkPropertiesPath(String theFilePath) {
 		theFilePath = (theFilePath.startsWith("/") || theFilePath.startsWith(".")) ? theFilePath : papplet.sketchPath(theFilePath);
 		return theFilePath;
 	}
@@ -925,7 +939,7 @@ public class ControlP5 extends ControlP5Base {
 	 * @param theFilePath
 	 * @return
 	 */
-	@ControlP5.Invisible public boolean loadLayout(String theFilePath) {
+	public boolean loadLayout(String theFilePath) {
 		theFilePath = checkPropertiesPath(theFilePath);
 		File f = new File(theFilePath);
 		if (f.exists()) {
@@ -1167,7 +1181,7 @@ public class ControlP5 extends ControlP5Base {
 
 	@Retention(RetentionPolicy.RUNTIME) @interface Invisible {}
 
-	@Retention(RetentionPolicy.RUNTIME) @interface Layout {}
+	public @Retention(RetentionPolicy.RUNTIME) @interface Layout {}
 
 	/**
 	 * @exclude

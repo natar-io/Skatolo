@@ -21,7 +21,7 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.layout;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

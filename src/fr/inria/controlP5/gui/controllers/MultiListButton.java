@@ -21,8 +21,15 @@
  * 
  * 
  */
-package controlP5;
+package fr.inria.controlP5.gui.controllers;
 
+import fr.inria.controlP5.Hacks;
+import fr.inria.controlP5.ControlP5;
+import fr.inria.controlP5.ControlP5Constants;
+import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.controllers.MultiList;
+import fr.inria.controlP5.gui.group.ControllerGroup;
+import fr.inria.controlP5.gui.controllers.Button;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -198,7 +205,7 @@ public class MultiListButton extends Button implements MultiListInterface {
 	}
 
 
-	protected void onLeave() {
+	public void onLeave() {
 		if (parent instanceof MultiListInterface) {
 			if (!((MultiListInterface) parent).observe() && !root.isUpdateLocation && root.mostRecent == this) {
 				isActive = false;
@@ -215,7 +222,7 @@ public class MultiListButton extends Button implements MultiListInterface {
 
 
 	public boolean observe() {
-		return CP.inside(_myRect, _myControlWindow.mouseX, _myControlWindow.mouseY);
+		return Hacks.inside(_myRect, _myControlWindow.mouseX, _myControlWindow.mouseY);
 	}
 
 
