@@ -12,7 +12,10 @@
 
 import java.awt.Frame;
 import java.awt.BorderLayout;
-import controlP5.*;
+
+import fr.inria.controlP5.*;
+import fr.inria.controlP5.events.*;
+import fr.inria.controlP5.gui.controllers.*;
 
 private ControlP5 cp5;
 

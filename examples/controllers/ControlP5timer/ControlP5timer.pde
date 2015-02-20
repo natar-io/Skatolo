@@ -3,7 +3,10 @@
  * by andreas schlegel, 2009
  */
 
-import controlP5.*;
+import fr.inria.controlP5.*;
+import fr.inria.controlP5.extra.ControlTimer;
+import fr.inria.controlP5.gui.controllers.*;
+
 
 ControlP5 cp5;
 ControlTimer c;
@@ -22,7 +25,7 @@ void setup() {
 void draw() {
   background(0);
   t.setValue(c.toString());
-  t.draw(this);
+  t.draw(this.g);
   t.setPosition(mouseX, mouseY);
 }
 

@@ -4,8 +4,11 @@
  * custom PFonts used for labeling controllers.
  * by andreas schlegel, 2009
  */
-import controlP5.*;
 
+import fr.inria.controlP5.*;
+import fr.inria.controlP5.events.*;
+import fr.inria.controlP5.gui.controllers.*;
+import fr.inria.controlP5.gui.Label;
 
 ControlP5 controlP5;
 
@@ -23,7 +26,7 @@ void setup() {
   Slider s = controlP5.addSlider("slider",100,167,128,100,160,10,100);
   s = controlP5.addSlider("sliderValue",0,255,128,200,200,64,100);
   
-  controlP5.Label label = s.valueLabel();
+  Label label = s.valueLabel();
   label.setColor(color(255,128));
   label.style().marginTop = -10;
   

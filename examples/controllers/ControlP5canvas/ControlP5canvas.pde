@@ -10,9 +10,10 @@
  * www.sojamo.de/libraries/controlp5
  * 
  */
+import fr.inria.controlP5.*;
+import fr.inria.controlP5.events.*;
+import fr.inria.controlP5.gui.*;
 
-
-import controlP5.*;
 
 ControlP5 cp5;
 
@@ -29,14 +30,14 @@ class MyCanvas extends Canvas {
     y = 200;
   }  
 
-  public void draw(PApplet p) {
+  public void draw(PGraphics p) {
     // renders a square with randomly changing colors
     // make changes here.
     p.fill(100);
-    p.rect(p.mouseX-20, y-20, 240, 30);
+    p.rect(mouseX-20, y-20, 240, 30);
     p.fill(255);
-    p.text("This text is drawn by MyCanvas", p.mouseX,y);
-    p.text("This text is drawn by MyCanvas", p.mouseX,y);
+    p.text("This text is drawn by MyCanvas", mouseX,y);
+    p.text("This text is drawn by MyCanvas", mouseX,y);
   }
 }
 

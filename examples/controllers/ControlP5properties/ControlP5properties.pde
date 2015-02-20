@@ -34,7 +34,9 @@
  *
  */
 
-import controlP5.*;
+import fr.inria.controlP5.*;
+import fr.inria.controlP5.gui.controllers.*;
+import fr.inria.controlP5.gui.*;
 
 ControlP5 cp5;
 public int myColor = color(0, 0, 0);

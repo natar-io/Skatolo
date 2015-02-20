@@ -9,7 +9,10 @@
  *
  */
 
-import controlP5.*;
+import fr.inria.controlP5.*;
+import fr.inria.controlP5.events.*;
+import fr.inria.controlP5.gui.group.*;
+import fr.inria.controlP5.extra.Println;
 
 ControlP5 cp5;
 

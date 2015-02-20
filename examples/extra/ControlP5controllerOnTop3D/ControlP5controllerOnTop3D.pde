@@ -9,8 +9,11 @@
  */
 
 
+import fr.inria.controlP5.*;
+import fr.inria.controlP5.events.*;
+import fr.inria.controlP5.gui.controllers.*;
+import fr.inria.controlP5.gui.group.*;
 
-import controlP5.*;
 import processing.opengl.*;
 
 ControlP5 cp5;
@@ -20,7 +23,7 @@ String messageBoxString = "";
 float t;
 
 void setup() {
-  size(640,480,P3D);
+  size(640,480,OPENGL);
   cp5 = new ControlP5(this);
   noStroke();
   createMessageBox();

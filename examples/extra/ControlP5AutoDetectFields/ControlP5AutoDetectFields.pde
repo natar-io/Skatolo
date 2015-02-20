@@ -9,8 +9,9 @@
  *
  */
 
-
-import controlP5.*;
+import fr.inria.controlP5.*;
+import fr.inria.controlP5.events.*;
+import fr.inria.controlP5.gui.controllers.*;
 
 int s1 = 50;
 int s2 = 50;
