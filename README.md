@@ -7,7 +7,7 @@ ControlP5 is a GUI and controller library for processing that can be used in app
 
 ## Important notes
 
-* Update 27 Feb 2015 *
+### Update 27 Feb 2015
 
 There is now a working example with :
 * One global ControlP5 which works as usual.
@@ -31,7 +31,7 @@ Another focus is to dive into this library to look at the introspection features
 
 # Features 
 
-* Since original ControlP5 *
+### Since original ControlP5
 
 ## Automatic controller-event detect
 
