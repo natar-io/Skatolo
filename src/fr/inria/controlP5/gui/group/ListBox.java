@@ -90,7 +90,7 @@ public class ListBox extends ControlGroup<ListBox> implements ControlListener {
 	 */
 	public ListBox(ControlP5 theControlP5, String theName) {
 		this(theControlP5, theControlP5.getDefaultTab(), theName, 0, 0, 99, 199);
-		theControlP5.register(theControlP5.papplet, theName, this);
+		theControlP5.register(theControlP5.getObjectForIntrospection(), theName, this);
 	}
 
 

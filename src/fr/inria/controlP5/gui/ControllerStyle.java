@@ -34,7 +34,7 @@ import java.io.Serializable;
  */
 public class ControllerStyle implements Serializable {
 
-	private static final long serialVersionUID = 3250201688970310633L;
+	private static final long serialVersionUID = 3250202688970310633L;
 
 	public int paddingTop = 0;
 	public int paddingRight = 0;

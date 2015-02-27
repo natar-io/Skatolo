@@ -92,7 +92,7 @@ public class Matrix extends Controller<Matrix> {
 	 */
 	public Matrix(ControlP5 theControlP5, String theName) {
 		this(theControlP5, theControlP5.getDefaultTab(), theName, 10, 10, 0, 0, 100, 100);
-		theControlP5.register(theControlP5.papplet, theName, this);
+		theControlP5.register(theControlP5.getObjectForIntrospection(), theName, this);
 	}
 
 	public Matrix(ControlP5 theControlP5, ControllerGroup<?> theParent, String theName, int theCellX, int theCellY, int theX, int theY, int theWidth, int theHeight) {
@@ -100,7 +100,7 @@ public class Matrix extends Controller<Matrix> {
 		_myInterval = 100;
 		setGrid(theCellX, theCellY);
 
-		_myPlug = cp5.papplet;
+		_myPlug = theControlP5.getObjectForIntrospection();
 		_myPlugName = getName();
 		_myCaptionLabel.align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE);
 		_myCaptionLabel.setPadding(0, 4);
@@ -427,8 +427,8 @@ public class Matrix extends Controller<Matrix> {
 			if (isInside()) {
                             
                             // TODO: mouseX & mouseY here ? Why ?!
-                            int x = (int) ((cp5.papplet.mouseX - position.x) / stepX);
-                            int y = (int) ((cp5.papplet.mouseY - position.y) / stepY);
+                            int x = (int) ((cp5.getPApplet().mouseX - position.x) / stepX);
+                            int y = (int) ((cp5.getPApplet().mouseY - position.y) / stepY);
                             if (x >= 0 && x < _myCellX && y >= 0 && y < _myCellY) {
 					graphics.fill(_myCells[x][y] == 1 ? color.getActive() : color.getForeground());
 					graphics.rect(x * stepX, y * stepY, stepX - gapX, stepY - gapY);

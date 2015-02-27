@@ -85,7 +85,7 @@ public class Numberbox extends Controller<Numberbox> {
 	 */
 	public Numberbox(ControlP5 theControlP5, String theName) {
 		this(theControlP5, theControlP5.getDefaultTab(), theName, 0, 0, 0, autoWidth, autoHeight);
-		theControlP5.register(theControlP5.papplet, theName, this);
+		theControlP5.register(theControlP5.getObjectForIntrospection(), theName, this);
 	}
 	
 	/**
@@ -119,9 +119,9 @@ public class Numberbox extends Controller<Numberbox> {
 		if (isActive) {
 			if (!cp5.isAltDown()) {
 				if (_myNumberCount == VERTICAL) {
-					setValue(_myValue + (_myControlWindow.mouseY - _myControlWindow.pmouseY) * _myMultiplier);
+					setValue(_myValue + (controlWindow.mouseY - controlWindow.pmouseY) * _myMultiplier);
 				} else {
-					setValue(_myValue + (_myControlWindow.mouseX - _myControlWindow.pmouseX) * _myMultiplier);
+					setValue(_myValue + (controlWindow.mouseX - controlWindow.pmouseX) * _myMultiplier);
 				}
 			}
 		}
@@ -294,8 +294,8 @@ public class Numberbox extends Controller<Numberbox> {
 	class NumberboxView implements ControllerView<Numberbox> {
 
 		NumberboxView() {
-			_myValueLabel.align(LEFT, CENTER).setPadding(0, Label.paddingY);
-			_myCaptionLabel.align(LEFT, BOTTOM_OUTSIDE).setPadding(0, Label.paddingY);
+			_myValueLabel.align(LEFT, CENTER).setPadding(0, Label.defaultPaddingY);
+			_myCaptionLabel.align(LEFT, BOTTOM_OUTSIDE).setPadding(0, Label.defaultPaddingY);
 		}
 	
 		public void display(PGraphics graphics, Numberbox theController) {

@@ -56,7 +56,7 @@ import fr.inria.controlP5.gui.ControllerInterface;
 	 */
 	public Accordion(ControlP5 theControlP5, String theName) {
 		this(theControlP5, theControlP5.getDefaultTab(), theName, 0, 0, 200);
-		theControlP5.register(theControlP5.papplet, theName, this);
+		theControlP5.register(theControlP5.getObjectForIntrospection(), theName, this);
 	}
 
 	public Accordion(ControlP5 theControlP5, Tab theTab, String theName, int theX, int theY, int theW) {

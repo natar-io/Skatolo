@@ -34,34 +34,26 @@ import java.io.Serializable;
 @SuppressWarnings("serial") public class CColor implements Serializable {
 
 	private int colorBackground = 0xff003652;
-
 	private int colorForeground = 0xff00698c;
 
-	private int colorActive = 0xff08a2cf; // 0699C4;
+        private int colorActive = 0xff08a2cf; // 0699C4;
 
 	private int colorCaptionLabel = 0xffffffff;
-
 	private int colorValueLabel = 0xffffffff;
 
 	private int colorBackgroundAlpha = 0xff;
-
 	private int colorForegroundAlpha = 0xff;
 
 	private int colorActiveAlpha = 0xff; // 0699C4;
-
 	private int colorCaptionLabelAlpha = 0xff;
-
 	private int colorValueLabelAlpha = 0xff;
 
-	private int alpha = 0xff;
+	private final int alpha = 0xff;
+	private final int maskA = 0x00ffffff;
 
-	private int maskA = 0x00ffffff;
-
-	int maskR = 0xff00ffff;
-
-	int maskG = 0xffff00ff;
-
-	int maskB = 0xffffff00;
+	private final int maskR = 0xff00ffff;
+	private final int maskG = 0xffff00ff;
+	private final int maskB = 0xffffff00;
 
 
 	public CColor set(CColor theColor) {
@@ -101,7 +93,7 @@ import java.io.Serializable;
 
 
 	public CColor() {
-		set(ControlP5.getColor());
+		set(ControlP5.DEFAULT_COLOR);
 	}
 
 

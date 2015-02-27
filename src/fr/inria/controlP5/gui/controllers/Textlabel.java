@@ -158,7 +158,7 @@ public class Textlabel extends Controller<Textlabel> {
 
     public void draw() {
         if (cp5.pgraphics == null) {
-            draw(cp5.papplet.g);
+            draw(cp5.getPApplet().g);
         } else {
             draw(cp5.pgraphics);
         }
@@ -166,10 +166,10 @@ public class Textlabel extends Controller<Textlabel> {
 
     public void draw(int theX, int theY) {
         if (cp5.pgraphics == null) {
-            cp5.papplet.pushMatrix();
-            cp5.papplet.translate(theX, theY);
-            draw(cp5.papplet.g);
-            cp5.papplet.popMatrix();
+            cp5.getPApplet().pushMatrix();
+            cp5.getPApplet().translate(theX, theY);
+            draw(cp5.getPApplet().g);
+            cp5.getPApplet().popMatrix();
         } else {
             cp5.pgraphics.pushMatrix();
             cp5.pgraphics.translate(theX, theY);
@@ -261,9 +261,9 @@ public class Textlabel extends Controller<Textlabel> {
     }
 
     protected boolean inside() {
-        return (_myControlWindow.mouseX > position.x + _myParent.getAbsolutePosition().x
-                && _myControlWindow.mouseX < position.x + _myParent.getAbsolutePosition().x + _myValueLabel.getWidth()
-                && _myControlWindow.mouseY > position.y + _myParent.getAbsolutePosition().y && _myControlWindow.mouseY < position.y
+        return (controlWindow.mouseX > position.x + _myParent.getAbsolutePosition().x
+                && controlWindow.mouseX < position.x + _myParent.getAbsolutePosition().x + _myValueLabel.getWidth()
+                && controlWindow.mouseY > position.y + _myParent.getAbsolutePosition().y && controlWindow.mouseY < position.y
                 + _myParent.getAbsolutePosition().y + _myValueLabel.getHeight());
     }
 

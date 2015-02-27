@@ -67,7 +67,7 @@ public class ControlGroup<T> extends ControllerGroup<T> implements ControlListen
 	 */
 	public ControlGroup(ControlP5 theControlP5, String theName) {
 		this(theControlP5, theControlP5.getDefaultTab(), theName, 0, 0,100,9);
-		theControlP5.register(theControlP5.papplet, theName, this);
+		theControlP5.register(theControlP5.getObjectForIntrospection(), theName, this);
 	}
 
 	public ControlGroup(ControlP5 theControlP5, ControllerGroup<?> theParent, String theName, int theX, int theY, int theW, int theH) {
@@ -187,7 +187,7 @@ public class ControlGroup<T> extends ControllerGroup<T> implements ControlListen
 	 */
 	protected void postDraw(PGraphics graphics) {
 		if (isBarVisible) {
-			graphics.fill(isInside ? color.getForeground() : color.getBackground());
+			graphics.fill(isInside ? this.getColor().getForeground() : this.getColor().getBackground());
 			graphics.rect(0, -1, _myWidth, -_myHeight);
 			_myLabel.draw(graphics, 0, -_myHeight-1, this);
 			if (isCollapse && isArrowVisible) {

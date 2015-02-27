@@ -24,10 +24,6 @@
 package fr.inria.controlP5.gui;
 
 import fr.inria.controlP5.ControlP5Constants;
-import fr.inria.controlP5.gui.CDrawable;
-import fr.inria.controlP5.gui.Label;
-import fr.inria.controlP5.gui.Controller;
-import processing.core.PApplet;
 import processing.core.PGraphics;
 
 /**
@@ -35,63 +31,62 @@ import processing.core.PGraphics;
  */
 public class TickMark implements CDrawable {
 
-	protected Controller<?> _myParent;
+    protected Controller<?> _myParent;
 
-	protected int _myLen = 4;
+    protected Label label;
+    protected boolean isLabel;
 
-	protected Label _myLabel;
+    protected int length = 4;
 
-	protected boolean isLabel;
+    public TickMark(Controller<?> theController) {
+        _myParent = theController;
+    }
 
-	public TickMark(Controller<?> theController) {
-		_myParent = theController;
-	}
+    public void draw(PGraphics graphics) {
+        draw(graphics, ControlP5Constants.HORIZONTAL);
+    }
 
-	public void draw(PGraphics graphics) {
-		draw(graphics, ControlP5Constants.HORIZONTAL);
-	}
+    public void draw(PGraphics graphics, int theDirection) {
+        graphics.pushMatrix();
+        switch (theDirection) {
+            case (ControlP5Constants.HORIZONTAL):
+                graphics.translate(0, length);
+                graphics.rect(0, 0, 1, length);
+                if (isLabel) {
+                    label.draw(graphics, 0, length + 4, _myParent);
+                }
+                break;
+            case (ControlP5Constants.VERTICAL):
+                graphics.translate(-length, 0);
+                graphics.rect(0, 0, length, 1);
+                if (isLabel) {
+                    label.draw(graphics, -label.getWidth(), 0, _myParent);
+                }
+                break;
+        }
 
-	public void draw(PGraphics graphics, int theDirection) {
-		graphics.pushMatrix();
-		switch (theDirection) {
-		case (ControlP5Constants.HORIZONTAL):
-			graphics.translate(0, _myLen);
-			graphics.rect(0, 0, 1, _myLen);
-			if (isLabel) {
-				_myLabel.draw(graphics, 0, _myLen + 4, _myParent);
-			}
-			break;
-		case (ControlP5Constants.VERTICAL):
-			graphics.translate(-_myLen, 0);
-			graphics.rect(0, 0, _myLen, 1);
-			if (isLabel) {
-				_myLabel.draw(graphics, -_myLabel.getWidth(), 0, _myParent);
-			}
-			break;
-		}
+        graphics.popMatrix();
+    }
 
-		graphics.popMatrix();
-	}
+    public void setLength(int theLength) {
+        length = theLength;
+    }
 
-	public void setLength(int theLength) {
-		_myLen = theLength;
-	}
+    public Label setLabel(String theLabeltext) {
+        if (label == null) {
+            label = new Label(_myParent.cp5, theLabeltext);
+            isLabel = true;
+        } else {
+            label.set(theLabeltext);
+        }
+        return label;
+    }
 
-	public Label setLabel(String theLabeltext) {
-		if (_myLabel == null) {
-			_myLabel = new Label(_myParent.cp5,theLabeltext);
-			isLabel = true;
-		} else {
-			_myLabel.set(theLabeltext);
-		}
-		return _myLabel;
-	}
-
-	public Label getLabel() {
-		if (_myLabel == null) {
-			setLabel("?");
-		}
-		return _myLabel;
-	}
+    public Label getLabel() {
+        if (label == null) {
+            setLabel("?");
+        }
+        return label;
+    }
 
 }

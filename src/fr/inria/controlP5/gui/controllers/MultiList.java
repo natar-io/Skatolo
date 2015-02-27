@@ -82,7 +82,7 @@ public class MultiList extends Controller<MultiList> implements MultiListInterfa
 	 */
 	public MultiList(ControlP5 theControlP5, String theName) {
 		this(theControlP5, theControlP5.getDefaultTab(), theName, 0, 0, 99, 19);
-		theControlP5.register(theControlP5.papplet, theName, this);
+		theControlP5.register(theControlP5.getObjectForIntrospection(), theName, this);
 	}
 
 
@@ -210,7 +210,7 @@ public class MultiList extends Controller<MultiList> implements MultiListInterfa
 		}
 
 		if (isUpdateLocation) {
-			updateLocation((_myControlWindow.mouseX - _myControlWindow.pmouseX), (_myControlWindow.mouseY - _myControlWindow.pmouseY));
+			updateLocation((controlWindow.mouseX - controlWindow.pmouseX), (controlWindow.mouseY - controlWindow.pmouseY));
 			isUpdateLocation = theApplet.mousePressed;
 		}
 
@@ -240,7 +240,7 @@ public class MultiList extends Controller<MultiList> implements MultiListInterfa
 	 * @return boolean
 	 */
 	public boolean observe() {
-		return Hacks.inside(_myRect, _myControlWindow.mouseX, _myControlWindow.mouseY);
+		return Hacks.inside(_myRect, controlWindow.mouseX, controlWindow.mouseY);
 	}
 
 

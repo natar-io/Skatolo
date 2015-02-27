@@ -81,7 +81,7 @@ public class RadioButton extends ControlGroup<RadioButton> {
 
 	protected int alignY = CENTER;
 	
-	protected int _myPaddingX = Label.paddingX;
+	protected int _myPaddingX = Label.defaultPaddingX;
 
 	protected int _myPaddingY = 0;
 
@@ -94,7 +94,7 @@ public class RadioButton extends ControlGroup<RadioButton> {
 	 */
 	public RadioButton(ControlP5 theControlP5, String theName) {
 		this(theControlP5, theControlP5.getDefaultTab(), theName, 0, 0);
-		theControlP5.register(theControlP5.papplet, theName, this);
+		theControlP5.register(theControlP5.getObjectForIntrospection(), theName, this);
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class RadioButton extends ControlGroup<RadioButton> {
 		isCollapse = false;
 		_myRadioToggles = new ArrayList<Toggle>();
 		setItemsPerRow(1);
-		_myPlug = cp5.papplet;
+		_myPlug = cp5.getObjectForIntrospection();
 		_myPlugName = getName();
 		if (!ControllerPlug.checkPlug(_myPlug, _myPlugName, new Class[] { int.class })) {
 			_myPlug = null;

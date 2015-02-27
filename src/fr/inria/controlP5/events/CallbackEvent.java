@@ -35,9 +35,7 @@ import fr.inria.controlP5.gui.Controller;
 public class CallbackEvent {
 
 	private final int _myAction;
-
 	private final Controller<?> _myController;
-
 
 	public CallbackEvent(Controller<?> theController, int theAction) {
 		_myController = theController;

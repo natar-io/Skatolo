@@ -47,53 +47,41 @@ public interface ControllerInterface<T> {
 	public void init();
 
 	public int getWidth();
-
 	public int getHeight();
 
 	public T setValue(float theValue);
-
 	public float getValue();
 
 	public T setStringValue(String theValue);
-
 	public String getStringValue();
 
 	public float[] getArrayValue();
-	
 	public float getArrayValue(int theIndex);
 	
 	public T setArrayValue(int theIndex, float theValue);
-	
 	public T setArrayValue(float[] theArray);
 	
 	public int getId();
 
-	public PVector getPosition();
-
+        public PVector getPosition();
 	public T setPosition(float theX, float theY);
-
 	public T setPosition(PVector thePVector);
 
 	public PVector getAbsolutePosition();
-
 	public T setAbsolutePosition(PVector thePVector);
-
 	public T updateAbsolutePosition();
 
 	public ControllerInterface<?> getParent();
-
-	public T update();
-
-	public T setUpdate(boolean theFlag);
 	
-	public T bringToFront();
-	
+        public T bringToFront();
 	public T bringToFront(ControllerInterface<?> theController);
 
+        
+	public T update();
+	public T setUpdate(boolean theFlag);
 	public boolean isUpdate();
 
-	public T updateEvents();
-
+        public T updateEvents();
 	public void continuousUpdateEvents();
 
 	/**
@@ -105,20 +93,16 @@ public interface ControllerInterface<T> {
 	 */
 	public T updateInternalEvents(PApplet theApplet);
 
+        
 	public void draw(PGraphics graphics);
 
 	public T add(ControllerInterface<?> theElement);
-
 	public T remove(ControllerInterface<?> theElement);
-
 	public void remove();
 
 	public String getName();
-
 	public String getAddress();
-
 	public ControlWindow getWindow();
-
 	public Tab getTab();
 
 	public boolean setMousePressed(boolean theStatus);
@@ -128,76 +112,37 @@ public interface ControllerInterface<T> {
 	public T setAddress(String theAddress);
 
 	public T setId(int theValue);
-
 	public T setLabel(String theString);
-
 	public T setColorActive(int theColor);
-
 	public T setColorForeground(int theColor);
-
 	public T setColorBackground(int theColor);
-
 	public T setColorLabel(int theColor);
-
 	public T setColorValue(int theColor);
-	
 	public T setColor(CColor theColor);
-	
 	public CColor getColor();
 	
 	public T show();
-
 	public T hide();
-
 	public boolean isVisible();
 
 	public T moveTo(ControllerGroup<?> theGroup, Tab theTab, ControlWindow theWindow);
-
 	public T moveTo(ControllerGroup<?> theGroup);
-
 
 	public int getPickingColor();
 
 	public ControllerInterface<?> parent();
 
 	public ControllerProperty getProperty(String thePropertyName);
-
 	public ControllerProperty getProperty(String theSetter, String theGetter);
 
 	public T registerProperty(String thePropertyName);
-
 	public T registerProperty(String theSetter, String theGetter);
-
 	public T removeProperty(String thePropertyName);
-
 	public T removeProperty(String theSetter, String theGetter);
 
 	public boolean isMouseOver();
-	
 	public T setMouseOver(boolean theFlag);
-	
 	public T addListener(ControlListener theListener);
-	
 	public T setCaptionLabel(String theValue);
-	/**
-	 * @exclude
-	 * @deprecated
-	 */
-	@Deprecated
-	public String name();
 	
-	/**
-	 * @exclude
-	 * @deprecated
-	 */
-	@Deprecated
-	public String stringValue();
-	
-	/**
-	 * @exclude
-	 * @deprecated
-	 */
-	@Deprecated
-	public int id();
-
 }

@@ -36,7 +36,6 @@ import java.lang.reflect.Field;
 public class FieldChangedListener {
 
 	private FieldValue value;
-
 	private ControlP5 controlP5;
 
 	public FieldChangedListener(ControlP5 theControlP5) {

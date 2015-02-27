@@ -432,7 +432,7 @@ public class ControllerProperties {
 	 * saves a snapshot into your sketch's sketch folder.
 	 */
 	public ControllerProperties saveSnapshot(String theKey) {
-		saveSnapshotAs(controlP5.papplet.sketchPath(theKey), theKey);
+		saveSnapshotAs(controlP5.getPApplet().sketchPath(theKey), theKey);
 		return this;
 	}
 
@@ -485,7 +485,7 @@ public class ControllerProperties {
 	 * load properties from the default properties file 'controlP5.properties'
 	 */
 	public boolean load() {
-		return load(controlP5.papplet.sketchPath(defaultName + "." + format.extension));
+		return load(controlP5.getPApplet().sketchPath(defaultName + "." + format.extension));
 	}
 
 	public boolean load(String thePropertiesPath) {
@@ -511,8 +511,8 @@ public class ControllerProperties {
 	 * file into your sketch folder.
 	 */
 	public boolean save() {
-		System.out.println("saving with format " + format + " (" + format.extension + ") " + controlP5.papplet.sketchPath(defaultName));
-		format.compile(controlP5.papplet.sketchPath(defaultName), allProperties.keySet());
+		System.out.println("saving with format " + format + " (" + format.extension + ") " + controlP5.getPApplet().sketchPath(defaultName));
+		format.compile(controlP5.getPApplet().sketchPath(defaultName), allProperties.keySet());
 		return true;
 	}
 
@@ -590,14 +590,14 @@ public class ControllerProperties {
 				}
 			}
 			xml.append("</properties>");
-			controlP5.papplet.saveStrings(thePropertiesPath, PApplet.split(xml.toString(), "\n"));
+			controlP5.getPApplet().saveStrings(thePropertiesPath, PApplet.split(xml.toString(), "\n"));
 			System.out.println("saving xml, " + thePropertiesPath);
 		}
 
 		public boolean load(String thePropertiesPath) {
 			String s;
 			try {
-				s = PApplet.join(controlP5.papplet.loadStrings(thePropertiesPath), "\n");
+				s = PApplet.join(controlP5.getPApplet().loadStrings(thePropertiesPath), "\n");
 			} catch (Exception e) {
 				logger.warning(thePropertiesPath + ", file not found.");
 				return false;

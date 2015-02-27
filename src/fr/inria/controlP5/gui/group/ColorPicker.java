@@ -69,7 +69,7 @@ public class ColorPicker extends ControlGroup<ColorPicker> {
 	 */
 	public ColorPicker(ControlP5 theControlP5, String theName) {
 		this(theControlP5, theControlP5.getDefaultTab(), theName, 0, 0, 255, 10);
-		theControlP5.register(theControlP5.papplet, theName, this);
+		theControlP5.register(theControlP5.getObjectForIntrospection(), theName, this);
 	}
 
 
@@ -138,7 +138,7 @@ public class ColorPicker extends ControlGroup<ColorPicker> {
 		sliderAlpha.getValueLabel().setColor(0xff000000);
 		sliderAlpha.setValue(255);
 
-		_myPlug = cp5.papplet;
+		_myPlug = cp5.getObjectForIntrospection();
 		_myPlugName = getName();
 		if (!ControllerPlug.checkPlug(_myPlug, _myPlugName, new Class[] { int.class })) {
 			_myPlug = null;

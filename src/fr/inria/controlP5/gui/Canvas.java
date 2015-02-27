@@ -39,14 +39,11 @@ import processing.core.PGraphics;
 
 public abstract class Canvas {
 
-	protected ControlWindow _myControlWindow;
-
 	public final static int PRE = 0;
-
 	public final static int POST = 1;
 
+        protected ControlWindow _myControlWindow;
 	protected int _myMode = PRE;
-
 
 	public void setup(PApplet theApplet) {
 	}

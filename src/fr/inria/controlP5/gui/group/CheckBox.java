@@ -61,7 +61,7 @@ public class CheckBox extends ControlGroup<CheckBox> {
 	 */
 	public CheckBox(ControlP5 theControlP5, String theName) {
 		this(theControlP5, theControlP5.getDefaultTab(), theName, 0, 0);
-		theControlP5.register(theControlP5.papplet, theName, this);
+		theControlP5.register(theControlP5.getObjectForIntrospection(), theName, this);
 	}
 
 
@@ -82,7 +82,7 @@ public class CheckBox extends ControlGroup<CheckBox> {
 		_myRadioToggles = new ArrayList<Toggle>();
 		setItemsPerRow(1);
 		isMultipleChoice = true;
-		_myPlug = cp5.papplet;
+		_myPlug = cp5.getObjectForIntrospection();
 		_myPlugName = getName();
 		if (!ControllerPlug.checkPlug(_myPlug, _myPlugName, new Class[] { float[].class })) {
 			_myPlug = null;
@@ -267,7 +267,7 @@ public class CheckBox extends ControlGroup<CheckBox> {
 	 */
 	public CheckBox addItem(final String theName, final float theValue) {
 		Toggle t = cp5.addToggle(theName, 0, 0, itemWidth, itemHeight);
-		t.getCaptionLabel().align(RIGHT_OUTSIDE, CENTER).setPadding(Label.paddingX, 0);
+		t.getCaptionLabel().align(RIGHT_OUTSIDE, CENTER).setPadding(Label.defaultPaddingX, 0);
 		t.setMode(ControlP5.DEFAULT);
 		t.setImages(images[0], images[1], images[2]);
 		t.setSize(images[0]);

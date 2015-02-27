@@ -82,7 +82,7 @@ public class ControlFont {
 
 	private int baseline = 0;
 
-	private int _myTextHeight = 1;
+	private int textHeight = 1;
 
 	private int[] offset = new int[2];
 
@@ -137,7 +137,7 @@ public class ControlFont {
 	}
 
 	public int getTextHeight() {
-		return _myTextHeight;
+		return textHeight;
 	}
 
 	public int getWidth() {
@@ -214,7 +214,7 @@ public class ControlFont {
 		if (theLabel.getHeight() % theLabel.getLineHeight() != 0) {
 			txt.add("");
 		}
-		_myTextHeight = (PApplet.round(txt.size() * theLabel.getLineHeight()));
+		textHeight = (PApplet.round(txt.size() * theLabel.getLineHeight()));
 		int maxLineNum = PApplet.round(theLabel.getHeight() / theLabel.getLineHeight());
 		int offset = (int) (PApplet.max(0, txt.size() - maxLineNum) * (PApplet.abs(theLabel.getOffsetYratio())));
 		int lim = PApplet.min(txt.size(), maxLineNum);
@@ -270,7 +270,7 @@ public class ControlFont {
 		if (theLabel.getHeight() % theLabel.getLineHeight() != 0) {
 			txt.add("");
 		}
-		_myTextHeight = (PApplet.round(txt.size() * theLabel.getLineHeight()));
+		textHeight = (PApplet.round(txt.size() * theLabel.getLineHeight()));
 		int maxLineNum = PApplet.round(theLabel.getHeight() / theLabel.getLineHeight());
 		int offset = (int) (PApplet.max(0, txt.size() - maxLineNum) * (PApplet.abs(theLabel.getOffsetYratio())));
 		int lim = PApplet.min(txt.size(), maxLineNum);
@@ -281,7 +281,7 @@ public class ControlFont {
 	}
 
 	public int getOverflow() {
-		return (_myTextHeight - height);
+		return (textHeight - height);
 	}
 
 	public static int getWidthFor(String theText, Label theLabel, PApplet theApplet) {

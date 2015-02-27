@@ -49,6 +49,7 @@ import fr.inria.controlP5.ControlP5Base.KeyCode;
 import processing.core.PGraphics;
 
 /**
+ * All the controllers are within a ControlWindow, either the main one or in separate window. 
  * the purpose of a control window is to shift controllers from the main window into a separate window. to save cpu, a control window is not
  * updated when not active - in focus. for the same reason the framerate is set to 15. To constantly update the control window, use
  * {@link ControlWindow#setUpdateMode(int)}
@@ -58,106 +59,82 @@ import processing.core.PGraphics;
 public final class ControlWindow {
 
 	protected ControlP5 cp5;
-
+        
+        // TODO: find the use of this ?
 	protected Controller<?> isControllerActive;
-
+	private final PVector autoPosition = new PVector(10, 30, 0);
+	private final float tempAutoPositionHeight = 0;
+	private final boolean rendererNotification = false;
+        
 	public int background = 0x00000000;
-
 	protected CColor color = new CColor();
+	private String name = "main";
 
-	private String _myName = "main";
+	private final PApplet applet;
+        private PGraphics graphics;
 
-	protected PApplet _myApplet;
+	protected ControllerList tabs;
+	private CDrawable cDrawable;
+	protected List<Canvas> canvasList;
 
-        protected PGraphics _myGraphics;
+	private boolean isVisible = true;
+        private boolean isInit = false;
+        private boolean isAutoDraw;
+	private boolean isUpdated;
+	private boolean isDrawingBackground = true;
+	private boolean isUndecorated = false;
+	private boolean focused = true;
 
-	protected ControllerList _myTabs;
+	private final PVector positionOfTabs = new PVector(0, 0, 0);
 
-	public boolean isVisible = true;
+	private int frameCount = 0;
 
-	protected boolean isInit = false;
-
-	protected boolean isRemove = false;
-
-	protected CDrawable _myDrawable;
-
-	public boolean isAutoDraw;
-
-	protected boolean isUpdate;
-
-	protected List<Canvas> _myCanvas;
-
-	protected boolean isDrawBackground = true;
-
-	protected boolean isUndecorated = false;
-
-	protected PVector autoPosition = new PVector(10, 30, 0);
-
-	protected float tempAutoPositionHeight = 0;
-
-	protected boolean rendererNotification = false;
-
-	protected PVector positionOfTabs = new PVector(0, 0, 0);
-
-	private int _myFrameCount = 0;
-
-	private boolean isMouse = true;
-
-	private Pointer _myPointer;
-
+	private Pointer pointer;
+	// Multi-Touch starts here... 
+        private ArrayList<Pointer> pointers;
+        
+	private boolean isUsingMouseForPointing = true;
 	private int mouseWheelMoved = 0;
 
-	private List<ControllerInterface<?>> mouseoverlist;
-
+	private final List<ControllerInterface<?>> mouseoverList;
 	private boolean isMouseOver;
 
 	public int mouseX;
-
 	public int mouseY;
-
 	public int pmouseX;
-
 	public int pmouseY;
 
 	protected boolean mousePressed;
-
 	public boolean mouselock;
 
 	public char key;
-
 	public int keyCode;
-
 	private boolean[] keys = new boolean[525];
-
 	private int numOfActiveKeys = 0;
 
-	private boolean focused = true;
+
 
 	/**
 	 * @exclude
 	 */
 	public ControlWindow(final ControlP5 theControlP5, final PApplet theApplet) {
-		mouseoverlist = new ArrayList<ControllerInterface<?>>();
-		cp5 = theControlP5;
-		_myApplet = theApplet;
-                _myGraphics = theApplet.g;
+		mouseoverList = new ArrayList<ControllerInterface<?>>();
+                cp5 = theControlP5;
+		applet = theApplet;
+                graphics = cp5.getGraphics();
 		isAutoDraw = true;
 		init();
 	}
 
 	protected void init() {
-		_myPointer = new Pointer();
+		pointer = new Pointer();
+		canvasList = new ArrayList<Canvas>();
+		
+                tabs = new ControllerList();
+		tabs.add(new Tab(cp5, this, "global"));
+		tabs.add(new Tab(cp5, this, "default"));
 
-		_myCanvas = new ArrayList<Canvas>();
-
-		_myTabs = new ControllerList();
-
-		_myTabs.add(new Tab(cp5, this, "global"));
-
-		_myTabs.add(new Tab(cp5, this, "default"));
-
-		activateTab((Tab) _myTabs.get(1));
-
+                activateTab((Tab) tabs.get(1));
 		/*
 		 * register a post event that will be called by processing after the draw method has been finished.
 		 */
@@ -168,20 +145,20 @@ public final class ControlWindow {
 		// this notification does no longer exist.
 
 		if (isInit == false) {
-			_myApplet.registerMethod("pre", this);
-			_myApplet.registerMethod("draw", this);
+			applet.registerMethod("pre", this);
+			applet.registerMethod("draw", this);
 			if (!cp5.isAndroid) {
-				_myApplet.registerMethod("keyEvent", this);
-				_myApplet.registerMethod("mouseEvent", this);
+				applet.registerMethod("keyEvent", this);
+				applet.registerMethod("mouseEvent", this);
 			}
 		}
 		isInit = true;
 	}
 
 	public Tab getCurrentTab() {
-		for (int i = 1; i < _myTabs.size(); i++) {
-			if (((Tab) _myTabs.get(i)).isActive()) {
-				return (Tab) _myTabs.get(i);
+		for (int i = 1; i < tabs.size(); i++) {
+			if (((Tab) tabs.get(i)).isActive()) {
+				return (Tab) tabs.get(i);
 			}
 		}
 		return null;
@@ -189,24 +166,24 @@ public final class ControlWindow {
 
 	public ControlWindow activateTab(String theTab) {
 
-		for (int i = 1; i < _myTabs.size(); i++) {
-			if (((Tab) _myTabs.get(i)).getName().equals(theTab)) {
-				if (!((Tab) _myTabs.get(i)).isActive) {
+		for (int i = 1; i < tabs.size(); i++) {
+			if (((Tab) tabs.get(i)).getName().equals(theTab)) {
+				if (!((Tab) tabs.get(i)).isActive) {
 					resetMouseOver();
 				}
-				activateTab((Tab) _myTabs.get(i));
+				activateTab((Tab) tabs.get(i));
 			}
 		}
 		return this;
 	}
 
 	public ControlWindow removeTab(Tab theTab) {
-		_myTabs.remove(theTab);
+		tabs.remove(theTab);
 		return this;
 	}
 
 	public Tab add(Tab theTab) {
-		_myTabs.add(theTab);
+		tabs.add(theTab);
 		return theTab;
 	}
 
@@ -215,21 +192,21 @@ public final class ControlWindow {
 	}
 
 	public ControlWindow activateTab(Tab theTab) {
-		for (int i = 1; i < _myTabs.size(); i++) {
-			if (_myTabs.get(i) == theTab) {
-				if (!((Tab) _myTabs.get(i)).isActive) {
+		for (int i = 1; i < tabs.size(); i++) {
+			if (tabs.get(i) == theTab) {
+				if (!((Tab) tabs.get(i)).isActive) {
 					resetMouseOver();
 				}
-				((Tab) _myTabs.get(i)).setActive(true);
+				((Tab) tabs.get(i)).setActive(true);
 			} else {
-				((Tab) _myTabs.get(i)).setActive(false);
+				((Tab) tabs.get(i)).setActive(false);
 			}
 		}
 		return this;
 	}
 
 	public ControllerList getTabs() {
-		return _myTabs;
+		return tabs;
 	}
 
 	public Tab getTab(String theTabName) {
@@ -275,11 +252,11 @@ public final class ControlWindow {
 	}
 
 	public void remove() {
-		for (int i = _myTabs.size() - 1; i >= 0; i--) {
-			((Tab) _myTabs.get(i)).remove();
+		for (int i = tabs.size() - 1; i >= 0; i--) {
+			((Tab) tabs.get(i)).remove();
 		}
-		_myTabs.clear();
-		_myTabs.clearDrawable();
+		tabs.clear();
+		tabs.clearDrawable();
 	}
 
 	/**
@@ -291,8 +268,8 @@ public final class ControlWindow {
 	}
 
 	public void updateFont(ControlFont theControlFont) {
-		for (int i = 0; i < _myTabs.size(); i++) {
-			((Tab) _myTabs.get(i)).updateFont(theControlFont);
+		for (int i = 0; i < tabs.size(); i++) {
+			((Tab) tabs.get(i)).updateFont(theControlFont);
 		}
 	}
 
@@ -302,14 +279,14 @@ public final class ControlWindow {
 	public void updateEvents() {
 		handleMouseOver();
 		handleMouseWheelMoved();
-		if (_myTabs.size() <= 0) {
+		if (tabs.size() <= 0) {
 			return;
 		}
-		((ControllerInterface<?>) _myTabs.get(0)).updateEvents();
-		for (int i = 1; i < _myTabs.size(); i++) {
-			((Tab) _myTabs.get(i)).continuousUpdateEvents();
-			if (((Tab) _myTabs.get(i)).isActive() && ((Tab) _myTabs.get(i)).isVisible()) {
-				((ControllerInterface<?>) _myTabs.get(i)).updateEvents();
+		((ControllerInterface<?>) tabs.get(0)).updateEvents();
+		for (int i = 1; i < tabs.size(); i++) {
+			((Tab) tabs.get(i)).continuousUpdateEvents();
+			if (((Tab) tabs.get(i)).isActive() && ((Tab) tabs.get(i)).isVisible()) {
+				((ControllerInterface<?>) tabs.get(i)).updateEvents();
 			}
 		}
 	}
@@ -319,22 +296,22 @@ public final class ControlWindow {
 	 */
 	public boolean isMouseOver() {
 		// TODO doesnt work for all groups yet, only ListBox and DropdownList.
-		if (_myFrameCount + 1 < _myApplet.frameCount) {
+		if (frameCount + 1 < applet.frameCount) {
 			resetMouseOver();
 		}
 		return isVisible ? isMouseOver : false;
 	}
 
 	public boolean isMouseOver(ControllerInterface<?> theController) {
-		return mouseoverlist.contains(theController);
+		return mouseoverList.contains(theController);
 	}
 
 	public void resetMouseOver() {
 		isMouseOver = false;
-		for (int i = mouseoverlist.size() - 1; i >= 0; i--) {
-			mouseoverlist.get(i).setMouseOver(false);
+		for (int i = mouseoverList.size() - 1; i >= 0; i--) {
+			mouseoverList.get(i).setMouseOver(false);
 		}
-		mouseoverlist.clear();
+		mouseoverList.clear();
 	}
 
 	public ControllerInterface<?> getFirstFromMouseOverList() {
@@ -349,27 +326,27 @@ public final class ControlWindow {
 	 * A list of controllers that are registered with a mouseover.
 	 */
 	public List<ControllerInterface<?>> getMouseOverList() {
-		return mouseoverlist;
+		return mouseoverList;
 	}
 
 	private ControlWindow handleMouseOver() {
-		for (int i = mouseoverlist.size() - 1; i >= 0; i--) {
-			if (!mouseoverlist.get(i).isMouseOver() || !isVisible) {
-				mouseoverlist.remove(i);
+		for (int i = mouseoverList.size() - 1; i >= 0; i--) {
+			if (!mouseoverList.get(i).isMouseOver() || !isVisible) {
+				mouseoverList.remove(i);
 			}
 		}
-		isMouseOver = mouseoverlist.size() > 0;
+		isMouseOver = mouseoverList.size() > 0;
 		return this;
 	}
 
 	public ControlWindow removeMouseOverFor(ControllerInterface<?> theController) {
-		mouseoverlist.remove(theController);
+		mouseoverList.remove(theController);
 		return this;
 	}
 
 	public ControlWindow setMouseOverController(ControllerInterface<?> theController) {
-		if (!mouseoverlist.contains(theController) && isVisible && theController.isVisible()) {
-			mouseoverlist.add(theController);
+		if (!mouseoverList.contains(theController) && isVisible && theController.isVisible()) {
+			mouseoverList.add(theController);
 		}
 		isMouseOver = true;
 		return this;
@@ -381,19 +358,19 @@ public final class ControlWindow {
 	 * @exclude
 	 */
 	public void update() {
-		((ControllerInterface<?>) _myTabs.get(0)).update();
-		for (int i = 1; i < _myTabs.size(); i++) {
-			((Tab) _myTabs.get(i)).update();
+		((ControllerInterface<?>) tabs.get(0)).update();
+		for (int i = 1; i < tabs.size(); i++) {
+			((Tab) tabs.get(i)).update();
 		}
 	}
 
 	/**
 	 * enable or disable the update function of a control window.
 	 */
-	public void setUpdate(boolean theFlag) {
-		isUpdate = theFlag;
-		for (int i = 0; i < _myTabs.size(); i++) {
-			((ControllerInterface<?>) _myTabs.get(i)).setUpdate(theFlag);
+	public void setUpdated(boolean theFlag) {
+		isUpdated = theFlag;
+		for (int i = 0; i < tabs.size(); i++) {
+			((ControllerInterface<?>) tabs.get(i)).setUpdate(theFlag);
 		}
 	}
 
@@ -401,18 +378,18 @@ public final class ControlWindow {
 	 * check the update status of a control window.
 	 */
 	public boolean isUpdate() {
-		return isUpdate;
+		return isUpdated;
 	}
 
 	public ControlWindow addCanvas(Canvas theCanvas) {
-		_myCanvas.add(theCanvas);
+		canvasList.add(theCanvas);
 		theCanvas.setControlWindow(this);
-		theCanvas.setup(_myApplet);
+		theCanvas.setup(applet);
 		return this;
 	}
 
 	public ControlWindow removeCanvas(Canvas theCanvas) {
-		_myCanvas.remove(theCanvas);
+		canvasList.remove(theCanvas);
 		return this;
 	}
 
@@ -420,7 +397,7 @@ public final class ControlWindow {
 
 	public ControlWindow pre() {
 
-		if (_myFrameCount + 1 < _myApplet.frameCount) {
+		if (frameCount + 1 < applet.frameCount) {
 			if (isReset) {
 				resetMouseOver();
 				isReset = false;
@@ -462,7 +439,7 @@ public final class ControlWindow {
 		} else if (!pressed && !pmouseReleased) {
 			updateEvents();
 			mouseReleasedEvent();
-			for (ControllerInterface c : mouseoverlist) {
+			for (ControllerInterface c : mouseoverList) {
 				if (c instanceof Controller) {
 					((Controller) c).onLeave();
 					((Controller) c).onRelease();
@@ -482,7 +459,7 @@ public final class ControlWindow {
 	 * @param theMouseEvent MouseEvent
 	 */
 	public void mouseEvent(MouseEvent theMouseEvent) {
-		if (isMouse) {
+		if (isUsingMouseForPointing) {
 			mouseX = theMouseEvent.getX();
 			mouseY = theMouseEvent.getY();
 			if (theMouseEvent.getAction() == MouseEvent.PRESS) {
@@ -525,7 +502,7 @@ public final class ControlWindow {
 
 		}
 
-		if (theKeyEvent.getAction() == KeyEvent.PRESS && cp5.isShortcuts()) {
+		if (theKeyEvent.getAction() == KeyEvent.PRESS && cp5.areShortcutsEnabled()) {
 			int n = 0;
 			for (boolean b : keys) {
 				n += b ? 1 : 0;
@@ -557,11 +534,11 @@ public final class ControlWindow {
 	 * @exclude draw content.
 	 */
 	public void draw() {
-
-		_myFrameCount = _myApplet.frameCount;
-		if (cp5.blockDraw == false) {
+            
+            // TODO: BAD mouseX ! ?!!
+		frameCount = applet.frameCount;
 			if (cp5.isAndroid) {
-				mouseEvent(cp5.papplet.mouseX, cp5.papplet.mouseY, cp5.papplet.mousePressed);
+				mouseEvent(cp5.getPApplet().mouseX, cp5.getPApplet().mouseY, cp5.getPApplet().mousePressed);
 			} else {
 				updateEvents();
 			}
@@ -570,38 +547,38 @@ public final class ControlWindow {
 				// TODO save stroke, noStroke, fill, noFill, strokeWeight
 				// parameters and restore after drawing controlP5 elements.
 
-				int myRectMode = _myGraphics.rectMode;
+				int myRectMode = graphics.rectMode;
 
-				int myEllipseMode = _myGraphics.ellipseMode;
+				int myEllipseMode = graphics.ellipseMode;
 
-				int myImageMode = _myGraphics.imageMode;
+				int myImageMode = graphics.imageMode;
 
-				_myGraphics.pushStyle();
-				_myGraphics.rectMode(PConstants.CORNER);
-				_myGraphics.ellipseMode(PConstants.CORNER);
-				_myGraphics.imageMode(PConstants.CORNER);
-				_myGraphics.noStroke();
+				graphics.pushStyle();
+				graphics.rectMode(PConstants.CORNER);
+				graphics.ellipseMode(PConstants.CORNER);
+				graphics.imageMode(PConstants.CORNER);
+				graphics.noStroke();
 
-				if (_myDrawable != null) {
-					_myDrawable.draw(_myGraphics);
+				if (cDrawable != null) {
+					cDrawable.draw(graphics);
 				}
 
-				for (int i = 0; i < _myCanvas.size(); i++) {
-					if ((_myCanvas.get(i)).mode() == Canvas.PRE) {
-						(_myCanvas.get(i)).draw(_myGraphics);
+				for (int i = 0; i < canvasList.size(); i++) {
+					if ((canvasList.get(i)).mode() == Canvas.PRE) {
+						(canvasList.get(i)).draw(graphics);
 					}
 				}
 
-				_myGraphics.noStroke();
-				_myGraphics.noFill();
+				graphics.noStroke();
+				graphics.noFill();
 				int myOffsetX = (int) getPositionOfTabs().x;
 				int myOffsetY = (int) getPositionOfTabs().y;
 				int myHeight = 0;
-				if (_myTabs.size() > 0) {
-					for (int i = 1; i < _myTabs.size(); i++) {
-						if (((Tab) _myTabs.get(i)).isVisible()) {
-							if (myHeight < ((Tab) _myTabs.get(i)).height()) {
-								myHeight = ((Tab) _myTabs.get(i)).height();
+				if (tabs.size() > 0) {
+					for (int i = 1; i < tabs.size(); i++) {
+						if (((Tab) tabs.get(i)).isVisible()) {
+							if (myHeight < ((Tab) tabs.get(i)).height()) {
+								myHeight = ((Tab) tabs.get(i)).height();
 							}
 
 							// conflicts with Android, getWidth not found TODO
@@ -612,23 +589,23 @@ public final class ControlWindow {
 							// myHeight = 0;
 							// }
 
-							((Tab) _myTabs.get(i)).setOffset(myOffsetX, myOffsetY);
+							((Tab) tabs.get(i)).setOffset(myOffsetX, myOffsetY);
 
-							if (((Tab) _myTabs.get(i)).isActive()) {
-								((Tab) _myTabs.get(i)).draw(_myGraphics);
+							if (((Tab) tabs.get(i)).isActive()) {
+								((Tab) tabs.get(i)).draw(graphics);
 							}
 
-							if (((Tab) _myTabs.get(i)).updateLabel()) {
-								((Tab) _myTabs.get(i)).drawLabel(_myGraphics);
+							if (((Tab) tabs.get(i)).updateLabel()) {
+								((Tab) tabs.get(i)).drawLabel(graphics);
 							}
-							myOffsetX += ((Tab) _myTabs.get(i)).width();
+							myOffsetX += ((Tab) tabs.get(i)).width();
 						}
 					}
-					((ControllerInterface<?>) _myTabs.get(0)).draw(_myGraphics);
+					((ControllerInterface<?>) tabs.get(0)).draw(graphics);
 				}
-				for (int i = 0; i < _myCanvas.size(); i++) {
-					if ((_myCanvas.get(i)).mode() == Canvas.POST) {
-						(_myCanvas.get(i)).draw(_myGraphics);
+				for (int i = 0; i < canvasList.size(); i++) {
+					if ((canvasList.get(i)).mode() == Canvas.POST) {
+						(canvasList.get(i)).draw(graphics);
 					}
 				}
 
@@ -637,12 +614,11 @@ public final class ControlWindow {
 
 				// draw Tooltip here.
 				cp5.getTooltip().draw(this);
-				_myGraphics.rectMode(myRectMode);
-				_myGraphics.ellipseMode(myEllipseMode);
-				_myGraphics.imageMode(myImageMode);
-				_myGraphics.popStyle();
+				graphics.rectMode(myRectMode);
+				graphics.ellipseMode(myEllipseMode);
+				graphics.imageMode(myImageMode);
+				graphics.popStyle();
 			}
-		}
 
 	}
         
@@ -651,7 +627,7 @@ public final class ControlWindow {
 	 * @exclude draw content.
 	 */
 	public void draw(PGraphics graphics) {
-                _myGraphics = graphics;
+                this.graphics = graphics;
                 draw();
         }
        
@@ -663,7 +639,7 @@ public final class ControlWindow {
 	 * @param theDrawable CDrawable
 	 */
 	public ControlWindow setContext(CDrawable theDrawable) {
-		_myDrawable = theDrawable;
+		cDrawable = theDrawable;
 		return this;
 	}
 
@@ -671,14 +647,14 @@ public final class ControlWindow {
 	 * returns the name of the control window.
 	 */
 	public String name() {
-		return _myName;
+		return name;
 	}
 
 	private void mousePressedEvent() {
 		if (isVisible) {
 			mousePressed = true;
-			for (int i = 0; i < _myTabs.size(); i++) {
-				if (((ControllerInterface<?>) _myTabs.get(i)).setMousePressed(true)) {
+			for (int i = 0; i < tabs.size(); i++) {
+				if (((ControllerInterface<?>) tabs.get(i)).setMousePressed(true)) {
 					mouselock = true;
 					return;
 				}
@@ -690,8 +666,8 @@ public final class ControlWindow {
 		if (isVisible) {
 			mousePressed = false;
 			mouselock = false;
-			for (int i = 0; i < _myTabs.size(); i++) {
-				((ControllerInterface<?>) _myTabs.get(i)).setMousePressed(false);
+			for (int i = 0; i < tabs.size(); i++) {
+				((ControllerInterface<?>) tabs.get(i)).setMousePressed(false);
 			}
 		}
 	}
@@ -704,7 +680,7 @@ public final class ControlWindow {
 
 	@SuppressWarnings("unchecked") private void handleMouseWheelMoved() {
 		if (mouseWheelMoved != 0) {
-			CopyOnWriteArrayList<ControllerInterface<?>> mouselist = new CopyOnWriteArrayList<ControllerInterface<?>>(mouseoverlist);
+			CopyOnWriteArrayList<ControllerInterface<?>> mouselist = new CopyOnWriteArrayList<ControllerInterface<?>>(mouseoverList);
 			for (ControllerInterface<?> c : mouselist) {
 				if (c.isVisible()) {
 					if (c instanceof Controller) {
@@ -743,8 +719,8 @@ public final class ControlWindow {
 	 * @param theKeyEvent KeyEvent
 	 */
 	public void handleKeyEvent(KeyEvent theKeyEvent) {
-		for (int i = 0; i < _myTabs.size(); i++) {
-			((ControllerInterface<?>) _myTabs.get(i)).keyEvent(theKeyEvent);
+		for (int i = 0; i < tabs.size(); i++) {
+			((ControllerInterface<?>) tabs.get(i)).keyEvent(theKeyEvent);
 		}
 	}
 
@@ -815,7 +791,7 @@ public final class ControlWindow {
 	 * get the papplet instance of the ControlWindow.
 	 */
 	public PApplet papplet() {
-		return _myApplet;
+		return applet;
 	}
 
 	/**
@@ -825,7 +801,7 @@ public final class ControlWindow {
 	 * @return ControlWindow
 	 */
 	public ControlWindow frameRate(int theFrameRate) {
-		_myApplet.frameRate(theFrameRate);
+		applet.frameRate(theFrameRate);
 		return this;
 	}
 
@@ -842,18 +818,19 @@ public final class ControlWindow {
 	 * @return ControlWindow
 	 */
 	public ControlWindow setDrawBackground(boolean theFlag) {
-		isDrawBackground = theFlag;
+		isDrawingBackground = theFlag;
 		return this;
 	}
 
 	public boolean isDrawBackground() {
-		return isDrawBackground;
+		return isDrawingBackground;
 	}
 
 	public boolean isVisible() {
 		return isVisible;
 	}
 
+        // TODO: find the use of this 
 	protected boolean isControllerActive(Controller<?> theController) {
 		if (isControllerActive == null) {
 			return false;
@@ -874,12 +851,12 @@ public final class ControlWindow {
 	public ControlWindow setUndecorated(boolean theFlag) {
 		if (theFlag != isUndecorated()) {
 			isUndecorated = theFlag;
-			_myApplet.frame.removeNotify();
-			_myApplet.frame.setUndecorated(isUndecorated);
-			_myApplet.setSize(_myApplet.width, _myApplet.height);
-			_myApplet.setBounds(0, 0, _myApplet.width, _myApplet.height);
-			_myApplet.frame.setSize(_myApplet.width, _myApplet.height);
-			_myApplet.frame.addNotify();
+			applet.frame.removeNotify();
+			applet.frame.setUndecorated(isUndecorated);
+			applet.setSize(applet.width, applet.height);
+			applet.setBounds(0, 0, applet.width, applet.height);
+			applet.frame.setSize(applet.width, applet.height);
+			applet.frame.addNotify();
 		}
 		return this;
 	}
@@ -893,23 +870,27 @@ public final class ControlWindow {
 	}
 
 	public ControlWindow setLocation(int theX, int theY) {
-		_myApplet.frame.setLocation(theX, theY);
+		applet.frame.setLocation(theX, theY);
 		return this;
 	}
 
 	public Pointer getPointer() {
-		return _myPointer;
+		return pointer;
 	}
 
 	public ControlWindow disablePointer() {
-		_myPointer.disable();
+		pointer.disable();
 		return this;
 	}
 
 	public ControlWindow enablePointer() {
-		_myPointer.enable();
+		pointer.enable();
 		return this;
 	}
+
+        public void setAutoDraw(boolean theFlag) {
+            this.isAutoDraw = theFlag;
+        }
 
 	/**
 	 * A pointer by default is linked to the mouse and stores the x and y position as well as the pressed and released state. The pointer
@@ -978,15 +959,15 @@ public final class ControlWindow {
 		}
 
 		public void enable() {
-			isMouse = false;
+			isUsingMouseForPointing = false;
 		}
 
 		public void disable() {
-			isMouse = true;
+			isUsingMouseForPointing = true;
 		}
 
 		public boolean isEnabled() {
-			return !isMouse;
+			return !isUsingMouseForPointing;
 		}
 	}
 
@@ -998,116 +979,13 @@ public final class ControlWindow {
 		isMouseOver = false;
 		return this;
 	}
+        
+        public boolean isIsVisible() {
+            return isVisible;
+        }
 
-	/**
-	 * @exclude
-	 * @deprecated
-	 */
-	@Deprecated public ControllerList tabs() {
-		return _myTabs;
-	}
-
-	/**
-	 * @exclude
-	 * @deprecated
-	 */
-	@Deprecated public Tab tab(String theTabName) {
-		return cp5.getTab(this, theTabName);
-	}
-
-	/**
-	 * @deprecated
-	 * @exclude
-	 */
-	@Deprecated public Tab currentTab() {
-		for (int i = 1; i < _myTabs.size(); i++) {
-			if (((Tab) _myTabs.get(i)).isActive()) {
-				return (Tab) _myTabs.get(i);
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * @exclude
-	 * @deprecated
-	 * @param theMode
-	 */
-	@Deprecated public void setMode(int theMode) {
-		setUpdateMode(theMode);
-	}
-
-	/**
-	 * @deprecated
-	 * @exclude
-	 * @param theCoordinates
-	 */
-	public void multitouch(int[][] theCoordinates) {
-		// removed
-	}
-
-	/**
-	 * @deprecated enable smooth controlWindow rendering.
-	 */
-	public ControlWindow smooth() {
-		return this;
-	}
-
-	/**
-	 * @deprecated disable smooth controlWindow rendering.
-	 */
-	public ControlWindow noSmooth() {
-		return this;
-	}
-
-	/**
-	 * @deprecated set the title of a control window. only applies to control windows of type PAppletWindow.
-	 */
-	public ControlWindow setTitle(String theTitle) {
-		return this;
-	}
-
-	/**
-	 * @deprecated shows the xy coordinates displayed in the title of a control window. only applies to control windows of type
-	 *             PAppletWindow.
-	 * 
-	 * @param theFlag
-	 */
-	public ControlWindow showCoordinates() {
-		return this;
-	}
-
-	/**
-	 * @deprecated hide the xy coordinates displayed in the title of a control window. only applies to control windows of type
-	 *             PAppletWindow.
-	 * 
-	 * @param theFlag
-	 */
-	public ControlWindow hideCoordinates() {
-		return this;
-	}
-
-	/**
-	 * @deprecated set the draw mode of a control window. a separate control window is only updated when in focus. to update the context of
-	 *             the window continuously, use yourControlWindow.setUpdateMode(ControlWindow.NORMAL); otherwise use
-	 *             yourControlWindow.setUpdateMode(ControlWindow.ECONOMIC); for an economic, less cpu intensive update.
-	 * 
-	 * @param theMode
-	 */
-	public ControlWindow setUpdateMode(int theMode) {
-		return this;
-	}
-
-	@Deprecated public ControlWindow disableMouseWheel() {
-		return this;
-	}
-
-	@Deprecated public ControlWindow enableMouseWheel() {
-		return this;
-	}
-
-	@Deprecated public boolean isMouseWheel() {
-		return false;
-	}
-
+        public boolean isAutoDraw() {
+            return isAutoDraw;
+        }
+        
 }

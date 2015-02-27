@@ -38,23 +38,18 @@ import java.security.AccessControlException;
 public class ControllerPlug {
 
 	private Object _myObject;
-
 	private String _myName;
-
 	private Method _myMethod;
-
 	private Field _myField;
 
 	private int _myType = ControlP5Constants.INVALID;
-
-	private Class<?> _myParameterClass;
-
-	private int _myParameterType = -1;
-
+	
+        private Class<?> _myParameterClass;
+	
+        private int _myParameterType = -1;
 	private Object _myValue = null;
 
-	private Class<?>[] _myAcceptClassList;
-
+        private Class<?>[] _myAcceptClassList;
 	private Class<?> _myEventMethodParameter = ControlEvent.class;
 
 	public ControllerPlug(final Object theObject, final String theName, final int theType, final int theParameterType, Class<?>[] theAcceptClassList) {
@@ -242,33 +237,4 @@ public class ControllerPlug {
 			return false;
 		}
 	}
-
-	@Deprecated protected Class<?> classType() {
-		return _myParameterClass;
-	}
-
-	@Deprecated protected Object value() {
-		return _myValue;
-	}
-
-	@Deprecated protected Object object() {
-		return _myObject;
-	}
-
-	@Deprecated protected String name() {
-		return _myName;
-	}
-
-	@Deprecated protected int type() {
-		return _myType;
-	}
-
-	@Deprecated protected int parameterType() {
-		return _myParameterType;
-	}
-
-	@Deprecated protected Class<?>[] acceptClassList() {
-		return _myAcceptClassList;
-	}
-
 }

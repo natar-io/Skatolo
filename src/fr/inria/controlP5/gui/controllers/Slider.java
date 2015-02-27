@@ -90,7 +90,7 @@ public class Slider extends Controller<Slider> {
 	 */
 	public Slider(ControlP5 theControlP5, String theName) {
 		this(theControlP5, theControlP5.getDefaultTab(), theName, 0, 100, 0, 0, 0, autoWidth, autoHeight);
-		theControlP5.register(theControlP5.papplet, theName, this);
+		theControlP5.register(theControlP5.getObjectForIntrospection(), theName, this);
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class Slider extends Controller<Slider> {
 		// in order not to break anything, init() will be overwritten here.
 
 		_myDefaultValue = getValue();
-		cp5.getControlBroadcaster().plug(cp5.papplet, this, _myName);
+		cp5.getControlBroadcaster().plug(cp5.getObjectForIntrospection(), this, name);
 		initControllerValue();
 		isInit = cp5.isAutoInitialization;
 		setValue(_myDefaultValue);
@@ -531,7 +531,7 @@ public class Slider extends Controller<Slider> {
 	private class SliderViewV extends SliderView {
 
 		SliderViewV() {
-			_myCaptionLabel.align(LEFT, BOTTOM_OUTSIDE).setPadding(0, Label.paddingY);
+			_myCaptionLabel.align(LEFT, BOTTOM_OUTSIDE).setPadding(0, Label.defaultPaddingY);
 			_myValueLabel.set("" + adjustValue(getValue())).align(RIGHT_OUTSIDE, TOP);
 		}
 
@@ -545,12 +545,12 @@ public class Slider extends Controller<Slider> {
 		}
 
 		void update() {
-			float f = _myMin + (-(_myControlWindow.mouseY - (_myParent.getAbsolutePosition().y + position.y) - height)) * _myUnit;
+			float f = _myMin + (-(controlWindow.mouseY - (_myParent.getAbsolutePosition().y + position.y) - height)) * _myUnit;
 			setValue(PApplet.map(f, 0, 1, _myMinReal, _myMaxReal));
 		}
 
 		void updateInternalEvents(PApplet theApplet) {
-			float f = _myMin + (-(_myControlWindow.mouseY - (_myParent.getAbsolutePosition().y + position.y) - height)) * _myUnit;
+			float f = _myMin + (-(controlWindow.mouseY - (_myParent.getAbsolutePosition().y + position.y) - height)) * _myUnit;
 			setValue(PApplet.map(f, 0, 1, _myMinReal, _myMaxReal));
 		}
 
@@ -613,12 +613,12 @@ public class Slider extends Controller<Slider> {
 		}
 
 		void update() {
-			float f = _myMin + (_myControlWindow.mouseX - (_myParent.getAbsolutePosition().x + position.x)) * _myUnit;
+			float f = _myMin + (controlWindow.mouseX - (_myParent.getAbsolutePosition().x + position.x)) * _myUnit;
 			setValue(PApplet.map(f, 0, 1, _myMinReal, _myMaxReal));
 		}
 
 		void updateInternalEvents(PApplet theApplet) {
-			float f = _myMin + (_myControlWindow.mouseX - (_myParent.getAbsolutePosition().x + position.x)) * _myUnit;
+			float f = _myMin + (controlWindow.mouseX - (_myParent.getAbsolutePosition().x + position.x)) * _myUnit;
 			setValue(PApplet.map(f, 0, 1, _myMinReal, _myMaxReal));
 		}
 

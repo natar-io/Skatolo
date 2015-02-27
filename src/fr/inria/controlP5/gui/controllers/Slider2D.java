@@ -62,7 +62,7 @@ public class Slider2D extends Controller<Slider2D> {
 	 */
 	public Slider2D(ControlP5 theControlP5, String theName) {
 		this(theControlP5, theControlP5.getDefaultTab(), theName, 0, 0, 99, 9);
-		theControlP5.register(theControlP5.papplet, theName, this);
+		theControlP5.register(theControlP5.getObjectForIntrospection(), theName, this);
 	}
 
 	public Slider2D(ControlP5 theControlP5, ControllerGroup<?> theParent, String theName, int theX, int theY, int theWidth, int theHeight) {
@@ -72,8 +72,8 @@ public class Slider2D extends Controller<Slider2D> {
 		_myMinY = 0;
 		_myMaxX = theWidth;
 		_myMaxY = theHeight;
-		getCaptionLabel().setPadding(0, Label.paddingY).align(LEFT, BOTTOM_OUTSIDE);
-		getValueLabel().setPadding(0, Label.paddingY).align(RIGHT, BOTTOM_OUTSIDE);
+		getCaptionLabel().setPadding(0, Label.defaultPaddingY).align(LEFT, BOTTOM_OUTSIDE);
+		getValueLabel().setPadding(0, Label.defaultPaddingY).align(RIGHT, BOTTOM_OUTSIDE);
 	}
 
 	/*
@@ -84,8 +84,8 @@ public class Slider2D extends Controller<Slider2D> {
 	 public Slider2D updateInternalEvents(PApplet theApplet) {
 		if (isInside()) {
 			if (!cp5.isAltDown()) {
-				float tX = PApplet.constrain(_myControlWindow.mouseX - (_myParent.getAbsolutePosition().x + position.x), 0, width - cursorWidth);
-				float tY = PApplet.constrain(_myControlWindow.mouseY - (_myParent.getAbsolutePosition().y + position.y), 0, height - cursorHeight);
+				float tX = PApplet.constrain(controlWindow.mouseX - (_myParent.getAbsolutePosition().x + position.x), 0, width - cursorWidth);
+				float tY = PApplet.constrain(controlWindow.mouseY - (_myParent.getAbsolutePosition().y + position.y), 0, height - cursorHeight);
 				if (isMousePressed) {
 					cursorX = tX;
 					cursorY = tY;

@@ -33,7 +33,6 @@ import java.util.Vector;
 public class ControllerList {
 
 	protected List<ControllerInterface<?>> controllers;
-
 	protected List<CDrawable> drawables;
 
 	public ControllerList() {

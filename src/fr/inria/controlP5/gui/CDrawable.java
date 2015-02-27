@@ -23,7 +23,6 @@
  */
 package fr.inria.controlP5.gui;
 
-import processing.core.PApplet;
 import processing.core.PGraphics;
 
 /**
@@ -31,8 +30,5 @@ import processing.core.PGraphics;
  */
 public interface CDrawable {
 
-
-        /**
-	 */
 	public void draw(PGraphics graphics);
 }

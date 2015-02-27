@@ -43,53 +43,49 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ControlBroadcaster {
 
-	private int _myControlEventType = ControlP5Constants.INVALID;
+    	private ControlP5 cp5;
+    
+	private int controlEventType = ControlP5Constants.INVALID;
 
-	private ControllerPlug _myControlEventPlug = null;
+	private ControllerPlug controlEventPlug = null;
+	private ControllerPlug controllerCallbackEventPlug = null;
 
-	private ControllerPlug _myControllerCallbackEventPlug = null;
+	private String controllerCallbackEventMethod = "controlEvent";
 
-	private ControlP5 cp5;
-
-	private String _myEventMethod = "controlEvent";
-
-	private String _myControllerCallbackEventMethod = "controlEvent";
-
-	private ArrayList<ControlListener> _myControlListeners;
-
-	private Map<CallbackListener, Controller<?>> _myControllerCallbackListeners;
+	private ArrayList<ControlListener> controlListeners;
+	private Map<CallbackListener, Controller<?>> controllerCallbackListeners;
 
 	private static boolean setPrintStackTrace = true;
-
 	private static boolean ignoreErrorMessage = false;
 
 	private static Map<Class<?>, Field[]> fieldcache = new HashMap<Class<?>, Field[]>();
-
 	private static Map<Class<?>, Method[]> methodcache = new HashMap<Class<?>, Method[]>();
 
 	public boolean broadcast = true;
 
 	public ControlBroadcaster(ControlP5 theControlP5) {
 		cp5 = theControlP5;
-		_myControlListeners = new ArrayList<ControlListener>();
-		_myControllerCallbackListeners = new ConcurrentHashMap<CallbackListener, Controller<?>>();
-		_myControlEventPlug = checkObject(cp5.papplet, getEventMethod(), new Class[] { ControlEvent.class });
-		_myControllerCallbackEventPlug = checkObject(cp5.papplet, _myControllerCallbackEventMethod, new Class[] { CallbackEvent.class });
-		if (_myControlEventPlug != null) {
-			_myControlEventType = ControlP5Constants.METHOD;
+		controlListeners = new ArrayList<ControlListener>();
+		controllerCallbackListeners = new ConcurrentHashMap<CallbackListener, Controller<?>>();
+		
+                controlEventPlug =            checkObject(cp5.getObjectForIntrospection(), controllerCallbackEventMethod, new Class[] { ControlEvent.class });
+                controllerCallbackEventPlug = checkObject(cp5.getObjectForIntrospection(), controllerCallbackEventMethod, new Class[] { CallbackEvent.class });
+		
+                if (controlEventPlug != null) {
+			controlEventType = ControlP5Constants.METHOD;
 		}
 	}
 
 	public ControlBroadcaster addListener(ControlListener... theListeners) {
 		for (ControlListener l : theListeners) {
-			_myControlListeners.add(l);
+			controlListeners.add(l);
 		}
 		return this;
 	}
 
 	public ControlBroadcaster removeListener(ControlListener... theListeners) {
 		for (ControlListener l : theListeners) {
-			_myControlListeners.remove(l);
+			controlListeners.remove(l);
 		}
 		return this;
 	}
@@ -101,10 +97,10 @@ public class ControlBroadcaster {
 	 * @return
 	 */
 	public ControlListener getListener(int theIndex) {
-		if (theIndex < 0 || theIndex >= _myControlListeners.size()) {
+		if (theIndex < 0 || theIndex >= controlListeners.size()) {
 			return null;
 		}
-		return _myControlListeners.get(theIndex);
+		return controlListeners.get(theIndex);
 	}
 
 	/**
@@ -113,18 +109,18 @@ public class ControlBroadcaster {
 	 * @return
 	 */
 	public int listenerSize() {
-		return _myControlListeners.size();
+		return controlListeners.size();
 	}
 
 	public ControlBroadcaster addCallback(CallbackListener... theListeners) {
 		for (CallbackListener l : theListeners) {
-			_myControllerCallbackListeners.put(l, new EmptyController());
+			controllerCallbackListeners.put(l, new EmptyController());
 		}
 		return this;
 	}
 
 	public ControlBroadcaster addCallback(CallbackListener theListener) {
-		_myControllerCallbackListeners.put(theListener, new EmptyController());
+		controllerCallbackListeners.put(theListener, new EmptyController());
 		return this;
 	}
 
@@ -136,19 +132,19 @@ public class ControlBroadcaster {
 	 */
 	public void addCallback(CallbackListener theListener, Controller<?>... theController) {
 		for (Controller<?> c : theController) {
-			_myControllerCallbackListeners.put(theListener, c);
+			controllerCallbackListeners.put(theListener, c);
 		}
 	}
 
 	public ControlBroadcaster removeCallback(CallbackListener... theListeners) {
 		for (CallbackListener c : theListeners) {
-			_myControllerCallbackListeners.remove(c);
+			controllerCallbackListeners.remove(c);
 		}
 		return this;
 	}
 
 	public ControlBroadcaster removeCallback(CallbackListener theListener) {
-		_myControllerCallbackListeners.remove(theListener);
+		controllerCallbackListeners.remove(theListener);
 		return this;
 	}
 
@@ -159,9 +155,9 @@ public class ControlBroadcaster {
 	 */
 	public ControlBroadcaster removeCallback(Controller<?>... theControllers) {
 		for (Controller<?> c : theControllers) {
-			for (Map.Entry<CallbackListener, Controller<?>> entry : _myControllerCallbackListeners.entrySet()) {
+			for (Map.Entry<CallbackListener, Controller<?>> entry : controllerCallbackListeners.entrySet()) {
 				if (c != null && entry.getValue().equals(c)) {
-					_myControllerCallbackListeners.remove(entry.getKey());
+					controllerCallbackListeners.remove(entry.getKey());
 				}
 			}
 		}
@@ -257,7 +253,7 @@ public class ControlBroadcaster {
 
 	public ControlBroadcaster broadcast(final ControlEvent theControlEvent, final int theType) {
 		if (broadcast) {
-			for (ControlListener cl : _myControlListeners) {
+			for (ControlListener cl : controlListeners) {
 				cl.controlEvent(theControlEvent);
 			}
 			if (theControlEvent.isTab() == false && theControlEvent.isGroup() == false) {
@@ -279,8 +275,8 @@ public class ControlBroadcaster {
 					}
 				}
 			}
-			if (_myControlEventType == ControlP5Constants.METHOD) {
-				invokeMethod(_myControlEventPlug.getObject(), _myControlEventPlug.getMethod(), new Object[] { theControlEvent });
+			if (controlEventType == ControlP5Constants.METHOD) {
+				invokeMethod(controlEventPlug.getObject(), controlEventPlug.getMethod(), new Object[] { theControlEvent });
 			}
 		}
 		return this;
@@ -334,20 +330,20 @@ public class ControlBroadcaster {
 	}
 
 	public String getEventMethod() {
-		return _myEventMethod;
+		return controllerCallbackEventMethod;
 	}
 
 	public void invokeAction(CallbackEvent theEvent) {
 		boolean invoke;
-		for (Map.Entry<CallbackListener, Controller<?>> entry : _myControllerCallbackListeners.entrySet()) {
+		for (Map.Entry<CallbackListener, Controller<?>> entry : controllerCallbackListeners.entrySet()) {
 			invoke = (entry.getValue().getClass().equals(EmptyController.class)) ? true : (entry.getValue().equals(theEvent.getController())) ? true : false;
 			if (invoke) {
 				entry.getKey().controlEvent(theEvent);
 			}
 		}
 
-		if (_myControllerCallbackEventPlug != null) {
-			invokeMethod(cp5.papplet, _myControllerCallbackEventPlug.getMethod(), new Object[] { theEvent });
+		if (controllerCallbackEventPlug != null) {
+			invokeMethod(cp5.getObjectForIntrospection(), controllerCallbackEventPlug.getMethod(), new Object[] { theEvent });
 		}
 	}
 
@@ -391,6 +387,6 @@ public class ControlBroadcaster {
 	 * @exclude
 	 */
 	@Deprecated public void plug(final String theControllerName, final String theTargetMethod) {
-		plug(cp5.papplet, theControllerName, theTargetMethod);
+		plug(cp5.getObjectForIntrospection(), theControllerName, theTargetMethod);
 	}
 }

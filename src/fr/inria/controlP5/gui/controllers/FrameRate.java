@@ -54,7 +54,7 @@ public class FrameRate extends Textlabel {
 			setText("" + PApplet.round(_myIntervalSum / _myInterval));
 			_myIntervalSum = 0;
 		}
-		_myIntervalSum += cp5.papplet.frameRate;
+		_myIntervalSum += cp5.getPApplet().frameRate;
 		super.draw(graphics);
 	}
 

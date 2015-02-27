@@ -80,13 +80,13 @@ public class ControlP5Base implements ControlP5Constants {
 
 	private ControlP5 cp5;
 
-	ControllerProperties _myProperties;
+	ControllerProperties properties;
 
-	private ControllerAutomator _myAutomator;
+	private ControllerAutomator controllerAutomator;
 
-	protected Map<Object, ArrayList<ControllerInterface<?>>> _myObjectToControllerMap = new HashMap<Object, ArrayList<ControllerInterface<?>>>();
+	protected Map<Object, ArrayList<ControllerInterface<?>>> objectToControllerMap = new HashMap<Object, ArrayList<ControllerInterface<?>>>();
 
-	protected Map<String, FieldChangedListener> _myFieldChangedListenerMap = new HashMap<String, FieldChangedListener>();
+	protected Map<String, FieldChangedListener> fieldChangedListenerMap = new HashMap<String, FieldChangedListener>();
 
 	public Map<KeyCode, List<ControlKey>> keymap = new HashMap<KeyCode, List<ControlKey>>();
 
@@ -102,8 +102,8 @@ public class ControlP5Base implements ControlP5Constants {
 
 	protected void init(ControlP5 theControlP5) {
 		cp5 = theControlP5;
-		_myProperties = new ControllerProperties(cp5);
-		_myAutomator = new ControllerAutomator(cp5);
+		properties = new ControllerProperties(cp5);
+		controllerAutomator = new ControllerAutomator(cp5);
 		currentGroupPointer = cp5.controlWindow.getTab("default");
 	}
 
@@ -573,8 +573,9 @@ public class ControlP5Base implements ControlP5Constants {
 		Controller.autoSpacing.z = theZ;
 	}
 
+        // TODO: Warning getPApplet.width  -> WRONG DOING !
 	@SuppressWarnings("static-access") public void linebreak(Controller<?> theController, boolean theFlag, int theW, int theH, PVector theSpacing) {
-		if (currentGroupPointer.autoPosition.x + theController.autoSpacing.x + theW > cp5.papplet.width) {
+		if (currentGroupPointer.autoPosition.x + theController.autoSpacing.x + theW > cp5.getPApplet().width) {
 			currentGroupPointer.autoPosition.y += currentGroupPointer.tempAutoPositionHeight;
 			currentGroupPointer.autoPosition.x = currentGroupPointer.autoPositionOffsetX;
 			currentGroupPointer.tempAutoPositionHeight = 0;
@@ -806,13 +807,13 @@ public class ControlP5Base implements ControlP5Constants {
 	 * </p>
 	 */
 	public ControlP5Base addControllersFor(final String theAddressSpace, Object t) {
-		_myAutomator.addControllersFor(theAddressSpace, t);
+		controllerAutomator.addControllersFor(theAddressSpace, t);
 		return this;
 	}
 
 	public Controller<?> getController(String theName, Object theObject) {
-		if (_myObjectToControllerMap.containsKey(theObject)) {
-			ArrayList<ControllerInterface<?>> cs = _myObjectToControllerMap.get(theObject);
+		if (objectToControllerMap.containsKey(theObject)) {
+			ArrayList<ControllerInterface<?>> cs = objectToControllerMap.get(theObject);
 			for (ControllerInterface<?> c : cs) {
 				if (c.getName().equals(theName)) {
 					return (Controller<?>) c;
@@ -823,7 +824,7 @@ public class ControlP5Base implements ControlP5Constants {
 	}
 
 	@SuppressWarnings("unchecked") public Object getObjectForController(ControllerInterface theController) {
-		for (Iterator it = _myObjectToControllerMap.entrySet().iterator(); it.hasNext();) {
+		for (Iterator it = objectToControllerMap.entrySet().iterator(); it.hasNext();) {
 			Map.Entry entry = (Map.Entry) it.next();
 			Object key = entry.getKey();
 			ArrayList<ControllerInterface> value = (ArrayList<ControllerInterface>) entry.getValue();
@@ -837,8 +838,8 @@ public class ControlP5Base implements ControlP5Constants {
 	}
 
 	public ControlP5Base setPosition(int theX, int theY, Object o) {
-		if (o != null && _myObjectToControllerMap.containsKey(o)) {
-			ArrayList<ControllerInterface<?>> cs = _myObjectToControllerMap.get(o);
+		if (o != null && objectToControllerMap.containsKey(o)) {
+			ArrayList<ControllerInterface<?>> cs = objectToControllerMap.get(o);
 			for (ControllerInterface<?> c : cs) {
 				int x = (int) c.getPosition().x + theX;
 				int y = (int) c.getPosition().y + theY;
@@ -849,8 +850,8 @@ public class ControlP5Base implements ControlP5Constants {
 	}
 
 	public ControlP5Base hide(Object theObject) {
-		if (theObject != null && _myObjectToControllerMap.containsKey(theObject)) {
-			ArrayList<ControllerInterface<?>> cs = _myObjectToControllerMap.get(theObject);
+		if (theObject != null && objectToControllerMap.containsKey(theObject)) {
+			ArrayList<ControllerInterface<?>> cs = objectToControllerMap.get(theObject);
 			for (ControllerInterface<?> c : cs) {
 				c.hide();
 			}
@@ -859,8 +860,8 @@ public class ControlP5Base implements ControlP5Constants {
 	}
 
 	public ControlP5Base show(Object theObject) {
-		if (theObject != null && _myObjectToControllerMap.containsKey(theObject)) {
-			ArrayList<ControllerInterface<?>> cs = _myObjectToControllerMap.get(theObject);
+		if (theObject != null && objectToControllerMap.containsKey(theObject)) {
+			ArrayList<ControllerInterface<?>> cs = objectToControllerMap.get(theObject);
 			for (ControllerInterface<?> c : cs) {
 				c.show();
 			}
@@ -869,8 +870,8 @@ public class ControlP5Base implements ControlP5Constants {
 	}
 
 	public ControlP5Base remove(Object theObject) {
-		if (theObject != null && _myObjectToControllerMap.containsKey(theObject)) {
-			ArrayList<ControllerInterface<?>> cs = _myObjectToControllerMap.get(theObject);
+		if (theObject != null && objectToControllerMap.containsKey(theObject)) {
+			ArrayList<ControllerInterface<?>> cs = objectToControllerMap.get(theObject);
 			for (ControllerInterface<?> c : cs) {
 				c.remove();
 			}
@@ -879,8 +880,8 @@ public class ControlP5Base implements ControlP5Constants {
 	}
 
 	public ControlP5Base setColor(CColor theColor, Object theObject) {
-		if (_myObjectToControllerMap.containsKey(theObject)) {
-			ArrayList<ControllerInterface<?>> cs = _myObjectToControllerMap.get(theObject);
+		if (objectToControllerMap.containsKey(theObject)) {
+			ArrayList<ControllerInterface<?>> cs = objectToControllerMap.get(theObject);
 			for (ControllerInterface<?> c : cs) {
 				c.setColor(theColor);
 			}
@@ -892,19 +893,19 @@ public class ControlP5Base implements ControlP5Constants {
 		String key = theObject.hashCode() + "" + theFieldName.hashCode();
 		FieldChangedListener value = new FieldChangedListener(cp5);
 		value.listenTo(theObject, theFieldName);
-		_myFieldChangedListenerMap.put(key, value);
+		fieldChangedListenerMap.put(key, value);
 		return this;
 	}
 
 	public ControlP5Base stopListeningTo(String theFieldName, Object theObject) {
 		String key = theObject.hashCode() + "" + theFieldName.hashCode();
-		_myFieldChangedListenerMap.remove(key);
+		fieldChangedListenerMap.remove(key);
 		return this;
 	}
 
 	public ControlP5Base moveTo(ControllerGroup<?> theController, Object theObject) {
-		if (_myObjectToControllerMap.containsKey(theObject)) {
-			ArrayList<ControllerInterface<?>> cs = _myObjectToControllerMap.get(theObject);
+		if (objectToControllerMap.containsKey(theObject)) {
+			ArrayList<ControllerInterface<?>> cs = objectToControllerMap.get(theObject);
 			for (ControllerInterface<?> c : cs) {
 				c.moveTo(theController);
 			}
@@ -915,11 +916,11 @@ public class ControlP5Base implements ControlP5Constants {
 	/* Properties */
 
 	public ControllerProperties getProperties() {
-		return _myProperties;
+		return properties;
 	}
 
 	public void removeProperty(ControllerInterface<?> theController) {
-		_myProperties.remove(theController);
+		properties.remove(theController);
 	}
 
 	/**
@@ -1080,19 +1081,19 @@ public class ControlP5Base implements ControlP5Constants {
 	public int modifiers;
 
 	public boolean isShiftDown() {
-		return (modifiers & Event.SHIFT & (cp5.isShortcuts() ? -1 : 1)) != 0;
+		return (modifiers & Event.SHIFT & (cp5.areShortcutsEnabled() ? -1 : 1)) != 0;
 	}
 
 	public boolean isControlDown() {
-		return (modifiers & Event.CTRL & (cp5.isShortcuts() ? -1 : 1)) != 0;
+		return (modifiers & Event.CTRL & (cp5.areShortcutsEnabled() ? -1 : 1)) != 0;
 	}
 
 	public boolean isMetaDown() {
-		return (modifiers & Event.META & (cp5.isShortcuts() ? -1 : 1)) != 0;
+		return (modifiers & Event.META & (cp5.areShortcutsEnabled() ? -1 : 1)) != 0;
 	}
 
 	public boolean isAltDown() {
-		return (modifiers & Event.ALT & (cp5.isShortcuts() ? -1 : 1)) != 0;
+		return (modifiers & Event.ALT & (cp5.areShortcutsEnabled() ? -1 : 1)) != 0;
 	}
 
 	public static class KeyCode {

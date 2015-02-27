@@ -61,7 +61,7 @@ public class Toggle extends Controller<Toggle> {
 	 */
 	public Toggle(ControlP5 theControlP5, String theName) {
 		this(theControlP5, theControlP5.getDefaultTab(), theName, 0, 0, 0, autoWidth, autoHeight);
-		theControlP5.register(theControlP5.papplet, theName, this);
+		theControlP5.register(theControlP5.getObjectForIntrospection(), theName, this);
 	}
 
 
@@ -79,7 +79,7 @@ public class Toggle extends Controller<Toggle> {
 	public Toggle(ControlP5 theControlP5, Tab theParent, String theName, float theValue, float theX, float theY, int theWidth, int theHeight) {
 		super(theControlP5, theParent, theName, theX, theY, theWidth, theHeight);
 		_myValue = theValue;
-		_myCaptionLabel.align(LEFT, BOTTOM_OUTSIDE).setPadding(0, Label.paddingY);
+		_myCaptionLabel.align(LEFT, BOTTOM_OUTSIDE).setPadding(0, Label.defaultPaddingY);
 	}
 
 

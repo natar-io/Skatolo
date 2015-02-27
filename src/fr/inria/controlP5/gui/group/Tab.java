@@ -95,9 +95,9 @@ public class Tab extends ControllerGroup<Tab> {
 			_myWidth = _myLabel.getWidth() + padding * 2;
 		}
 		graphics.pushMatrix();
-		graphics.fill(isInside ? color.getForeground() : color.getBackground());
+		graphics.fill(isInside ? this.getColor().getForeground() : this.getColor().getBackground());
 		if (isActive) {
-			graphics.fill(color.getActive());
+			graphics.fill(this.getColor().getActive());
 		}
 		graphics.translate(_myOffsetX, _myOffsetY);
 		graphics.rect(0, 0, _myWidth - 1, _myHeight);

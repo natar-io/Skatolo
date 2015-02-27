@@ -128,7 +128,7 @@ public class Textfield extends Controller<Textfield> {
      */
     public Textfield(ControlP5 theControlP5, String theName) {
             this(theControlP5, theControlP5.getDefaultTab(), theName, "", 0, 0, 199, 19);
-            theControlP5.register(theControlP5.papplet, theName, this);
+            theControlP5.register(theControlP5.getObjectForIntrospection(), theName, this);
     }
 
     public Textfield(ControlP5 theControlP5, ControllerGroup<?> theParent, String theName, String theDefaultValue,

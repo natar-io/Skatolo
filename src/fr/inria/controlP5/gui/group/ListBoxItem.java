@@ -53,7 +53,7 @@ public class ListBoxItem {
 		text = theName;
 		value = theValue;
 		parent = theListBox;
-		color = new CColor(theListBox.color);
+		color = new CColor(theListBox.getColor());
 	}
 
 	public CColor getColor() {

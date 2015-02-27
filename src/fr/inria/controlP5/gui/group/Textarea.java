@@ -71,7 +71,7 @@ public class Textarea extends ControllerGroup<Textarea> implements ControlListen
 	 */
 	public Textarea(ControlP5 theControlP5, String theName) {
 		this(theControlP5, theControlP5.getDefaultTab(), theName, "", 0, 0, 199, 99);
-		theControlP5.register(theControlP5.papplet, theName, this);
+		theControlP5.register(theControlP5.getObjectForIntrospection(), theName, this);
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class Textarea extends ControllerGroup<Textarea> implements ControlListen
 		_myValueLabel.setHeight((int) _myHeight);
 		_myValueLabel.setMultiline(true);
 		_myValueLabel.toUpperCase(false);
-		_myValueLabel.setColor(color.getValueLabel());
+		_myValueLabel.setColor(this.getColor().getValueLabel());
 		
 		
 		_myScrollbar = new Slider(cp5, _myParent, getName() + "Scroller", 0, 1, 1, _myWidth - 5, 0, 5, _myHeight);
@@ -129,7 +129,7 @@ public class Textarea extends ControllerGroup<Textarea> implements ControlListen
 		add(_myScrollbar);
 		setWidth(_myWidth);
 		setHeight(_myHeight);
-		_myScrollbar.color.set(color);
+		_myScrollbar.color.set(this.getColor());
 		_myScrollbar.setColorBackground(0x00000000);
 		_myScrollbar.setHandleSize(40);
 	}
@@ -399,7 +399,7 @@ public class Textarea extends ControllerGroup<Textarea> implements ControlListen
 	 * @return Textarea
 	 */
 	public Textarea setBorderColor(int theColor) {
-		color.setBackground(theColor);
+		this.getColor().setBackground(theColor);
 		return this;
 	}
 
