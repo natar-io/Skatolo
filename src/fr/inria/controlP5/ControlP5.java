@@ -232,6 +232,11 @@ public class ControlP5 extends ControlP5Base {
 
     private void checkGraphics() {
         try {
+            if (this.objectForIntrospection == this.papplet) {
+                this.graphics = papplet.g;
+                return;
+            }
+
             Method m = this.objectForIntrospection.getClass().getMethod("getGraphics");
             this.graphics = (PGraphics) m.invoke(objectForIntrospection);
             System.out.println("Graphics Found !" + this.graphics);
@@ -254,7 +259,6 @@ public class ControlP5 extends ControlP5Base {
             logger.info("Invocation targetException for getGraphics(). ");
             System.out.println("Invocation targetException for getGraphics(). ");
             this.graphics = papplet.g;
-
         }
     }
 
@@ -262,9 +266,9 @@ public class ControlP5 extends ControlP5Base {
         if (this.objectForIntrospection == null) {
             this.objectForIntrospection = papplet;
             System.out.println("No object for introspection, we use PApplet.");
-        } else {
-            checkGraphics();
         }
+        checkGraphics();
+
         renderer = (papplet.g.getClass().getCanonicalName().indexOf("Java2D") > -1) ? J2D : P3D;
         checkIfAndroid();
         isTabEventsActive = false;
