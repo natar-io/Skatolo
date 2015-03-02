@@ -51,7 +51,7 @@ public class Tab extends ControllerGroup<Tab> {
 
 	protected boolean isEventActive = false;
 
-	protected float _myValue = 0;
+	private float _myValue = 0;
 
 	protected String _myStringValue = "";
 
@@ -137,7 +137,7 @@ public class Tab extends ControllerGroup<Tab> {
 	}
 
 	protected boolean inside() {
-		return (cp5.getWindow().mouseX > _myOffsetX && cp5.getWindow().mouseX < _myOffsetX + _myWidth && cp5.getWindow().mouseY > _myOffsetY && cp5.getWindow().mouseY < _myOffsetY
+		return (cp5.getWindow().getMouseX() > _myOffsetX && cp5.getWindow().getMouseX() < _myOffsetX + _myWidth && cp5.getWindow().getMouseY() > _myOffsetY && cp5.getWindow().getMouseY() < _myOffsetY
 				+ _myHeight);
 	}
 

@@ -16,6 +16,8 @@ There is now a working example with :
 * This object can use the power of ControlP5 and use its own variables
   and methods automatically linked to the controller.
 
+
+
 The examples in at the bottom of this page. 
 
 
@@ -28,8 +30,9 @@ ControlP5 object to a specific PGraphics.
 
 Another focus is to dive into this library to look at the introspection features and port them to other languages such as [ruby](https://github.com/jashkenas/ruby-processing) or [python](http://py.processing.org/) modes for Processing. Consequently, these other flavours of Processing could benefit from the ease of use of ControlP5 ! 
 
+# Features
 
-# Features 
+
 
 ### Since original ControlP5
 

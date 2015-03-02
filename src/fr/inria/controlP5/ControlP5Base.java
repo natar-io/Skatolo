@@ -1009,11 +1009,11 @@ public class ControlP5Base implements ControlP5Constants {
 	}
 
 	public int getKeyCode() {
-		return cp5.getWindow().keyCode;
+		return cp5.getWindow().getKeyCode();
 	}
 
 	public char getKey() {
-		return cp5.getWindow().key;
+		return cp5.getWindow().getKey();
 	}
 
 	private char[] fromIntToChar(int... theChar) {
@@ -1078,22 +1078,26 @@ public class ControlP5Base implements ControlP5Constants {
 		return cp5;
 	}
 
-	public int modifiers;
+	private int keyModifiers;
 
+        public void updateKeyModifiers(int modifiers){
+            this.keyModifiers = modifiers;
+        }
+        
 	public boolean isShiftDown() {
-		return (modifiers & Event.SHIFT & (cp5.areShortcutsEnabled() ? -1 : 1)) != 0;
+		return (keyModifiers & Event.SHIFT & (cp5.areShortcutsEnabled() ? -1 : 1)) != 0;
 	}
 
 	public boolean isControlDown() {
-		return (modifiers & Event.CTRL & (cp5.areShortcutsEnabled() ? -1 : 1)) != 0;
+		return (keyModifiers & Event.CTRL & (cp5.areShortcutsEnabled() ? -1 : 1)) != 0;
 	}
 
 	public boolean isMetaDown() {
-		return (modifiers & Event.META & (cp5.areShortcutsEnabled() ? -1 : 1)) != 0;
+		return (keyModifiers & Event.META & (cp5.areShortcutsEnabled() ? -1 : 1)) != 0;
 	}
 
 	public boolean isAltDown() {
-		return (modifiers & Event.ALT & (cp5.areShortcutsEnabled() ? -1 : 1)) != 0;
+		return (keyModifiers & Event.ALT & (cp5.areShortcutsEnabled() ? -1 : 1)) != 0;
 	}
 
 	public static class KeyCode {

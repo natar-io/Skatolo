@@ -119,9 +119,9 @@ public class Numberbox extends Controller<Numberbox> {
 		if (isActive) {
 			if (!cp5.isAltDown()) {
 				if (_myNumberCount == VERTICAL) {
-					setValue(_myValue + (controlWindow.mouseY - controlWindow.pmouseY) * _myMultiplier);
+					setValue(_myValue + (controlWindow.getMouseY() - controlWindow.getPMouseY()) * _myMultiplier);
 				} else {
-					setValue(_myValue + (controlWindow.mouseX - controlWindow.pmouseX) * _myMultiplier);
+					setValue(_myValue + (controlWindow.getMouseX() - controlWindow.getPMouseX()) * _myMultiplier);
 				}
 			}
 		}

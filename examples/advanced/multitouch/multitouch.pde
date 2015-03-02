@@ -1,14 +1,14 @@
 /**
-* ControlP5 Pointer
+* ControlP5 Multi-Touch
 *
 * Default mouse actions use the Pointer class to trigger events.
 * you can manipulate the x and y fields of the Pointer class
 * for customizing input events for example when using a 
 * different input than the mouse.
-* Here in this example the mouse coordiates are reveresed.
+* cp5 can now have multiple Pointers !
 *
-* by Andreas Schlegel, 2012
-* www.sojamo.de/libraries/controlp5
+* by Jeremy Laviole, 2015
+* https://github.com/potioc/ControlP5
 *
 */
 
@@ -26,7 +26,7 @@ void setup() {
   cp5 = new ControlP5(this);
   // disable outodraw because we want to draw our 
   // custom cursor on to of controlP5
-  cp5.setAutoDraw(true);
+  cp5.setAutoDraw(false);
   
   cp5.addSlider("hello", 0, 100, 50, 40, 40, 100, 20);
   
@@ -38,9 +38,6 @@ void setup() {
 
 void draw() {
 
-
-
-    println("Hello " + hello);
   background(cp5.get("hello").getValue());
   // first draw controlP5
   cp5.draw();
@@ -53,7 +50,7 @@ void draw() {
   line(-10,0,10,0);
   line(0,-10,0,10);
   popMatrix();
-  println(cp5.isMouseOver());
+
 }
 
 void mousePressed() {

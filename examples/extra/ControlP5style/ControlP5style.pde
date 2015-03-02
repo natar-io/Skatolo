@@ -9,8 +9,11 @@
 * www.sojamo.de/libraries/controlp5
 *
 */
+import fr.inria.controlP5.*;
+import fr.inria.controlP5.events.*;
+import fr.inria.controlP5.gui.*;
+import fr.inria.controlP5.gui.controllers.*;
 
-import controlP5.*;
 
 ControlP5 cp5;
 

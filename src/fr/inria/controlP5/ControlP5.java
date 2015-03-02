@@ -34,6 +34,7 @@ import fr.inria.controlP5.events.ControlBroadcaster;
 import fr.inria.controlP5.gui.Canvas;
 import fr.inria.controlP5.gui.ControlWindow;
 import fr.inria.controlP5.gui.Controller;
+import fr.inria.controlP5.gui.Pointer;
 import fr.inria.controlP5.gui.group.ControllerGroup;
 import fr.inria.controlP5.gui.controllers.Textfield;
 import fr.inria.controlP5.gui.group.Tab;
@@ -56,7 +57,6 @@ import processing.core.PFont;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
-import fr.inria.controlP5.gui.ControlWindow.Pointer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
@@ -750,6 +750,7 @@ public class ControlP5 extends ControlP5Base {
         controllerMap.clear();
     }
 
+    // TODO: find the use of this and comment. 
     /**
      * @exclude
      */
@@ -761,7 +762,8 @@ public class ControlP5 extends ControlP5Base {
     }
 
     /**
-     * call draw() from your program when autoDraw is disabled.
+     * call draw() from your program when autoDraw is disabled. Only used for
+     * autoDraw.
      *
      * @exclude
      */
@@ -789,21 +791,47 @@ public class ControlP5 extends ControlP5Base {
         return getWindow(papplet);
     }
 
-    public void mouseEvent(MouseEvent theMouseEvent) {
-        getWindow().mouseEvent(theMouseEvent);
-    }
-
-    public void keyEvent(KeyEvent theKeyEvent) {
-        getWindow().keyEvent(theKeyEvent);
-    }
-
+    // TODO: usefull ?
+//    public void mouseEvent(MouseEvent theMouseEvent) {
+//        getWindow().mouseEvent(theMouseEvent);
+//    }
+//
+//    public void keyEvent(KeyEvent theKeyEvent) {
+//        getWindow().keyEvent(theKeyEvent);
+//    }
+    
+    
     /**
-     * convenience method to access the pointer of the main control window.
+     * Add a Pointer with a specific ID (for multi-touch). 
+     * @param id
+     * @return the pointer to update manually, or with updatePointer()
      */
-    public Pointer getPointer() {
-        return getWindow(papplet).getPointer();
+    public Pointer addPointer(int id) {
+        return controlWindow.getPointers().addPointer(id);
     }
 
+    public void updatePointer(int id, int x, int y) {
+        try{
+        controlWindow.getPointers().updatePointer(id, x, y);
+        } catch (IllegalArgumentException exception){
+            // TODO: better exception.
+            // TODO: logging.
+            System.out.println("Invalid pointer " + id + ". Update not done. ");
+        }
+    }
+    
+    public void removePointer(int id){
+        controlWindow.getPointers().removePointer(id);
+    }
+
+    
+    public int getMouseX(){
+        return controlWindow.getMouseX();
+    }
+    public int getMouseY(){
+        return controlWindow.getMouseY();
+    }
+    
     /**
      * convenience method to check if the mouse (or pointer) is hovering over
      * any controller. only applies to the main window. To receive the mouseover
@@ -1229,7 +1257,7 @@ public class ControlP5 extends ControlP5Base {
     /**
      * disposes and clears all controlP5 elements. When running in applet mode,
      * opening new tabs or switching to another tab causes the applet to call
-     * dispose(). therefore dispose() is disabled when running ing applet mode.
+     * dispose(). therefore dispose() is disabled when running in applet mode.
      * TODO implement better dispose handling for applets.
      *
      * @exclude

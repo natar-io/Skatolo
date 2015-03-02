@@ -84,8 +84,8 @@ public class Slider2D extends Controller<Slider2D> {
 	 public Slider2D updateInternalEvents(PApplet theApplet) {
 		if (isInside()) {
 			if (!cp5.isAltDown()) {
-				float tX = PApplet.constrain(controlWindow.mouseX - (_myParent.getAbsolutePosition().x + position.x), 0, width - cursorWidth);
-				float tY = PApplet.constrain(controlWindow.mouseY - (_myParent.getAbsolutePosition().y + position.y), 0, height - cursorHeight);
+				float tX = PApplet.constrain(controlWindow.getMouseX() - (_myParent.getAbsolutePosition().x + position.x), 0, width - cursorWidth);
+				float tY = PApplet.constrain(controlWindow.getMouseY() - (_myParent.getAbsolutePosition().y + position.y), 0, height - cursorHeight);
 				if (isMousePressed) {
 					cursorX = tX;
 					cursorY = tY;

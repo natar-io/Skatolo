@@ -342,9 +342,9 @@ public class Textarea extends ControllerGroup<Textarea> implements ControlListen
 	// !!! add padding to the box.
 	// padding and margin doesnt work nicely with textarea yet!
 	protected boolean inside() {
-		return (cp5.getWindow().mouseX > position.x + _myParent.absolutePosition.x
-				&& cp5.getWindow().mouseX < position.x + _myParent.absolutePosition.x + _myWidth
-				&& cp5.getWindow().mouseY > position.y + _myParent.absolutePosition.y && cp5.getWindow().mouseY < position.y
+		return (cp5.getWindow().getMouseX() > position.x + _myParent.absolutePosition.x
+				&& cp5.getWindow().getMouseX() < position.x + _myParent.absolutePosition.x + _myWidth
+				&& cp5.getWindow().getMouseY() > position.y + _myParent.absolutePosition.y && cp5.getWindow().getMouseY() < position.y
 				+ _myParent.absolutePosition.y + _myHeight);
 	}
 

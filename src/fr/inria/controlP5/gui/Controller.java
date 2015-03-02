@@ -35,7 +35,6 @@ import fr.inria.controlP5.ControlP5Constants;
 import fr.inria.controlP5.events.ControllerPlug;
 import fr.inria.controlP5.file.ControllerProperty;
 import fr.inria.controlP5.gui.controllers.ControllerView;
-import fr.inria.controlP5.Pointer;
 import fr.inria.controlP5.gui.controllers.Numberbox;
 import fr.inria.controlP5.gui.group.ControllerGroup;
 import fr.inria.controlP5.gui.controllers.Textfield;
@@ -286,7 +285,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
 
         _myDefaultValue = _myValue;
 
-		// plug to a method or field inside the main papplet.
+        // plug to a method or field inside the main papplet.
         // forwarding a ControlEvent to the controlEvent() method inside
         // the main papplet is done by the controlbroadcaster.
         cp5.getControlBroadcaster().plug(cp5.getObjectForIntrospection(), this, name);
@@ -299,7 +298,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
 
     protected final void initControllerValue() {
 
-		// this is painful. deciding if the value has been set by parameter or by reading the current value of the corresponding field is
+        // this is painful. deciding if the value has been set by parameter or by reading the current value of the corresponding field is
         // very painful here due to too many ifs and thens. therefore this is done manually here - very ugly though.
         boolean go = false;
 
@@ -510,7 +509,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
      * @return {@link PVector}
      */
     public PVector getAbsolutePosition() {
-		// should return a mutable object of absolutePostion in a new PVector
+        // should return a mutable object of absolutePostion in a new PVector
         // object to prevent absolutePosition from being modified by changing
         // its field values. PVector should have getter and setters for x,y,z
         return absolutePosition;
@@ -521,7 +520,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
      */
     @Override
     public T setAbsolutePosition(PVector thePVector) {
-		// TODO
+        // TODO
         // doesnt work properly yet.
         // absolute position should not be changed from the outside anyway.
         absolutePosition.x = thePVector.x;
@@ -557,15 +556,16 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
      */
     public final T updateEvents() {
         if (isInside) {
-            boolean moved = ((controlWindow.mouseX - controlWindow.pmouseX) != 0 || (controlWindow.mouseY - controlWindow.pmouseY) != 0);
-            if (isMousePressed) {
-                if (moved) {
+            boolean moved = ((controlWindow.getMouseX() - controlWindow.getPMouseX()) != 0 || (controlWindow.getMouseY() - controlWindow.getPMouseY()) != 0);
+
+            if (moved) {
+                if (isMousePressed) {
                     onDrag();
                     dragged = true;
-                }
-            } else {
-                if (moved && this.equals(controlWindow.getFirstFromMouseOverList())) {
-                    onMove();
+                } else {
+                    if (this.equals(controlWindow.getFirstFromMouseOverList())) {
+                        onMove();
+                    }
                 }
             }
         }
@@ -573,8 +573,8 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
         if (isVisible && (isMousePressed == controlWindow.mouselock)) {
             if (isMousePressed && cp5.isAltDown() && isMoveable) {
                 if (!cp5.isMoveable) {
-                    positionBuffer.x += controlWindow.mouseX - controlWindow.pmouseX;
-                    positionBuffer.y += controlWindow.mouseY - controlWindow.pmouseY;
+                    positionBuffer.x += controlWindow.getMouseX() - controlWindow.getPMouseX();
+                    positionBuffer.y += controlWindow.getMouseY() - controlWindow.getPMouseY();
                     if (cp5.isShiftDown()) {
                         position.x = ((int) (positionBuffer.x) / 10) * 10;
                         position.y = ((int) (positionBuffer.y) / 10) * 10;
@@ -603,7 +603,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
 
                             setMouseOver(false);
 
-							// here the mouseOver is set to false when the mouse is released
+                            // here the mouseOver is set to false when the mouse is released
                             // outside a controller. the mouseoverlist is not updated when
                             // the mouse is still pressed but has left the controller - updating the
                             // list here currently conflicts with callbacks called from inside
@@ -620,27 +620,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
         return me;
     }
 
-    public final Pointer getPointer() {
-        return new Pointer() {
-
-            public int x() {
-                return (int) (controlWindow.mouseX - _myParent.getAbsolutePosition().x - position.x);
-            }
-
-            public int y() {
-                return (int) (controlWindow.mouseY - _myParent.getAbsolutePosition().y - position.y);
-            }
-
-            public int px() {
-                return (int) (controlWindow.pmouseX - _myParent.getAbsolutePosition().x - position.x);
-            }
-
-            public int py() {
-                return (int) (controlWindow.pmouseY - _myParent.getAbsolutePosition().y - position.y);
-            }
-        };
-    }
-
+    
     /**
      * @param theStatus boolean
      * @return boolean
@@ -775,7 +755,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
 
         graphics.popMatrix();
 
-		// theApplet.pushMatrix();
+        // theApplet.pushMatrix();
         // _myDebugDisplay.display(theApplet, this);
         // theApplet.popMatrix();
     }
@@ -1079,8 +1059,8 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
      * @return boolean
      */
     protected boolean inside() {
-        return (controlWindow.mouseX > position.x + _myParent.getAbsolutePosition().x && controlWindow.mouseX < position.x + _myParent.getAbsolutePosition().x + width
-                && controlWindow.mouseY > position.y + _myParent.getAbsolutePosition().y && controlWindow.mouseY < position.y + _myParent.getAbsolutePosition().y + height);
+        return (controlWindow.getMouseX() > position.x + _myParent.getAbsolutePosition().x && controlWindow.getMouseX() < position.x + _myParent.getAbsolutePosition().x + width
+                && controlWindow.getMouseY() > position.y + _myParent.getAbsolutePosition().y && controlWindow.getMouseY() < position.y + _myParent.getAbsolutePosition().y + height);
     }
 
     /**

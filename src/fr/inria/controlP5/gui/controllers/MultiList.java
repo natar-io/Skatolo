@@ -210,7 +210,7 @@ public class MultiList extends Controller<MultiList> implements MultiListInterfa
 		}
 
 		if (isUpdateLocation) {
-			updateLocation((controlWindow.mouseX - controlWindow.pmouseX), (controlWindow.mouseY - controlWindow.pmouseY));
+			updateLocation((controlWindow.getMouseX() - controlWindow.getPMouseX()), (controlWindow.getMouseY() - controlWindow.getPMouseY()));
 			isUpdateLocation = theApplet.mousePressed;
 		}
 
@@ -240,7 +240,7 @@ public class MultiList extends Controller<MultiList> implements MultiListInterfa
 	 * @return boolean
 	 */
 	public boolean observe() {
-		return Hacks.inside(_myRect, controlWindow.mouseX, controlWindow.mouseY);
+		return Hacks.inside(_myRect, controlWindow.getMouseX(), controlWindow.getMouseY());
 	}
 
 

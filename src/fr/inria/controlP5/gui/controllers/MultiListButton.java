@@ -222,7 +222,7 @@ public class MultiListButton extends Button implements MultiListInterface {
 
 
 	public boolean observe() {
-		return Hacks.inside(_myRect, controlWindow.mouseX, controlWindow.mouseY);
+		return Hacks.inside(_myRect, controlWindow.getMouseX(), controlWindow.getMouseY());
 	}
 
 

@@ -11,8 +11,10 @@
 *
 */
 
-
-import controlP5.*;
+import fr.inria.controlP5.*;
+import fr.inria.controlP5.events.*;
+import fr.inria.controlP5.gui.controllers.*;
+import fr.inria.controlP5.gui.group.*;
 
 ControlP5 cp5;
 
@@ -35,6 +37,8 @@ void setup() {
   
   cp5.addButton("b1", 0, 20, 350, 80, 12);
   cp5.addButton("b2", 0, 101, 350, 80, 12);
+
+  cp5.setMoveable(true);
 
 }
 

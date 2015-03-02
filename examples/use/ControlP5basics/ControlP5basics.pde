@@ -17,7 +17,9 @@
  */
 
 
-import controlP5.*;
+import fr.inria.controlP5.*;
+import fr.inria.controlP5.events.*;
+import fr.inria.controlP5.gui.controllers.*;
 
 ControlP5 cp5;
 public int myColorRect = 200;
@@ -53,6 +55,8 @@ void draw() {
   background(myColorBackground);
   fill(myColorRect);
   rect(0, 0, width, 100);
+
+  myColorRect = myColorRect + 1;
 }
 
 

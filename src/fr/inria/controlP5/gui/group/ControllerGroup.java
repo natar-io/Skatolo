@@ -444,8 +444,8 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
             if ((isMousePressed == cp5.getWindow().mouselock)) {
                 if (isMousePressed && cp5.isAltDown() && isMoveable) {
                     if (!cp5.isMoveable) {
-                        positionBuffer.x += cp5.getWindow().mouseX - cp5.getWindow().pmouseX;
-                        positionBuffer.y += cp5.getWindow().mouseY - cp5.getWindow().pmouseY;
+                        positionBuffer.x += cp5.getWindow().getMouseX() - cp5.getWindow().getPMouseX();
+                        positionBuffer.y += cp5.getWindow().getMouseY() - cp5.getWindow().getPMouseY();
                         if (cp5.isShiftDown()) {
                             position.x = ((int) (positionBuffer.x) / 10) * 10;
                             position.y = ((int) (positionBuffer.y) / 10) * 10;
@@ -1182,8 +1182,8 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
     }
 
     protected boolean inside() {
-        return (cp5.getWindow().mouseX > position.x + _myParent.absolutePosition.x && cp5.getWindow().mouseX < position.x + _myParent.absolutePosition.x + _myWidth
-                && cp5.getWindow().mouseY > position.y + _myParent.absolutePosition.y - _myHeight && cp5.getWindow().mouseY < position.y + _myParent.absolutePosition.y);
+        return (cp5.getWindow().getMouseX() > position.x + _myParent.absolutePosition.x && cp5.getWindow().getMouseX() < position.x + _myParent.absolutePosition.x + _myWidth
+                && cp5.getWindow().getMouseY() > position.y + _myParent.absolutePosition.y - _myHeight && cp5.getWindow().getMouseY() < position.y + _myParent.absolutePosition.y);
     }
 
     /**

@@ -13,8 +13,13 @@
 *
 */
 
-import controlP5.*;
+
 import processing.opengl.*;
+
+import fr.inria.controlP5.*;
+import fr.inria.controlP5.events.*;
+import fr.inria.controlP5.gui.*;
+import fr.inria.controlP5.gui.controllers.*;
 
 ControlP5 controlP5;
 

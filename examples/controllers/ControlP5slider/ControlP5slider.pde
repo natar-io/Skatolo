@@ -91,6 +91,9 @@ void draw() {
   
   fill(sliderTicks2);
   rect(0,350,width,50);
+
+  println("Mouse : "+   cp5.getMouseX() + " " + cp5.getMouseY() );
+  println("Mouse2 : "+   mouseX + " " + mouseY );
 }
 
 void slider(float theColor) {

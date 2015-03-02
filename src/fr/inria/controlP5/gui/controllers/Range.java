@@ -186,7 +186,7 @@ public class Range extends Controller<Range> {
 
 	public Range updateInternalEvents(PApplet theApplet) {
 		if (isVisible) {
-			int c = controlWindow.mouseX - controlWindow.pmouseX;
+			int c = controlWindow.getMouseX() - controlWindow.getMouseX();
 			if (c == 0) {
 				return this;
 			}
@@ -214,7 +214,7 @@ public class Range extends Controller<Range> {
 		final float posX = _myParent.getAbsolutePosition().x + position.x;
 		final float posY = _myParent.getAbsolutePosition().y + position.y;
 
-		if (controlWindow.mouseY < posY || controlWindow.mouseY > posY + getHeight()) {
+		if (controlWindow.getMouseY() < posY || controlWindow.getMouseY() > posY + getHeight()) {
 			mode = -1;
 			isMinHandle = isMaxHandle = false;
 			return;
@@ -223,13 +223,13 @@ public class Range extends Controller<Range> {
 		int x0 = (int) (posX + minHandle);
 		int x1 = (int) (posX + maxHandle);
 
-		if (controlWindow.mouseX >= x0 - handleSize && controlWindow.mouseX < x0) {
+		if (controlWindow.getMouseX() >= x0 - handleSize && controlWindow.getMouseX() < x0) {
 			mode = LEFT;
 			isMinHandle = true;
-		} else if (controlWindow.mouseX >= x1 && controlWindow.mouseX < x1 + handleSize) {
+		} else if (controlWindow.getMouseX() >= x1 && controlWindow.getMouseX() < x1 + handleSize) {
 			mode = RIGHT;
 			isMaxHandle = true;
-		} else if (controlWindow.mouseX > x0 && controlWindow.mouseX < x1 && isDraggable) {
+		} else if (controlWindow.getMouseX() > x0 && controlWindow.getMouseX() < x1 && isDraggable) {
 			mode = CENTER;
 		}
 	}
@@ -449,11 +449,11 @@ public class Range extends Controller<Range> {
 			int x1 = (int) (posX + maxHandle);
 
 			if (isInside() && high < 0) {
-				if (controlWindow.mouseX >= x0 - handleSize && controlWindow.mouseX < x0) {
+				if (controlWindow.getMouseX() >= x0 - handleSize && controlWindow.getMouseX() < x0) {
 					high = LEFT;
-				} else if (controlWindow.mouseX >= x1 && controlWindow.mouseX < x1 + handleSize) {
+				} else if (controlWindow.getMouseX() >= x1 && controlWindow.getMouseX() < x1 + handleSize) {
 					high = RIGHT;
-				} else if (controlWindow.mouseX > x0 && controlWindow.mouseX < x1 && isDraggable) {
+				} else if (controlWindow.getMouseX() > x0 && controlWindow.getMouseX() < x1 && isDraggable) {
 					high = CENTER;
 				}
 			}

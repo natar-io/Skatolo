@@ -143,8 +143,8 @@ public class Matrix extends Controller<Matrix> {
 
 		if (getIsInside()) {
 			if (isPressed) {
-				int tX = (int) ((theApplet.mouseX - position.x) / stepX);
-				int tY = (int) ((theApplet.mouseY - position.y) / stepY);
+				int tX = (int) ((getWindow().getMouseX() - position.x) / stepX);
+				int tY = (int) ((getWindow().getMouseY() - position.y) / stepY);
 
 				if (tX != currentX || tY != currentY) {
 					tX = PApplet.min(PApplet.max(0, tX), _myCellX);
@@ -426,9 +426,9 @@ public class Matrix extends Controller<Matrix> {
 			}
 			if (isInside()) {
                             
-                            // TODO: mouseX & mouseY here ? Why ?!
-                            int x = (int) ((cp5.getPApplet().mouseX - position.x) / stepX);
-                            int y = (int) ((cp5.getPApplet().mouseY - position.y) / stepY);
+                            // TODO: getMouseX() & getMouseY() here ? Why ?!
+                            int x = (int) ((getWindow().getMouseX() - position.x) / stepX);
+                            int y = (int) ((getWindow().getMouseY() - position.y) / stepY);
                             if (x >= 0 && x < _myCellX && y >= 0 && y < _myCellY) {
 					graphics.fill(_myCells[x][y] == 1 ? color.getActive() : color.getForeground());
 					graphics.rect(x * stepX, y * stepY, stepX - gapX, stepY - gapY);
