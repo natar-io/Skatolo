@@ -146,7 +146,7 @@ public class Tooltip {
             if (mode >= ControlP5.WAIT) {
 
                 previousPosition.set(currentPosition);
-                currentPosition.set(theWindow.getMouseX(), theWindow.getMouseY(), 0);
+                currentPosition.set(theWindow.getPointerX(), theWindow.getPointerY(), 0);
 
                 if (controller != null) {
                     if (controller.getControlWindow().equals(theWindow)) {
@@ -239,7 +239,7 @@ public class Tooltip {
         if (map.containsKey(theController)) {
             startTime = System.nanoTime();
             controller = theController;
-            currentPosition.set(theController.getControlWindow().getMouseX(), theController.getControlWindow().getMouseY(), 0);
+            currentPosition.set(theController.getControlWindow().getPointerX(), theController.getControlWindow().getPointerY(), 0);
             updateText(map.get(controller));
             mode = ControlP5.WAIT;
         }

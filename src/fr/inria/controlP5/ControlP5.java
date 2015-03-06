@@ -35,6 +35,7 @@ import fr.inria.controlP5.gui.Canvas;
 import fr.inria.controlP5.gui.ControlWindow;
 import fr.inria.controlP5.gui.Controller;
 import fr.inria.controlP5.gui.Pointer;
+import fr.inria.controlP5.gui.PointerList;
 import fr.inria.controlP5.gui.group.ControllerGroup;
 import fr.inria.controlP5.gui.controllers.Textfield;
 import fr.inria.controlP5.gui.group.Tab;
@@ -59,6 +60,7 @@ import processing.event.KeyEvent;
 import processing.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.logging.Level;
 import processing.core.PGraphics;
 
@@ -823,13 +825,24 @@ public class ControlP5 extends ControlP5Base {
     public void removePointer(int id){
         controlWindow.getPointers().removePointer(id);
     }
+    
+    public PointerList getPointers(){
+        return controlWindow.getPointers();
+    }
+    
+    public Collection<Pointer> getPointerList(){
+        return controlWindow.getPointers().values();
+    }
 
+    public Pointer getMousePointer(){
+        return controlWindow.getMousePointer();
+    }
     
     public int getMouseX(){
-        return controlWindow.getMouseX();
+        return controlWindow.getPointerX();
     }
     public int getMouseY(){
-        return controlWindow.getMouseY();
+        return controlWindow.getPointerY();
     }
     
     /**

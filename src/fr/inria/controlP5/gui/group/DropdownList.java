@@ -266,10 +266,10 @@ public class DropdownList extends ControlGroup<DropdownList> {
 	 * @exclude {@inheritDoc}
 	 */
 	@Override public DropdownList updateInternalEvents(PApplet theApplet) {
-		boolean xx = cp5.getWindow().getMouseX() > getAbsolutePosition().x && cp5.getWindow().getMouseX() < getAbsolutePosition().x + _myWidth;
+		boolean xx = cp5.getWindow().getPointerX() > getAbsolutePosition().x && cp5.getWindow().getPointerX() < getAbsolutePosition().x + _myWidth;
 		// there is a 1px gap between bar and controllers, so -1 the top-y-position
-		boolean yy = cp5.getWindow().getMouseY() > getAbsolutePosition().y - 1
-				&& cp5.getWindow().getMouseY() < getAbsolutePosition().y + _myBackgroundHeight;
+		boolean yy = cp5.getWindow().getPointerY() > getAbsolutePosition().y - 1
+				&& cp5.getWindow().getPointerY() < getAbsolutePosition().y + _myBackgroundHeight;
 		isInsideGroup = isOpen() ? xx && yy : false;
 		if ((isBarVisible ? isInside : false) || isInsideGroup) {
 			cp5.getWindow().setMouseOverController(this);
@@ -502,7 +502,7 @@ public class DropdownList extends ControlGroup<DropdownList> {
 		super.keyEvent(theEvent);
 		float x = getAbsolutePosition().x;
 		float y = getAbsolutePosition().y;
-		boolean b = (getWindow().getMouseX() > x && getWindow().getMouseX() < (x + _myWidth) && getWindow().getMouseY() > (y - getBarHeight()) && getWindow().getMouseY() < y
+		boolean b = (getWindow().getPointerX() > x && getWindow().getPointerX() < (x + _myWidth) && getWindow().getPointerY() > (y - getBarHeight()) && getWindow().getPointerY() < y
 				+ _myOriginalBackgroundHeight);
 		if (b && isOpen()) {
 			float step = (1.0f / (float) items.size());

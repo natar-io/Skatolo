@@ -186,11 +186,11 @@ public class Range extends Controller<Range> {
 
 	public Range updateInternalEvents(PApplet theApplet) {
 		if (isVisible) {
-			int c = controlWindow.getMouseX() - controlWindow.getMouseX();
+			int c = controlWindow.getPointerX() - controlWindow.getPointerX();
 			if (c == 0) {
 				return this;
 			}
-			if (isMousePressed && !cp5.isAltDown()) {
+			if (isMousePressed() && !cp5.isAltDown()) {
 				switch (mode) {
 				case (LEFT):
 					minHandle = PApplet.max(handleSize, PApplet.min(maxHandle, minHandle + c));
@@ -214,7 +214,7 @@ public class Range extends Controller<Range> {
 		final float posX = _myParent.getAbsolutePosition().x + position.x;
 		final float posY = _myParent.getAbsolutePosition().y + position.y;
 
-		if (controlWindow.getMouseY() < posY || controlWindow.getMouseY() > posY + getHeight()) {
+		if (controlWindow.getPointerY() < posY || controlWindow.getPointerY() > posY + getHeight()) {
 			mode = -1;
 			isMinHandle = isMaxHandle = false;
 			return;
@@ -223,13 +223,13 @@ public class Range extends Controller<Range> {
 		int x0 = (int) (posX + minHandle);
 		int x1 = (int) (posX + maxHandle);
 
-		if (controlWindow.getMouseX() >= x0 - handleSize && controlWindow.getMouseX() < x0) {
+		if (controlWindow.getPointerX() >= x0 - handleSize && controlWindow.getPointerX() < x0) {
 			mode = LEFT;
 			isMinHandle = true;
-		} else if (controlWindow.getMouseX() >= x1 && controlWindow.getMouseX() < x1 + handleSize) {
+		} else if (controlWindow.getPointerX() >= x1 && controlWindow.getPointerX() < x1 + handleSize) {
 			mode = RIGHT;
 			isMaxHandle = true;
-		} else if (controlWindow.getMouseX() > x0 && controlWindow.getMouseX() < x1 && isDraggable) {
+		} else if (controlWindow.getPointerX() > x0 && controlWindow.getPointerX() < x1 && isDraggable) {
 			mode = CENTER;
 		}
 	}
@@ -402,7 +402,7 @@ public class Range extends Controller<Range> {
 	}
 
 	protected float snapValue(float theValue) {
-		if (isMousePressed) {
+		if (isMousePressed()) {
 			return theValue;
 		}
 		if (isSnapToTickMarks) {
@@ -449,11 +449,11 @@ public class Range extends Controller<Range> {
 			int x1 = (int) (posX + maxHandle);
 
 			if (isInside() && high < 0) {
-				if (controlWindow.getMouseX() >= x0 - handleSize && controlWindow.getMouseX() < x0) {
+				if (controlWindow.getPointerX() >= x0 - handleSize && controlWindow.getPointerX() < x0) {
 					high = LEFT;
-				} else if (controlWindow.getMouseX() >= x1 && controlWindow.getMouseX() < x1 + handleSize) {
+				} else if (controlWindow.getPointerX() >= x1 && controlWindow.getPointerX() < x1 + handleSize) {
 					high = RIGHT;
-				} else if (controlWindow.getMouseX() > x0 && controlWindow.getMouseX() < x1 && isDraggable) {
+				} else if (controlWindow.getPointerX() > x0 && controlWindow.getPointerX() < x1 && isDraggable) {
 					high = CENTER;
 				}
 			}

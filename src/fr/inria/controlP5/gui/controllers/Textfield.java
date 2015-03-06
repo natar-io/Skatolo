@@ -290,8 +290,8 @@ public class Textfield extends Controller<Textfield> {
             if (isActive) {
                     // TODO System.out.println("adjust cursor");
             }
-            int x = (int) (getControlWindow().getMouseX() - getAbsolutePosition().x);
-            int y = (int) (getControlWindow().getMouseY() - getAbsolutePosition().y);
+            int x = (int) (getControlWindow().getPointerX() - getAbsolutePosition().x);
+            int y = (int) (getControlWindow().getPointerY() - getAbsolutePosition().y);
 
             // TODO System.out.println(x + ":" + y);
             setFocus(true);

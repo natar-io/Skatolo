@@ -308,9 +308,9 @@ public class Knob extends Controller<Knob> {
 	 * @exclude
 	 */
 	@Override public Knob updateInternalEvents(PApplet theApplet) {
-		if (isMousePressed && !cp5.isAltDown()) {
+		if (isMousePressed() && !cp5.isAltDown()) {
 			if (isActive) {
-				float c = (_myDragDirection == HORIZONTAL) ? controlWindow.getMouseX() - controlWindow.getPMouseX() : controlWindow.getMouseY() - controlWindow.getPMouseY();
+				float c = (_myDragDirection == HORIZONTAL) ? controlWindow.getPointerX() - controlWindow.getPointerPrevX() : controlWindow.getPointerY() - controlWindow.getPointerPrevY();
 				currentValue += (c) / resolution;
 				if (isConstrained) {
 					currentValue = PApplet.constrain(currentValue, 0, 1);
@@ -338,10 +338,10 @@ public class Knob extends Controller<Knob> {
 	@Override public void mousePressed() {
 		float x = _myParent.getAbsolutePosition().x + position.x + _myRadius;
 		float y = _myParent.getAbsolutePosition().y + position.y + _myRadius;
-		if (PApplet.dist(x, y, controlWindow.getMouseX(), controlWindow.getMouseY()) < _myRadius) {
+		if (PApplet.dist(x, y, controlWindow.getPointerX(), controlWindow.getPointerY()) < _myRadius) {
 			isActive = true;
-			if (PApplet.dist(x, y, controlWindow.getMouseX(), controlWindow.getMouseY()) > (_myRadius * 0.6)) {
-				myAngle = (PApplet.atan2(controlWindow.getMouseY() - y, controlWindow.getMouseX() - x) - startAngle);
+			if (PApplet.dist(x, y, controlWindow.getPointerX(), controlWindow.getPointerY()) > (_myRadius * 0.6)) {
+				myAngle = (PApplet.atan2(controlWindow.getPointerY() - y, controlWindow.getPointerX() - x) - startAngle);
 				if (myAngle < 0) {
 					myAngle = TWO_PI + myAngle;
 				}

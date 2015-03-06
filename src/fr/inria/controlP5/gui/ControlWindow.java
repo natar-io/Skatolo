@@ -112,8 +112,8 @@ public final class ControlWindow {
     private Pointer mousePointer;
     private Pointer currentPointer;
 
-    protected boolean mousePressed;
-    public boolean mouselock;
+//    protected boolean mousePressed;
+    public boolean isMouseMaintainedPressed;
 
     private static final int NB_KEYS = 525;   // Why ?!
     private char key;
@@ -296,9 +296,6 @@ public final class ControlWindow {
      */
     public void updateEvents() {
 
-        // Check if the mouse moved away. 
-        handleMouseOver();
-        handleMouseWheelMoved();
         if (tabs.size() <= 0) {
             return;
         }
@@ -430,7 +427,7 @@ public final class ControlWindow {
 
         if (papplet().focused != focused) {
             clearKeys();
-            mousePressed = false;
+            mousePointer.resetPress();
             focused = papplet().focused;
         }
 
@@ -485,19 +482,36 @@ public final class ControlWindow {
 
         if (theMouseEvent.getAction() == MouseEvent.PRESS) {
             mousePointer.setStatus(Pointer.Status.PRESSED);
+
         }
         if (theMouseEvent.getAction() == MouseEvent.RELEASE) {
-            mousePointer.setStatus(Pointer.Status.NOT_PRESSED);
+            mousePointer.setStatus(Pointer.Status.RELEASED);
         }
 
-        if (isUsingMouseForPointing) {
-            if (theMouseEvent.getAction() == MouseEvent.PRESS) {
-                mousePressedEvent();
-            }
-            if (theMouseEvent.getAction() == MouseEvent.RELEASE) {
-                mouseReleasedEvent();
-            }
-        }
+//        if (isUsingMouseForPointing) {
+//            if (theMouseEvent.getAction() == MouseEvent.PRESS) {
+//                mousePressedEvent();
+//            }
+//            if (theMouseEvent.getAction() == MouseEvent.RELEASE) {
+//                mouseReleasedEvent();
+//            }
+//        }
+    }
+
+    public int getPointerX() {
+        return currentPointer.getX();
+    }
+
+    public int getPointerY() {
+        return currentPointer.getY();
+    }
+
+    public int getPointerPrevX() {
+        return currentPointer.getPX();
+    }
+
+    public int getPointerPrevY() {
+        return currentPointer.getPY();
     }
 
     public int getMouseX() {
@@ -514,22 +528,6 @@ public final class ControlWindow {
 
     public int getPMouseY() {
         return mousePointer.getPY();
-    }
-
-    public int getCurrentPointerX() {
-        return currentPointer.getX();
-    }
-
-    public int getCurrentPointerY() {
-        return currentPointer.getY();
-    }
-
-    public int getCurrentPointerPX() {
-        return currentPointer.getPX();
-    }
-
-    public int getCurrentPointerPY() {
-        return currentPointer.getPY();
     }
 
     public void keyEvent(KeyEvent theKeyEvent) {
@@ -618,7 +616,26 @@ public final class ControlWindow {
             // set mouseX & mouseY & mousePressed for each pointer. 
             //       for (Pointer p : pointers.values()) {
             //       }
-            updateEvents();
+
+            // Check if the mouse moved away. 
+            handleMouseOver();
+            handleMouseWheelMoved();
+
+            for (Pointer p : pointers.values()) {
+
+                    currentPointer = p;
+                    if (p.isPressed()) {
+                        p.eventSent();
+                        mousePressedEvent();
+                    }
+                    if (p.isReleased()) {
+                        p.eventSent();
+                        mouseReleasedEvent();
+                    }
+
+                    updateEvents();
+            }
+
         }
         if (isVisible) {
 
@@ -725,10 +742,10 @@ public final class ControlWindow {
 
     private void mousePressedEvent() {
         if (isVisible) {
-            mousePressed = true;
+
             for (int i = 0; i < tabs.size(); i++) {
                 if (((ControllerInterface<?>) tabs.get(i)).setMousePressed(true)) {
-                    mouselock = true;
+                    isMouseMaintainedPressed = true;
                     return;
                 }
             }
@@ -737,8 +754,8 @@ public final class ControlWindow {
 
     private void mouseReleasedEvent() {
         if (isVisible) {
-            mousePressed = false;
-            mouselock = false;
+
+            isMouseMaintainedPressed = false;
             for (int i = 0; i < tabs.size(); i++) {
                 ((ControllerInterface<?>) tabs.get(i)).setMousePressed(false);
             }
@@ -787,7 +804,7 @@ public final class ControlWindow {
     }
 
     public boolean isMousePressed() {
-        return mousePressed;
+        return mousePointer.isPressed();
     }
 
     /**
@@ -995,6 +1012,14 @@ public final class ControlWindow {
 
     public boolean isAutoDraw() {
         return isAutoDraw;
+    }
+
+    public Pointer getMousePointer() {
+        return this.mousePointer;
+    }
+
+    Pointer getCurrentPointer() {
+       return this.currentPointer;
     }
 
 }

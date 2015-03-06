@@ -69,7 +69,7 @@ public class Println {
 								break;
 							}
 							if (!paused) {
-								if (!c._myScrollbar.isMousePressed) {
+								if (!c._myScrollbar.isMousePressed()) {
 									c.append(buffer + new String(buf, 0, len), max);
 									buffer = "";
 									c.scroll(1);

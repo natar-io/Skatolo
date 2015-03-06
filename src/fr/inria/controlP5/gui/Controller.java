@@ -103,42 +103,29 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
 
     protected ControlWindow controlWindow;
 
-    public boolean isMousePressed = false;
+    private boolean isMousePressed = false;
 
     protected ControlP5 cp5;
 
     public int width;
-
     public int height;
 
     protected int _myId = -1;
-
     public float _myValue = Float.NaN;
-
     protected float _myDefaultValue = Float.NaN;
-
     protected String _myStringValue = "";
-
     protected float[] _myArrayValue;
 
     protected Label _myCaptionLabel;
-
     protected Label _myValueLabel;
 
     public boolean isLabelVisible = true;
-
     public boolean isMoveable = true;
-
     public boolean isBroadcast = true;
-
     protected boolean isVisible = true;
-
     public boolean isActive = false;
-
     protected boolean isLock = false;
-
     protected boolean isUserInteraction = true;
-
     protected boolean isInit = false;
 
     protected List<ControlListener> _myControlListener;
@@ -146,17 +133,13 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
     public CColor color = new CColor();
 
     protected float _myMin;
-
     protected float _myMax;
-
     protected float _myUnit;
 
     protected String target;
-
     protected Object targetObject;
 
     protected ControlBehavior _myBehavior;
-
     protected boolean isBehavior;
 
     protected List<Controller<?>> subelements;
@@ -168,7 +151,6 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
     protected int _myDecimalPoints = 2;
 
     public static int autoWidth = 49;
-
     public static int autoHeight = 19;
 
     public static PVector autoSpacing = new PVector(10, 10, 0);
@@ -178,28 +160,25 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
     protected PImage[] images = new PImage[4];
 
     protected ControllerView<T> _myControllerView;
-
     protected ControllerView<T> _myDebugView;
 
     protected int _myDisplayMode = DEFAULT;
-
     protected int _myPickingColor = 0xffffff00;
-
-    protected boolean mouseover;
 
     protected String _myAddress = "";
 
     protected List<ControllerPlug> _myControllerPlugList;
 
     protected boolean tooltipEnabled;
-
     protected boolean listening;
 
+    // Input 
+    protected Pointer currentPointer = Pointer.invalidPointer;
+    protected boolean mouseover;
     protected boolean isInside = false;
+    protected boolean dragged;
 
     private T me;
-
-    protected boolean dragged;
 
     /**
      * TODO add distribution options for MOVE, RELEASE, and PRESSED.
@@ -550,77 +529,95 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
         }
     }
 
+    private boolean moved() {
+        return ((controlWindow.getPointerX() - controlWindow.getPointerPrevX()) != 0 || (controlWindow.getPointerY() - controlWindow.getPointerPrevY()) != 0);
+    }
+
+    private void moveToPointer() {
+        positionBuffer.x += controlWindow.getPointerX() - controlWindow.getPointerPrevX();
+        positionBuffer.y += controlWindow.getPointerY() - controlWindow.getPointerPrevY();
+        if (cp5.isShiftDown()) {
+            position.x = ((int) (positionBuffer.x) / 10) * 10;
+            position.y = ((int) (positionBuffer.y) / 10) * 10;
+        } else {
+            position.set(positionBuffer);
+        }
+    }
+
+    private boolean isMovingController() {
+        return isMousePressed && cp5.isAltDown() && isMoveable && !cp5.isMoveable;
+    }
+
+    private void checkDragging() {
+        // First check  dragging & movement.  
+        if (moved()) {
+
+            if (isMousePressed) {
+                onDrag();
+                dragged = true;
+            } else {
+                if (this.equals(controlWindow.getFirstFromMouseOverList())) {
+                    onMove();
+                }
+            }
+        }
+
+    }
+
     /**
      * updateEvents is used for internal updates of a controller. this method is
      * final and can't be overwritten.
      */
     public final T updateEvents() {
-        if (isInside) {
-            boolean moved = ((controlWindow.getMouseX() - controlWindow.getPMouseX()) != 0 || (controlWindow.getMouseY() - controlWindow.getPMouseY()) != 0);
 
-            if (moved) {
-                if (isMousePressed) {
-                    onDrag();
-                    dragged = true;
-                } else {
-                    if (this.equals(controlWindow.getFirstFromMouseOverList())) {
-                        onMove();
-                    }
-                }
-            }
+        if (!isVisible()) {
+            return me;
         }
 
-        if (isVisible && (isMousePressed == controlWindow.mouselock)) {
-            if (isMousePressed && cp5.isAltDown() && isMoveable) {
-                if (!cp5.isMoveable) {
-                    positionBuffer.x += controlWindow.getMouseX() - controlWindow.getPMouseX();
-                    positionBuffer.y += controlWindow.getMouseY() - controlWindow.getPMouseY();
-                    if (cp5.isShiftDown()) {
-                        position.x = ((int) (positionBuffer.x) / 10) * 10;
-                        position.y = ((int) (positionBuffer.y) / 10) * 10;
-                    } else {
-                        position.set(positionBuffer);
-                    }
+        // responds only to one pointer. 
+        if (currentPointer == controlWindow.getCurrentPointer() || currentPointer == Pointer.invalidPointer) {
+
+            if (isMovingController()) {
+                moveToPointer();
+                return me;
+            }
+
+            if (isLock) {
+                return me;
+            }
+
+            boolean goingOut = !computeIsInside();
+            boolean goingIn = !goingOut;
+
+            if (isInside) {
+                checkDragging();
+                if (goingOut && !isMousePressed) {
+                    onLeave();
+                    setMouseOver(false);
+                    setIsInside(false);
+                    currentPointer = Pointer.invalidPointer;
                 }
+
             } else {
-                if (!isLock) {
-                    if (isInside) {
-                        setMouseOver(true);
-                    }
-                    if (inside()) {
-                        if (!isInside) {
-                            onEnter();
-                            setIsInside(true);
-                        }
-                        setIsInside(true);
-                    } else {
-                        if (isInside && !isMousePressed) {
-                            onLeave();
-                            setMouseOver(false);
-                            setIsInside(false);
-                        }
-                        if (!isInside && mouseover) {
 
-                            setMouseOver(false);
-
-                            // here the mouseOver is set to false when the mouse is released
-                            // outside a controller. the mouseoverlist is not updated when
-                            // the mouse is still pressed but has left the controller - updating the
-                            // list here currently conflicts with callbacks called from inside
-                            // setMouseOver()
-                            //
-                            // Note: the mouseoverlist is only updated for ControllerGroups when
-                            // the mouse is pressed but is hovering other controllers while mouse is
-                            // dragged.
-                        }
-                    }
+                if (goingIn) {
+                    onEnter();
+                    setIsInside(true);
+                    setMouseOver(true);
+                    currentPointer = controlWindow.getCurrentPointer();
                 }
+
+//            // check for mouseOver flag to update
+//            if (mouseover) {
+//                System.out.println("MouseOver flag forgotten ?");
+//                setMouseOver(false);
+//            }
             }
         }
+
         return me;
     }
 
-    
     /**
      * @param theStatus boolean
      * @return boolean
@@ -640,7 +637,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
                 return true;
             }
         } else {
-            if (isMousePressed == true && inside()) {
+            if (isMousePressed == true && computeIsInside()) {
                 isMousePressed = false;
                 if (!cp5.isAltDown()) {
                     if (!dragged) {
@@ -652,7 +649,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
                     cp5.getControlBroadcaster().invokeAction(new CallbackEvent(this, ControlP5.ACTION_RELEASED));
                 }
             }
-            if (!inside()) {
+            if (!computeIsInside()) {
                 setIsInside(false);
                 if (isMousePressed) {
                     isMousePressed = false;
@@ -1058,9 +1055,9 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
      *
      * @return boolean
      */
-    protected boolean inside() {
-        return (controlWindow.getMouseX() > position.x + _myParent.getAbsolutePosition().x && controlWindow.getMouseX() < position.x + _myParent.getAbsolutePosition().x + width
-                && controlWindow.getMouseY() > position.y + _myParent.getAbsolutePosition().y && controlWindow.getMouseY() < position.y + _myParent.getAbsolutePosition().y + height);
+    protected boolean computeIsInside() {
+        return (controlWindow.getPointerX() > position.x + _myParent.getAbsolutePosition().x && controlWindow.getPointerX() < position.x + _myParent.getAbsolutePosition().x + width
+                && controlWindow.getPointerY() > position.y + _myParent.getAbsolutePosition().y && controlWindow.getPointerY() < position.y + _myParent.getAbsolutePosition().y + height);
     }
 
     /**
@@ -2048,7 +2045,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
     class DebugView implements ControllerView<T> {
 
         public void display(PGraphics graphics, T theController) {
-            if (inside()) {
+            if (computeIsInside()) {
                 graphics.fill(255, 0, 0, 50);
                 graphics.stroke(255, 0, 0);
             } else {

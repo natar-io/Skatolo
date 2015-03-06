@@ -137,7 +137,7 @@ public class Tab extends ControllerGroup<Tab> {
 	}
 
 	protected boolean inside() {
-		return (cp5.getWindow().getMouseX() > _myOffsetX && cp5.getWindow().getMouseX() < _myOffsetX + _myWidth && cp5.getWindow().getMouseY() > _myOffsetY && cp5.getWindow().getMouseY() < _myOffsetY
+		return (cp5.getWindow().getPointerX() > _myOffsetX && cp5.getWindow().getPointerX() < _myOffsetX + _myWidth && cp5.getWindow().getPointerY() > _myOffsetY && cp5.getWindow().getPointerY() < _myOffsetY
 				+ _myHeight);
 	}
 

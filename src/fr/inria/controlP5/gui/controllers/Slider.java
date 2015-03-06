@@ -190,7 +190,7 @@ public class Slider extends Controller<Slider> {
 	 */
 	public Slider updateInternalEvents(PApplet theApplet) {
 		if (isVisible) {
-			if (isMousePressed && !cp5.isAltDown()) {
+			if (isMousePressed() && !cp5.isAltDown()) {
 				_myView.updateInternalEvents(theApplet);
 			}
 		}
@@ -246,7 +246,7 @@ public class Slider extends Controller<Slider> {
 	 * @param theValue float
 	 */
 	@Override public Slider setValue(float theValue) {
-		if (isMousePressed && theValue == getValue()) {
+		if (isMousePressed() && theValue == getValue()) {
 			return this;
 		}
 		_myInternalValue = theValue;
@@ -545,12 +545,12 @@ public class Slider extends Controller<Slider> {
 		}
 
 		void update() {
-			float f = _myMin + (-(controlWindow.getMouseY() - (_myParent.getAbsolutePosition().y + position.y) - height)) * _myUnit;
+			float f = _myMin + (-(controlWindow.getPointerY() - (_myParent.getAbsolutePosition().y + position.y) - height)) * _myUnit;
 			setValue(PApplet.map(f, 0, 1, _myMinReal, _myMaxReal));
 		}
 
 		void updateInternalEvents(PApplet theApplet) {
-			float f = _myMin + (-(controlWindow.getMouseY() - (_myParent.getAbsolutePosition().y + position.y) - height)) * _myUnit;
+			float f = _myMin + (-(controlWindow.getPointerY() - (_myParent.getAbsolutePosition().y + position.y) - height)) * _myUnit;
 			setValue(PApplet.map(f, 0, 1, _myMinReal, _myMaxReal));
 		}
 
@@ -613,12 +613,12 @@ public class Slider extends Controller<Slider> {
 		}
 
 		void update() {
-			float f = _myMin + (controlWindow.getMouseX()- (_myParent.getAbsolutePosition().x + position.x)) * _myUnit;
+			float f = _myMin + (controlWindow.getPointerX()- (_myParent.getAbsolutePosition().x + position.x)) * _myUnit;
 			setValue(PApplet.map(f, 0, 1, _myMinReal, _myMaxReal));
 		}
 
 		void updateInternalEvents(PApplet theApplet) {
-			float f = _myMin + (controlWindow.getMouseX() - (_myParent.getAbsolutePosition().x + position.x)) * _myUnit;
+			float f = _myMin + (controlWindow.getPointerX() - (_myParent.getAbsolutePosition().x + position.x)) * _myUnit;
 			setValue(PApplet.map(f, 0, 1, _myMinReal, _myMaxReal));
 		}
 
