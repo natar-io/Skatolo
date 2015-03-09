@@ -175,7 +175,6 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
     // Input 
     protected Pointer currentPointer = Pointer.invalidPointer;
     protected boolean mouseover;
-    protected boolean isInside = false;
     protected boolean dragged;
 
     private T me;
@@ -589,20 +588,17 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
             boolean goingOut = !computeIsInside();
             boolean goingIn = !goingOut;
 
-            if (isInside) {
+            if (isMouseOver()) {
                 checkDragging();
                 if (goingOut && !isMousePressed) {
                     onLeave();
                     setMouseOver(false);
-                    setIsInside(false);
-                    currentPointer = Pointer.invalidPointer;
                 }
 
             } else {
 
                 if (goingIn) {
                     onEnter();
-                    setIsInside(true);
                     setMouseOver(true);
                     currentPointer = controlWindow.getCurrentPointer();
                 }
@@ -620,25 +616,39 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
 
     /**
      * @param theStatus boolean
-     * @return boolean
+     * @return boolean maintained pressed !
      */
     public final boolean setMousePressed(final boolean theStatus) {
         if (!isVisible && !isUserInteraction) {
             return false;
         }
+
         if (theStatus == true) {
-            if (isInside) {
-                isMousePressed = true;
-                if (!cp5.isAltDown()) {
-                    mousePressed();
-                    onPress();
-                    cp5.getControlBroadcaster().invokeAction(new CallbackEvent(this, ControlP5.ACTION_PRESSED));
-                }
+            if (isMouseOver()) {
+                setMousePressed();
                 return true;
             }
+
         } else {
-            if (isMousePressed == true && computeIsInside()) {
-                isMousePressed = false;
+            setMouseReleased();
+        }
+        return false;
+    }
+
+    private void setMousePressed() {
+        isMousePressed = true;
+        if (!cp5.isAltDown()) {
+            mousePressed();
+            onPress();
+            cp5.getControlBroadcaster().invokeAction(new CallbackEvent(this, ControlP5.ACTION_PRESSED));
+        }
+    }
+
+    private void setMouseReleased() {
+
+        if (isMousePressed) {
+            isMousePressed = false;
+            if (computeIsInside()) {
                 if (!cp5.isAltDown()) {
                     if (!dragged) {
                         onClick();
@@ -648,22 +658,25 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
                     dragged = false;
                     cp5.getControlBroadcaster().invokeAction(new CallbackEvent(this, ControlP5.ACTION_RELEASED));
                 }
+            } else {
+                mouseReleasedOutside();
+                onReleaseOutside();
+                cp5.getControlBroadcaster().invokeAction(new CallbackEvent(this, ControlP5.ACTION_RELEASEDOUTSIDE));
             }
+        } else {
+
+            // mouse Not pressed already, and released outside ?!
+            // does it makes sense ?
+            // TODO: It should be done in another way. 
             if (!computeIsInside()) {
-                setIsInside(false);
-                if (isMousePressed) {
-                    isMousePressed = false;
-                    mouseReleasedOutside();
-                    onReleaseOutside();
-                    cp5.getControlBroadcaster().invokeAction(new CallbackEvent(this, ControlP5.ACTION_RELEASEDOUTSIDE));
-                }
                 if (this instanceof Textfield) {
                     mouseReleasedOutside();
                     onReleaseOutside();
                 }
             }
+
         }
-        return false;
+
     }
 
     /**
@@ -713,14 +726,17 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
             return me;
         }
         mouseover = theFlag;
+
         if (mouseover) {
             controlWindow.setMouseOverController(this);
             cp5.getControlBroadcaster().invokeAction(new CallbackEvent(this, ControlP5.ACTION_ENTER));
             cp5.getTooltip().activate(this);
+            currentPointer = controlWindow.getCurrentPointer();
         } else {
             cp5.getControlBroadcaster().invokeAction(new CallbackEvent(this, ControlP5.ACTION_LEAVE));
             controlWindow.removeMouseOverFor(this);
             cp5.getTooltip().deactivate();
+            currentPointer = Pointer.invalidPointer;
         }
         return me;
     }
@@ -1061,16 +1077,6 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
     }
 
     /**
-     * returns true or false and indicates if the mouse is inside the area of a
-     * controller.
-     *
-     * @return boolean
-     */
-    public boolean isInside() {
-        return isInside;
-    }
-
-    /**
      * checks if a controller is active.
      *
      * @return boolean
@@ -1125,12 +1131,8 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
     protected void mouseReleasedOutside() {
     }
 
-    public void setIsInside(boolean theFlag) {
-        isInside = theFlag;
-    }
-
-    protected boolean getIsInside() {
-        return isInside;
+    protected boolean getMouseOver() {
+        return mouseover;
     }
 
     /**

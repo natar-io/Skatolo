@@ -24,11 +24,11 @@ public class PointerList extends HashMap<Integer, Pointer> {
         return p;
     }
 
-    public void removePointer(int id){
+    public void removePointer(int id) {
         this.remove(id);
     }
-    
-    public void updatePointer(int id, int x, int y) throws IllegalArgumentException{
+
+    public void updatePointer(int id, int x, int y) throws IllegalArgumentException {
         if (this.containsKey(id)) {
             Pointer p = this.get(id);
             p.updatePosition(x, y);
@@ -36,11 +36,24 @@ public class PointerList extends HashMap<Integer, Pointer> {
             throw new IllegalArgumentException("Pointer ID not found");
         }
     }
-    
-    public void updateMousePointer(int x, int y){
+
+    public void updatePointer(int id, boolean pressed) throws IllegalArgumentException {
+        if (this.containsKey(id)) {
+            Pointer p = this.get(id);
+            if (pressed) {
+                p.setPressed();
+            } else {
+                p.setReleased();
+            }
+        } else {
+            throw new IllegalArgumentException("Pointer ID not found");
+        }
+    }
+
+    public void updateMousePointer(int x, int y) {
         updatePointer(MOUSE, x, y);
     }
-    
+
     public Pointer getMousePointer() {
         return get(MOUSE);
     }

@@ -26,6 +26,8 @@ public class Pointer {
     private int x = INVALID_LOCATION, y = INVALID_LOCATION;
     private int px = INVALID_LOCATION, py = INVALID_LOCATION;
     private int id;
+    
+    private boolean enabled = true;
 
     public Pointer() {
     }
@@ -103,12 +105,28 @@ public class Pointer {
         this.status = Status.PRESSED;
     }
  
+    public void setReleased() {
+        this.status = Status.RELEASED;
+    }
+ 
     public void resetPress() {
         this.status = Status.STILL_RELEASED;
     }
 
     public int getID() {
         return this.id;
+    }
+    
+    public void enable(){
+        this.enabled = true;
+    }
+    
+    public void disable(){
+        this.enabled = false;
+    }
+    
+    public boolean enabled(){
+        return this.enabled;
     }
 
 }

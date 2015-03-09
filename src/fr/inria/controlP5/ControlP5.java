@@ -822,6 +822,16 @@ public class ControlP5 extends ControlP5Base {
         }
     }
     
+    public void updatePointerPress(int id, boolean pressed) {
+        try{
+        controlWindow.getPointers().updatePointer(id, pressed);
+        } catch (IllegalArgumentException exception){
+            // TODO: better exception.
+            // TODO: logging.
+            System.out.println("Invalid pointer " + id + ". Update not done. ");
+        }
+    }
+    
     public void removePointer(int id){
         controlWindow.getPointers().removePointer(id);
     }

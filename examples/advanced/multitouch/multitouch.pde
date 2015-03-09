@@ -37,8 +37,6 @@ void setup() {
 
   pointer1 = cp5.addPointer(1);
   pointer2 = cp5.addPointer(2);
-
-
 }
 
 

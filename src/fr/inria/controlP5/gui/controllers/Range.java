@@ -448,7 +448,7 @@ public class Range extends Controller<Range> {
 			int x0 = (int) (posX + minHandle);
 			int x1 = (int) (posX + maxHandle);
 
-			if (isInside() && high < 0) {
+			if (isMouseOver() && high < 0) {
 				if (controlWindow.getPointerX() >= x0 - handleSize && controlWindow.getPointerX() < x0) {
 					high = LEFT;
 				} else if (controlWindow.getPointerX() >= x1 && controlWindow.getPointerX() < x1 + handleSize) {

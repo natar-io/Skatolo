@@ -491,7 +491,6 @@ public class ListBox extends ControlGroup<ListBox> implements ControlListener {
 				}
 				cp5.getControlBroadcaster().broadcast(myEvent, ControlP5Constants.FLOAT);
 				theEvent.getController().onLeave();
-				theEvent.getController().setIsInside(false);
 				theEvent.getController().setMouseOver(false);
 			} catch (Exception e) {
 				ControlP5.logger().warning("ListBox.controlEvent exception:" + e);

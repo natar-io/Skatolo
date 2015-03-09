@@ -136,6 +136,8 @@ public final class ControlWindow {
     protected void init() {
         pointers = new PointerList();
         mousePointer = pointers.getMousePointer();
+        // default behaviour.
+        currentPointer = mousePointer;
 
         canvasList = new ArrayList<Canvas>();
 
@@ -621,19 +623,28 @@ public final class ControlWindow {
             handleMouseOver();
             handleMouseWheelMoved();
 
+            int nbPointers = 0;
             for (Pointer p : pointers.values()) {
+                if (!p.enabled()) {
+                    continue;
+                }
 
-                    currentPointer = p;
-                    if (p.isPressed()) {
-                        p.eventSent();
-                        mousePressedEvent();
-                    }
-                    if (p.isReleased()) {
-                        p.eventSent();
-                        mouseReleasedEvent();
-                    }
+                currentPointer = p;
+                if (p.isPressed()) {
+                    p.eventSent();
+                    mousePressedEvent();
+                }
+                if (p.isReleased()) {
+                    p.eventSent();
+                    mouseReleasedEvent();
+                }
+                updateEvents();
+                nbPointers++;
+            }
 
-                    updateEvents();
+            // No pointers ?!
+            if (nbPointers == 0) {
+                resetMouseOver();
             }
 
         }
@@ -1019,7 +1030,7 @@ public final class ControlWindow {
     }
 
     Pointer getCurrentPointer() {
-       return this.currentPointer;
+        return this.currentPointer;
     }
 
 }

@@ -560,7 +560,7 @@ public class Slider extends Controller<Slider> {
 			if ((getColor().getBackground() >> 24 & 0xff) > 0) {
 				graphics.rect(0, 0, getWidth(), getHeight());
 			}
-			graphics.fill(getIsInside() ? getColor().getActive() : getColor().getForeground());
+			graphics.fill(getMouseOver() ? getColor().getActive() : getColor().getForeground());
 			if (getSliderMode() == FIX) {
 				graphics.rect(0, getHeight(), getWidth(), -getValuePosition());
 			} else {
@@ -628,7 +628,7 @@ public class Slider extends Controller<Slider> {
 			if ((getColor().getBackground() >> 24 & 0xff) > 0) {
 				graphics.rect(0, 0, getWidth(), getHeight());
 			}
-			graphics.fill(getIsInside() ? getColor().getActive() : getColor().getForeground());
+			graphics.fill(getMouseOver() ? getColor().getActive() : getColor().getForeground());
 			if (getSliderMode() == FIX) {
 				graphics.rect(0, 0, getValuePosition(), getHeight());
 			} else {
