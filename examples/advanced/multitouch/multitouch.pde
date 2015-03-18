@@ -33,10 +33,14 @@ void setup() {
   
   cp5.addSlider("hello", 0, 100, 50, 40, 40, 100, 20);
   
-  // enable the pointer (and disable the mouse as input) 
+
+  // Disable the mouse 
+  cp5.getMousePointer().disable();
 
   pointer1 = cp5.addPointer(1);
   pointer2 = cp5.addPointer(2);
+
+  noCursor();
 }
 
 
@@ -46,35 +50,44 @@ void draw() {
 
   //  pointer1.updatePosition(mouseX, mouseY - 100);
    cp5.updatePointer(1, mouseX, mouseY - 100);
-
-  // first draw controlP5
-  cp5.draw();
-
+   cp5.updatePointer(2, mouseX, mouseY);
 
   for(Pointer p : cp5.getPointerList()){
+
+      if(!p.isEnabled())
+	  continue;
+
       pushMatrix();
       translate(p.getX(), p.getY());
+
       stroke(255);
+      if(p.isPressed()){
+	  stroke(255, 0, 0);	  
+      } 
+      if(p.isReleased()){
+	  stroke(0, 255, 0);
+      } 
+      if(p.isDragged()){
+	  stroke(0, 0, 255);
+      }
+      
+      
       line(-10,0,10,0);
       line(0,-10,0,10);
       popMatrix();
   }
-  
-  // the draw our pointer
-  //  cp5.getPointer().set(width - mouseX, height - mouseY);
-  pushMatrix();
-  //  translate(cp5.getPointer().getX(), cp5.getPointer().getY());
-  stroke(255);
-  line(-10,0,10,0);
-  line(0,-10,0,10);
-  popMatrix();
 
+  // first draw controlP5
+  cp5.draw();
+
+  
 }
 
 void mousePressed() {
-    //  cp5.getPointer().pressed();
+    cp5.updatePointerPress(1, true);
+
 }
 
 void mouseReleased() {
-    //   cp5.getPointer().released();
+    cp5.updatePointerPress(1, false);
 }

@@ -3,7 +3,6 @@
  * 
  * In this example a "MyCanvas" object contains its own rendering and 
  * its own ControlP5 object. 
- * To show the power tha
  *
  * by Jérémy Laviole
  * https://github.com/potioc/ControlP5
@@ -55,6 +54,8 @@ void bang(){
 
 }
 
+final int pointerID = 1;
+
 public class MyCanvas{
 
     PGraphics pg;
@@ -77,8 +78,12 @@ public class MyCanvas{
 	// You can graphical elements as usual... 
 	cp5Local.addSlider("bgColor", 0, 100, 50, 40, 40, 100, 20);
 	
-	// enable the pointer (and disable the mouse as input) 
-	cp5Local.getPointer().enable();
+	// Disable the mouse as pointer. 
+	cp5Local.getMousePointer().disable();
+
+	// add a pointer with a specific ID
+	cp5Local.addPointer(pointerID);
+
     }
 
     // method for ControlP5 to find the graphics. 
@@ -92,7 +97,11 @@ public class MyCanvas{
 	pg.background(bgColor);
 
 	// Set the pointer to interact with the controllers.
-	cp5Local.getPointer().set(mouseX - x, mouseY - y);
+	cp5Local.updatePointer(pointerID, 
+			       mouseX - drawingOffsetX,
+			       mouseY - drawingOffsetY);
+
+
 	cp5Local.draw(pg);
 
 	pg.endDraw();
@@ -101,11 +110,11 @@ public class MyCanvas{
 
 
 void mousePressed() {
-  canvas.cp5Local.getPointer().pressed();
+    canvas.cp5Local.updatePointerPress(pointerID, true);
 }
 
 void mouseReleased() {
-  canvas.cp5Local.getPointer().released();
+    canvas.cp5Local.updatePointerPress(pointerID, false);
 }
 
 

@@ -91,6 +91,7 @@ void setup() {
   
   cp5.getController("sliderValue").moveTo("extra");
   cp5.getController("slider").moveTo("global");
+  //  cp5.getController("slider").moveTo("default");
   
   // Tab 'global' is a tab that lies on top of any 
   // other tab and is always visible

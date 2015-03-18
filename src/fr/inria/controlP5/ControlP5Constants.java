@@ -97,6 +97,7 @@ public interface ControlP5Constants {
 
 	public static final int HORIZONTAL = 0;
 	public static final int VERTICAL = 1;
+        
 	public static final int DEFAULT = 0;
 	public static final int OVER = 1;
 	public static final int ACTIVE = 2;

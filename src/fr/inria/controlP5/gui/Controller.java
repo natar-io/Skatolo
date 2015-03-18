@@ -528,41 +528,6 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
         }
     }
 
-    private boolean moved() {
-        return ((controlWindow.getPointerX() - controlWindow.getPointerPrevX()) != 0 || (controlWindow.getPointerY() - controlWindow.getPointerPrevY()) != 0);
-    }
-
-    private void moveToPointer() {
-        positionBuffer.x += controlWindow.getPointerX() - controlWindow.getPointerPrevX();
-        positionBuffer.y += controlWindow.getPointerY() - controlWindow.getPointerPrevY();
-        if (cp5.isShiftDown()) {
-            position.x = ((int) (positionBuffer.x) / 10) * 10;
-            position.y = ((int) (positionBuffer.y) / 10) * 10;
-        } else {
-            position.set(positionBuffer);
-        }
-    }
-
-    private boolean isMovingController() {
-        return isMousePressed && cp5.isAltDown() && isMoveable && !cp5.isMoveable;
-    }
-
-    private void checkDragging() {
-        // First check  dragging & movement.  
-        if (moved()) {
-
-            if (isMousePressed) {
-                onDrag();
-                dragged = true;
-            } else {
-                if (this.equals(controlWindow.getFirstFromMouseOverList())) {
-                    onMove();
-                }
-            }
-        }
-
-    }
-
     /**
      * updateEvents is used for internal updates of a controller. this method is
      * final and can't be overwritten.
@@ -612,6 +577,41 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
         }
 
         return me;
+    }
+
+    private boolean moved() {
+        return ((controlWindow.getPointerX() - controlWindow.getPointerPrevX()) != 0 || (controlWindow.getPointerY() - controlWindow.getPointerPrevY()) != 0);
+    }
+
+    private void moveToPointer() {
+        positionBuffer.x += controlWindow.getPointerX() - controlWindow.getPointerPrevX();
+        positionBuffer.y += controlWindow.getPointerY() - controlWindow.getPointerPrevY();
+        if (cp5.isShiftDown()) {
+            position.x = ((int) (positionBuffer.x) / 10) * 10;
+            position.y = ((int) (positionBuffer.y) / 10) * 10;
+        } else {
+            position.set(positionBuffer);
+        }
+    }
+
+    private boolean isMovingController() {
+        return isMousePressed && cp5.isAltDown() && isMoveable && !cp5.isMoveable;
+    }
+
+    private void checkDragging() {
+        // First check  dragging & movement.  
+        if (moved()) {
+
+            if (isMousePressed) {
+                onDrag();
+                dragged = true;
+            } else {
+                if (this.equals(controlWindow.getFirstFromMouseOverList())) {
+                    onMove();
+                }
+            }
+        }
+
     }
 
     /**
@@ -718,7 +718,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
      * @return boolean
      */
     public boolean isMouseOver() {
-        return mouseover;
+        return mouseover && controlWindow.getCurrentPointer() == this.currentPointer;
     }
 
     public T setMouseOver(boolean theFlag) {
@@ -1075,6 +1075,10 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
         return (controlWindow.getPointerX() > position.x + _myParent.getAbsolutePosition().x && controlWindow.getPointerX() < position.x + _myParent.getAbsolutePosition().x + width
                 && controlWindow.getPointerY() > position.y + _myParent.getAbsolutePosition().y && controlWindow.getPointerY() < position.y + _myParent.getAbsolutePosition().y + height);
     }
+    
+    public boolean isInside(){
+        return computeIsInside();
+    }
 
     /**
      * checks if a controller is active.
@@ -1092,7 +1096,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
      * @return boolean
      */
     public boolean isMousePressed() {
-        return isMousePressed;
+        return isMousePressed && currentPointer == controlWindow.getCurrentPointer();
     }
 
     protected void onEnter() {

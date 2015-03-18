@@ -42,10 +42,10 @@ void setup() {
      
      for(Toggle t:r.getItems()) {
        t.captionLabel().setColorBackground(color(255,80));
-       t.captionLabel().style().moveMargin(-7,0,0,-3);
-       t.captionLabel().style().movePadding(7,0,0,3);
-       t.captionLabel().style().backgroundWidth = 45;
-       t.captionLabel().style().backgroundHeight = 13;
+       t.captionLabel().getStyle().moveMargin(-7,0,0,-3);
+       t.captionLabel().getStyle().movePadding(7,0,0,3);
+       t.captionLabel().getStyle().backgroundWidth = 45;
+       t.captionLabel().getStyle().backgroundHeight = 13;
      }
 }
 
@@ -74,7 +74,7 @@ void controlEvent(ControlEvent theEvent) {
       print(int(theEvent.getGroup().getArrayValue()[i]));
     }
     println("\t "+theEvent.getValue());
-    myColorBackground = color(int(theEvent.group().value()*50),0,0);
+    myColorBackground = color(int(theEvent.getGroup().getValue()*50),0,0);
   }
 }
 

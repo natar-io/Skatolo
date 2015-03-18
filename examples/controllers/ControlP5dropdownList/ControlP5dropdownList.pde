@@ -50,9 +50,9 @@ void customize(DropdownList ddl) {
   ddl.setItemHeight(20);
   ddl.setBarHeight(15);
   ddl.captionLabel().set("dropdown");
-  ddl.captionLabel().style().marginTop = 3;
-  ddl.captionLabel().style().marginLeft = 3;
-  ddl.valueLabel().style().marginTop = 3;
+  ddl.captionLabel().getStyle().marginTop = 3;
+  ddl.captionLabel().getStyle().marginLeft = 3;
+  ddl.valueLabel().getStyle().marginTop = 3;
   for (int i=0;i<40;i++) {
     ddl.addItem("item "+i, i);
   }

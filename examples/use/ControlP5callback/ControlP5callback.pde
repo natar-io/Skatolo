@@ -16,7 +16,10 @@
  *
  */
 
-import controlP5.*;
+import fr.inria.controlP5.*;
+import fr.inria.controlP5.events.*;
+import fr.inria.controlP5.gui.controllers.*;
+import fr.inria.controlP5.gui.group.*;
 
 ControlP5 cp5;
 Slider s1, s2;
@@ -92,7 +95,7 @@ void draw() {
 
 
 void controlEvent(ControlEvent theEvent) {
-  println("Got a ControlEvent for "+theEvent.name()+" = "+theEvent.value());
+  println("Got a ControlEvent for  = " +theEvent);
   info.label.setText(theEvent.getController().getInfo());
 }
 

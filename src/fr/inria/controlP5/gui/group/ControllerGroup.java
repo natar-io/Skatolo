@@ -38,6 +38,7 @@ import fr.inria.controlP5.gui.ControllerInterface;
 import fr.inria.controlP5.gui.ControllerList;
 import fr.inria.controlP5.file.ControllerProperty;
 import fr.inria.controlP5.gui.Label;
+import fr.inria.controlP5.gui.Pointer;
 import fr.inria.controlP5.gui.group.Tab;
 import fr.inria.controlP5.gui.controllers.Button;
 import java.util.ArrayList;
@@ -68,9 +69,12 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
     protected PVector positionBuffer;
     protected PVector absolutePosition;
 
-    //	protected ControlWindow _myControlWindow;
+//    protected ControlWindow controlWindow;
     private final CColor color = new CColor();
+
+    protected Pointer currentPointer = Pointer.invalidPointer;
     protected boolean isMousePressed = false;
+    private boolean mouseover;
 
     // only applies to the area of the title bar of a group
     protected boolean isInside = false;
@@ -114,8 +118,6 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
     public float autoPositionOffsetX = 10;
 
     private String _myAddress = "";
-
-    private boolean mouseover;
 
     protected final T me;
 
@@ -440,41 +442,60 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
                 ((ControllerInterface<?>) controllers.get(i)).updateEvents();
             }
         }
-        if (isVisible) {
-            if ((isMousePressed == cp5.getWindow().isMouseMaintainedPressed)) {
-                if (isMousePressed && cp5.isAltDown() && isMoveable) {
-                    if (!cp5.isMoveable) {
-                        positionBuffer.x += cp5.getWindow().getPointerX() - cp5.getWindow().getPointerPrevX();
-                        positionBuffer.y += cp5.getWindow().getPointerY() - cp5.getWindow().getPointerPrevY();
-                        if (cp5.isShiftDown()) {
-                            position.x = ((int) (positionBuffer.x) / 10) * 10;
-                            position.y = ((int) (positionBuffer.y) / 10) * 10;
-                        } else {
-                            position.set(positionBuffer);
-                        }
-                        updateAbsolutePosition();
-                    }
-                } else {
-                    if (isInside) {
+
+        if (!isVisible) {
+            return me;
+        }
+
+        // responds only to one pointer. 
+        if (currentPointer == cp5.getWindow().getCurrentPointer()
+                || currentPointer == Pointer.invalidPointer) {
+
+//            if (isMousePressed != cp5.getWindow().isPointerPressed()) {
+//                System.out.println(" this is MousePressed != window is mousemaintained");
+//            } else {
+//                System.out.println(" this is MousePressed == window is mousemaintained");
+//            }
+
+            if (isMovingGroup()) {
+                moveGroup();
+            } else {
+
+                if (inside()) {
+                    // Was not inside... Now it is !
+                    if (!isInside) {
+                        isInside = true;
+                        onEnter();
                         setMouseOver(true);
                     }
-                    if (inside()) {
-                        if (!isInside) {
-                            isInside = true;
-                            onEnter();
-                            setMouseOver(true);
-                        }
-                    } else {
-                        if (isInside && !isMousePressed) {
-                            onLeave();
-                            isInside = false;
-                            setMouseOver(false);
-                        }
+                } else {
+
+                    // Not inside anymore. 
+                    if (isInside && !isMousePressed) {
+                        onLeave();
+                        isInside = false;
+                        setMouseOver(false);
                     }
                 }
             }
         }
         return me;
+    }
+
+    private boolean isMovingGroup() {
+        return isMousePressed && cp5.isAltDown() && isMoveable && !cp5.isMoveable;
+    }
+
+    private void moveGroup() {
+        positionBuffer.x += cp5.getWindow().getPointerX() - cp5.getWindow().getPointerPrevX();
+        positionBuffer.y += cp5.getWindow().getPointerY() - cp5.getWindow().getPointerPrevY();
+        if (cp5.isShiftDown()) {
+            position.x = ((int) (positionBuffer.x) / 10) * 10;
+            position.y = ((int) (positionBuffer.y) / 10) * 10;
+        } else {
+            position.set(positionBuffer);
+        }
+        updateAbsolutePosition();
     }
 
     /**
@@ -505,10 +526,12 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
             for (int i = controllers.size() - 1; i >= 0; i--) {
                 controllers.get(i).setMouseOver(false);
             }
+            currentPointer = cp5.getWindow().getCurrentPointer();
         } else {
-			// TODO since inside can be either isInside or isInsideGroup, there are 2 options here,
+            // TODO since inside can be either isInside or isInsideGroup, there are 2 options here,
             // which i am not sure how to handle them yet.
             cp5.getWindow().setMouseOverController(this);
+            currentPointer = Pointer.invalidPointer;
         }
         return me;
     }
@@ -542,7 +565,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Cont
             graphics.pushMatrix();
             graphics.translate(position.x, position.y);
             preDraw(graphics);
-                        // TODO: fixme -> Find the Applet to forward events ? 
+            // TODO: fixme -> Find the Applet to forward events ? 
             // Push outside the draw method !
             drawControllers(graphics);
             postDraw(graphics);

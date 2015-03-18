@@ -1,13 +1,15 @@
 package fr.inria.controlP5.gui;
 
+import processing.core.PVector;
+
 /**
  *
  * @author Jeremy Laviole <jeremy.laviole@inria.fr>
  */
 public class Pointer {
 
-    static Pointer invalidPointer = new Pointer();
-    
+    static public Pointer invalidPointer = new Pointer();
+
     public enum Type {
 
         MOUSE, TOUCH, HOVER
@@ -26,7 +28,7 @@ public class Pointer {
     private int x = INVALID_LOCATION, y = INVALID_LOCATION;
     private int px = INVALID_LOCATION, py = INVALID_LOCATION;
     private int id;
-    
+
     private boolean enabled = true;
 
     public Pointer() {
@@ -74,27 +76,47 @@ public class Pointer {
         return this;
     }
 
+    public Pointer updatePosition(int x, int y, int px, int py) {
+        this.x = x;
+        this.y = y;
+        this.px = px;
+        this.py = py;
+        return this;
+    }
+
     private void updatePreviousPosition(int newX, int newY) {
         if (px == INVALID_LOCATION || py == INVALID_LOCATION) {
-            px = x;
-            py = y;
-        } else {
             px = newX;
             py = newY;
+        } else {
+            px = x;
+            py = y;
         }
     }
-    
-    public void eventSent(){
-        if(this.status == Status.PRESSED){
+
+    public void tick() {
+        updatePosition(x, y);
+    }
+
+    public void eventSent() {
+        if (this.status == Status.PRESSED) {
             this.status = Status.STILL_PRESSED;
         }
-        if(this.status == Status.RELEASED){
+        if (this.status == Status.RELEASED) {
             this.status = Status.STILL_RELEASED;
         }
     }
 
     public boolean isPressed() {
         return this.status == Status.PRESSED;
+    }
+
+    public boolean isDragged() {
+        return this.status == Status.STILL_PRESSED;
+    }
+
+    public boolean isMaintainedPressed() {
+        return this.status == Status.STILL_PRESSED;
     }
 
     public boolean isReleased() {
@@ -104,11 +126,11 @@ public class Pointer {
     public void setPressed() {
         this.status = Status.PRESSED;
     }
- 
+
     public void setReleased() {
         this.status = Status.RELEASED;
     }
- 
+
     public void resetPress() {
         this.status = Status.STILL_RELEASED;
     }
@@ -116,16 +138,16 @@ public class Pointer {
     public int getID() {
         return this.id;
     }
-    
-    public void enable(){
+
+    public void enable() {
         this.enabled = true;
     }
-    
-    public void disable(){
+
+    public void disable() {
         this.enabled = false;
     }
-    
-    public boolean enabled(){
+
+    public boolean isEnabled() {
         return this.enabled;
     }
 

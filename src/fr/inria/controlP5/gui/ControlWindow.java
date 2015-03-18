@@ -113,8 +113,6 @@ public final class ControlWindow {
     private Pointer currentPointer;
 
 //    protected boolean mousePressed;
-    public boolean isMouseMaintainedPressed;
-
     private static final int NB_KEYS = 525;   // Why ?!
     private char key;
     private int keyCode;
@@ -298,12 +296,16 @@ public final class ControlWindow {
      */
     public void updateEvents() {
 
-        if (tabs.size() <= 0) {
-            return;
-        }
-        ((ControllerInterface<?>) getDefaultTab()).updateEvents();
-        for (int i = 1; i < tabs.size(); i++) {
+        // Global is always there. 
+        ((ControllerInterface<?>) getGlobalTab()).continuousUpdateEvents();
+        ((ControllerInterface<?>) getGlobalTab()).updateEvents();
+
+        for (int i = 0; i < tabs.size(); i++) {
+
+            // Continuous update is for all elements.
             ((Tab) tabs.get(i)).continuousUpdateEvents();
+
+            // Update the active & visible tabs.        
             if (((Tab) tabs.get(i)).isActive() && ((Tab) tabs.get(i)).isVisible()) {
                 ((ControllerInterface<?>) tabs.get(i)).updateEvents();
             }
@@ -349,6 +351,7 @@ public final class ControlWindow {
         return mouseoverList;
     }
 
+    // TODO: check if this is useful ?
     private ControlWindow handleMouseOver() {
         for (int i = mouseoverList.size() - 1; i >= 0; i--) {
             if (!mouseoverList.get(i).isMouseOver() || !isVisible) {
@@ -448,40 +451,40 @@ public final class ControlWindow {
      */
     public void mouseEvent(int theX, int theY, boolean pressed) {
 
-        mousePointer.updatePosition(theX, theY);
-
-        if (pressed && !pmousePressed) {
-            updateEvents();
-            mousePressedEvent();
-            pmousePressed = true;
-            pmouseReleased = false;
-        } else if (!pressed && !pmouseReleased) {
-            updateEvents();
-            mouseReleasedEvent();
-            for (ControllerInterface c : mouseoverList) {
-                if (c instanceof Controller) {
-                    ((Controller) c).onLeave();
-                    ((Controller) c).onRelease();
-                } else if (c instanceof ControllerGroup) {
-                    ((ControllerGroup) c).mouseReleased();
-                }
-            }
-            resetMouseOver();
-            pmousePressed = false;
-            pmouseReleased = true;
-
-        }
+        System.out.println("Android mouseEvent. Support stopped for now.");
+//        mousePointer.updatePosition(theX, theY);
+//
+//        if (pressed && !pmousePressed) {
+//            updateEvents();
+//            mousePressedEvent();
+//            pmousePressed = true;
+//            pmouseReleased = false;
+//        } else if (!pressed && !pmouseReleased) {
+//            updateEvents();
+//            mouseReleasedEvent();
+//            for (ControllerInterface c : mouseoverList) {
+//                if (c instanceof Controller) {
+//                    ((Controller) c).onLeave();
+//                    ((Controller) c).onRelease();
+//                } else if (c instanceof ControllerGroup) {
+//                    ((ControllerGroup) c).mouseReleased();
+//                }
+//            }
+//            resetMouseOver();
+//            pmousePressed = false;
+//            pmouseReleased = true;
+//
+//        }
     }
 
     /**
      * @exclude @param theMouseEvent MouseEvent
      */
     public void mouseEvent(MouseEvent theMouseEvent) {
-
-        mousePointer.updatePosition(
-                theMouseEvent.getX(),
-                theMouseEvent.getY());
-
+//        mousePointer.updatePosition(
+//                theMouseEvent.getX(),
+//                theMouseEvent.getY());
+//        
         if (theMouseEvent.getAction() == MouseEvent.PRESS) {
             mousePointer.setStatus(Pointer.Status.PRESSED);
 
@@ -490,14 +493,10 @@ public final class ControlWindow {
             mousePointer.setStatus(Pointer.Status.RELEASED);
         }
 
-//        if (isUsingMouseForPointing) {
-//            if (theMouseEvent.getAction() == MouseEvent.PRESS) {
-//                mousePressedEvent();
-//            }
-//            if (theMouseEvent.getAction() == MouseEvent.RELEASE) {
-//                mouseReleasedEvent();
-//            }
-//        }
+    }
+
+    public boolean isPointerPressed() {
+        return currentPointer.isMaintainedPressed();
     }
 
     public int getPointerX() {
@@ -602,30 +601,26 @@ public final class ControlWindow {
         numOfActiveKeys = 0;
     }
 
-    /**
-     * @exclude draw content.
-     */
-    public void draw() {
-
-        // TODO: BAD mouseX ! ?!!
-        frameCount = applet.frameCount;
+    private void updatePointerEvents() {
         if (cp5.isAndroid) {
 
             //TODO: Multi-Touch  on Android. 
             mouseEvent(cp5.getPApplet().mouseX, cp5.getPApplet().mouseY, cp5.getPApplet().mousePressed);
             // updateEvents is called within mouseEvent(...)
         } else {
-            // set mouseX & mouseY & mousePressed for each pointer. 
-            //       for (Pointer p : pointers.values()) {
-            //       }
 
-            // Check if the mouse moved away. 
-            handleMouseOver();
-            handleMouseWheelMoved();
+            if (mousePointer.isEnabled()) {
+                mousePointer.updatePosition(
+                        papplet().mouseX,
+                        papplet().mouseY,
+                        papplet().pmouseX,
+                        papplet().pmouseY);
+            }
 
             int nbPointers = 0;
+
             for (Pointer p : pointers.values()) {
-                if (!p.enabled()) {
+                if (!p.isEnabled()) {
                     continue;
                 }
 
@@ -639,15 +634,33 @@ public final class ControlWindow {
                     mouseReleasedEvent();
                 }
                 updateEvents();
+
+                // FIXME: I really think it is useless.
+                //handleMouseOver();
+                handleMouseWheelMoved();
+
                 nbPointers++;
             }
 
             // No pointers ?!
             if (nbPointers == 0) {
+
+                // FIXME: also useless ?
                 resetMouseOver();
             }
 
         }
+    }
+
+    /**
+     * @exclude draw content.
+     */
+    public void draw() {
+
+        frameCount = applet.frameCount;
+
+        updatePointerEvents();
+
         if (isVisible) {
 
             // TODO save stroke, noStroke, fill, noFill, strokeWeight
@@ -753,10 +766,8 @@ public final class ControlWindow {
 
     private void mousePressedEvent() {
         if (isVisible) {
-
             for (int i = 0; i < tabs.size(); i++) {
                 if (((ControllerInterface<?>) tabs.get(i)).setMousePressed(true)) {
-                    isMouseMaintainedPressed = true;
                     return;
                 }
             }
@@ -765,8 +776,6 @@ public final class ControlWindow {
 
     private void mouseReleasedEvent() {
         if (isVisible) {
-
-            isMouseMaintainedPressed = false;
             for (int i = 0; i < tabs.size(); i++) {
                 ((ControllerInterface<?>) tabs.get(i)).setMousePressed(false);
             }
@@ -1029,7 +1038,7 @@ public final class ControlWindow {
         return this.mousePointer;
     }
 
-    Pointer getCurrentPointer() {
+    public Pointer getCurrentPointer() {
         return this.currentPointer;
     }
 

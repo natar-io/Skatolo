@@ -11,8 +11,9 @@
 */
 
 
-import controlP5.*;
-
+import fr.inria.controlP5.*;
+import fr.inria.controlP5.events.*;
+import fr.inria.controlP5.gui.controllers.*;
 
 ControlP5 cp5;
 
@@ -59,28 +60,28 @@ public void world(int theValue) {
  
 class CircularButton implements ControllerView<Button> {
 
-  public void display(PApplet theApplet, Button theButton) {
-    theApplet.pushMatrix();
+  public void display(PGraphics graphics, Button theButton) {
+    graphics.pushMatrix();
     if (theButton.isInside()) {
       if (theButton.isPressed()) { // button is pressed
-        theApplet.fill(200, 60, 0);
+        graphics.fill(200, 60, 0);
       }  else { // mouse hovers the button
-        theApplet.fill(200, 160, 100);
+        graphics.fill(200, 160, 100);
       }
     } else { // the mouse is located outside the button area
-      theApplet.fill(0, 160, 100);
+      graphics.fill(0, 160, 100);
     }
     
-    theApplet.ellipse(0, 0, theButton.getWidth(), theButton.getHeight());
+    graphics.ellipse(0, 0, theButton.getWidth(), theButton.getHeight());
     
     // center the caption label 
     int x = theButton.getWidth()/2 - theButton.getCaptionLabel().getWidth()/2;
     int y = theButton.getHeight()/2 - theButton.getCaptionLabel().getHeight()/2;
     
     translate(x, y);
-    theButton.getCaptionLabel().draw(theApplet);
+    theButton.getCaptionLabel().draw(graphics);
     
-    theApplet.popMatrix();
+    graphics.popMatrix();
   }
 }
 
