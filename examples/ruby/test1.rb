@@ -3,52 +3,64 @@
 require 'ruby-processing' 
 require 'jruby/core_ext'
 
+Processing::Runner 
+Dir["#{Processing::RP_CONFIG['PROCESSING_ROOT']}/core/library/\*.jar"].each{ |jar| require jar }
 Processing::App::SKETCH_PATH = __FILE__   unless defined? Processing::App::SKETCH_PATH
 
-
+require './cp5' 
 
 class MyApp < Processing::App
 
-  load_library :controlP5
-  include_package 'fr.inria.controlP5'
-
   attr_reader :cp5
-  attr_accessor :once, :button
+  attr_accessor :once, :button, :slider
 
+  def create_method(name, &block)
+    self.class.send(:define_method, name, &block)
+  end
+  
   def setup
     size 800, 800, OPENGL
-    @bidon = Bidon.new
-    @cp5 = ControlP5.new(self, @bidon) 
+
+    
+    @cp5 = ControlP5.new self
+
+
+    @button = @cp5.addButton("button")
+              .setPosition(40, 200)
+              .setSize(280, 40)
+    
+    @slider = @cp5.addSlider("slider1")
+              .setPosition(0, 0)
+              .setSize(150, 20)
+    
+    @cp5.update
+       
   end
 
   def draw 
-    background 0
+    background slider1_value 
 
-    if @once == nil 
-      puts "add Button" 
-       @button = cp5.addButton("button")
-        .setPosition(40, 200)
-        .setSize(280, 40)
-      @once = true
-    end
+    # puts mouse_x
+    # self.slider1_value = mouse_x
+  end
 
+  def mouse_dragged
+    slider1_value = mouse_x
+  end
+  
+  def button
+    puts "Button pressed"
+    self.slider1_value = 10
+  end
+
+  def slider1 value
+    puts "Slider event " + value.to_s
   end
 
   def test
     puts "test"
   end
 
-end
-
-
-class Bidon 
-#  include_package 'fr.inria.controlP5.events'
-
-  java_signature 'void controlEvent(fr.inria.controlP5.events.ControlEvent)'
-  def controlEvent(controlEvent)
-    puts "Event"
-  end
-  Bidon.become_java!
 end
 
 
