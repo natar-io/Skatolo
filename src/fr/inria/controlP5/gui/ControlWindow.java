@@ -270,8 +270,10 @@ public final class ControlWindow {
     }
 
     public void remove() {
-        for (int i = tabs.size() - 1; i >= 0; i--) {
-            ((Tab) tabs.get(i)).remove();
+        if (tabs.size() > 0) {
+            for (int i = tabs.size() - 1; i >= 0; i--) {
+                ((Tab) tabs.get(i)).remove();
+            }
         }
         tabs.clear();
         tabs.clearDrawable();
@@ -484,10 +486,9 @@ public final class ControlWindow {
 //        mousePointer.updatePosition(
 //                theMouseEvent.getX(),
 //                theMouseEvent.getY());
-//        
+
         if (theMouseEvent.getAction() == MouseEvent.PRESS) {
             mousePointer.setStatus(Pointer.Status.PRESSED);
-
         }
         if (theMouseEvent.getAction() == MouseEvent.RELEASE) {
             mousePointer.setStatus(Pointer.Status.RELEASED);
@@ -633,11 +634,11 @@ public final class ControlWindow {
                     p.eventSent();
                     mouseReleasedEvent();
                 }
-                
+
                 //***//
                 updateEvents();
                 //***//
-                
+
                 // FIXME: I really think it is useless.
                 //handleMouseOver();
                 handleMouseWheelMoved();
@@ -728,8 +729,6 @@ public final class ControlWindow {
                 }
             }
 
-//            pmouseX = mouseX;
-//            pmouseY = mouseY;
             // draw Tooltip here.
             cp5.getTooltip().draw(this);
             graphics.rectMode(myRectMode);
@@ -747,8 +746,8 @@ public final class ControlWindow {
         this.graphics = graphics;
         draw();
     }
-    
-    public PGraphics graphics(){
+
+    public PGraphics graphics() {
         return this.graphics;
     }
 
@@ -1048,5 +1047,14 @@ public final class ControlWindow {
     public Pointer getCurrentPointer() {
         return this.currentPointer;
     }
+
+    public void delete() {
+    
+        this.applet.unregisterMethod("pre", this);
+        this.applet.unregisterMethod("draw", this);
+        this.applet.unregisterMethod("keyEvent", this);
+        this.applet.unregisterMethod("mouseEvent", this);
+    }
+    
 
 }

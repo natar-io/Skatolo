@@ -785,6 +785,10 @@ public class ControlP5 extends ControlP5Base {
             controlWindow.draw(graphics);
         }
     }
+    
+    public void setGraphics(PGraphics graphics){
+        this.graphics = graphics;
+    }
 
     /**
      * convenience method to access the main window (ControlWindow class).
@@ -1289,6 +1293,13 @@ public class ControlP5 extends ControlP5Base {
         if (!isApplet) {
             clear();
         }
+    }
+    
+    public void delete(){
+        this.papplet.unregisterMethod("pre", this);
+        this.papplet.unregisterMethod("draw", this);
+        this.papplet.unregisterMethod("dispose", this);
+        controlWindow.delete();
     }
 
     /* add Objects with Annotation */
