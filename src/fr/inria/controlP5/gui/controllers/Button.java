@@ -288,17 +288,17 @@ public class Button extends Controller<Button> {
 
         public void display(PGraphics graphics, Button theController) {
             if (isOn && isSwitch) {
-                graphics.image((availableImages[HIGHLIGHT] == true) ? images[HIGHLIGHT] : images[DEFAULT], 0, 0);
+                graphics.image((availableImages[HIGHLIGHT] == true) ? images[HIGHLIGHT] : images[DEFAULT], 0, 0, width, height);
                 return;
             }
             if(getMouseOver()) {
                 if (isPressed) {
-                    graphics.image((availableImages[ACTIVE] == true) ? images[ACTIVE] : images[DEFAULT], 0, 0);
+                    graphics.image((availableImages[ACTIVE] == true) ? images[ACTIVE] : images[DEFAULT], 0, 0, width, height);
                 } else {
-                    graphics.image((availableImages[OVER] == true) ? images[OVER] : images[DEFAULT], 0, 0);
+                    graphics.image((availableImages[OVER] == true) ? images[OVER] : images[DEFAULT], 0, 0, width, height);
                 }
             } else {
-                graphics.image(images[DEFAULT], 0, 0);
+                graphics.image(images[DEFAULT], 0, 0, width, height);
             }
         }
     }

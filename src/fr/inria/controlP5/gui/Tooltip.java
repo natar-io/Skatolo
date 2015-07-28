@@ -196,11 +196,11 @@ public class Tooltip {
 
                         if (mode >= ControlP5.WAIT) {
                             currentAlpha = (mode == ControlP5.WAIT) ? 0 : currentAlpha;
-                            theWindow.papplet().pushMatrix();
-                            theWindow.papplet().translate(position.x, position.y);
-                            theWindow.papplet().translate(offset.x, offset.y);
-                            controllerView.display(theWindow.papplet().g, null); // TODO: Warning HERE !
-                            theWindow.papplet().popMatrix();
+                            theWindow.graphics().pushMatrix();
+                            theWindow.graphics().translate(position.x, position.y);
+                            theWindow.graphics().translate(offset.x, offset.y);
+                            controllerView.display(theWindow.graphics(), null); // TODO: Warning HERE !
+                            theWindow.graphics().popMatrix();
                         }
                         if (mode < ControlP5.FADEOUT) {
                             if (moved()) {

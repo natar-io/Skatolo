@@ -83,7 +83,8 @@ public class MyCanvas{
 
 	// add a pointer with a specific ID
 	cp5Local.addPointer(pointerID);
-
+	cp5Local.getTooltip().setDelay(200);
+	cp5Local.getTooltip().register("bgColor", "Background color");
     }
 
     // method for ControlP5 to find the graphics. 

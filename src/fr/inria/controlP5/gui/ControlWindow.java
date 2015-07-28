@@ -633,8 +633,11 @@ public final class ControlWindow {
                     p.eventSent();
                     mouseReleasedEvent();
                 }
+                
+                //***//
                 updateEvents();
-
+                //***//
+                
                 // FIXME: I really think it is useless.
                 //handleMouseOver();
                 handleMouseWheelMoved();
@@ -743,6 +746,10 @@ public final class ControlWindow {
     public void draw(PGraphics graphics) {
         this.graphics = graphics;
         draw();
+    }
+    
+    public PGraphics graphics(){
+        return this.graphics;
     }
 
     /**
