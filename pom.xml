@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.sojamo</groupId>
     <artifactId>controlP5</artifactId>
-    <version>2.2.1-1</version>
+    <version>3.0-0</version>
     <packaging>jar</packaging>
     <name>controlP5</name>
   
@@ -27,8 +27,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             
@@ -45,7 +45,7 @@
         <dependency>
             <groupId>org.processing</groupId>
             <artifactId>core</artifactId>
-            <version>2.2.1</version>
+            <version>3.0a11</version>
         </dependency>
     </dependencies>
     <properties>
