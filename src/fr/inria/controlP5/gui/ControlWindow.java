@@ -972,8 +972,10 @@ public final class ControlWindow {
             isUndecorated = theFlag;
             applet.frame.removeNotify();
             applet.frame.setUndecorated(isUndecorated);
+
+            // TODO: Might not work in Processing3
             applet.setSize(applet.width, applet.height);
-            applet.setBounds(0, 0, applet.width, applet.height);
+            applet.frame.setBounds(0, 0, applet.width, applet.height);
             applet.frame.setSize(applet.width, applet.height);
             applet.frame.addNotify();
         }
