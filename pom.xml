@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.sojamo</groupId>
     <artifactId>controlP5</artifactId>
-    <version>3.0-0</version>
+    <version>3.0b</version>
     <packaging>jar</packaging>
     <name>controlP5</name>
   
@@ -45,7 +45,7 @@
         <dependency>
             <groupId>org.processing</groupId>
             <artifactId>core</artifactId>
-            <version>3.0a11</version>
+            <version>3.0b3</version>
         </dependency>
     </dependencies>
     <properties>
