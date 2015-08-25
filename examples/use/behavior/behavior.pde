@@ -28,7 +28,7 @@ void setup() {
   size(400, 400);
   noStroke();
 
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   skatolo.addSlider("sliderValue")
      .setRange(0,255)
      .setValue(128)

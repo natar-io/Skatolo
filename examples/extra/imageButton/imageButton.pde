@@ -10,7 +10,7 @@ int myColor = color(0);
 
 void setup() {
   size(400,600);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   // replace the default skatolo button with an image.
   // button.setImages(defaultImage, rolloverImage, pressedImage);

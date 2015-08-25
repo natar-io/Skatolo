@@ -33,7 +33,7 @@ PApplet p;
 
 void setup() {
   size(400, 400);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   // create 2 groups to show nesting of custom controllers and
   //   

@@ -30,7 +30,7 @@ int r2 = 50;
 
 void setup() {
   size(400,400);
-  Skatolo skatolo = new skatolo(this);
+  Skatolo skatolo = new Skatolo(this);
   skatolo.addSlider("s1",10,150,10,10,100,15).setLabel("50");
   skatolo.addSlider("s2",10,150,20,150,10,100,15).setLabel("20");
   

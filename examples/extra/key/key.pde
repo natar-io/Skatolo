@@ -24,7 +24,7 @@ void setup() {
   noStroke();
   col = color(0);
   colEllipse = color(0,255,90);  
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   // press key 1 to change background to white             
   skatolo.mapKeyFor(new ControlKey() {public void keyEvent() {col = color(255);}}, '1');

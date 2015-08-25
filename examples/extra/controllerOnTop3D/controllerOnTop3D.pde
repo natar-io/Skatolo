@@ -24,7 +24,7 @@ float t;
 
 void setup() {
   size(640,480,OPENGL);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   noStroke();
   createMessageBox();
   Button b = skatolo.addButton("toggleBox",1,20,20,100,20);

@@ -50,7 +50,7 @@ void setup() {
   size(700, 400);
   noStroke();
   
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   skatolo.addSlider("slider")
      .setBroadcast(false)

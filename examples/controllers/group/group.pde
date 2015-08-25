@@ -19,7 +19,7 @@ Skatolo skatolo;
 void setup() {  
   size(700,400);
 
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   Group g1 = skatolo.addGroup("g1")
                 .setPosition(100,100)

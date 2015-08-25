@@ -25,7 +25,7 @@ int cnt = 0;
 void setup() {
   size(700, 400,P3D);
   
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   // create a DropdownList
   d1 = skatolo.addDropdownList("myList-d1")
           .setPosition(100, 100)

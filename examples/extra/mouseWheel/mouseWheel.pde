@@ -21,7 +21,7 @@ Skatolo skatolo;
 
 void setup() {
   size(700, 300);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
 
 
   skatolo.addNumberbox("numberbox")

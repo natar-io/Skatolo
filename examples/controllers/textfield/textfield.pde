@@ -23,7 +23,7 @@ void setup() {
   
   PFont font = createFont("arial",20);
   
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   skatolo.addTextfield("input")
      .setPosition(20,100)

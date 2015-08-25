@@ -21,7 +21,7 @@ Skatolo skatolo;
 void setup() {
   size(400, 400);
   smooth();
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   skatolo.addButton("hello")
      .setPosition(50, 100)
      .setSize(100,100)

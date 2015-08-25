@@ -33,7 +33,7 @@ Slider abc;
 void setup() {
   size(700,400);
   noStroke();
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   // add a horizontal sliders, the value of this slider will be linked
   // to variable 'sliderValue' 

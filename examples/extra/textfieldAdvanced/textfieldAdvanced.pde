@@ -22,7 +22,7 @@ Textfield myTextfield;
 void setup() {
   size(400, 600);
 
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   myTextfield = skatolo.addTextfield("textinput")
                    .setPosition(100, 200)
                    .setSize(200, 20)

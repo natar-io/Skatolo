@@ -19,7 +19,7 @@ Chart myChart;
 void setup() {
   size(400, 700);
   smooth();
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   skatolo.printPublicMethodsFor(Chart.class);
   myChart = skatolo.addChart("hello")
                .setPosition(50, 50)

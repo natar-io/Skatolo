@@ -25,7 +25,7 @@ void setup() {
   size(700,400);
   smooth();
   
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   // (1)
   // create some controllers
   skatolo.addButton("button")

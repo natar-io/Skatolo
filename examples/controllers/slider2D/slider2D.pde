@@ -19,7 +19,7 @@ Slider2D s;
 
 void setup() {
   size(700,400);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   s = skatolo.addSlider2D("wave")
          .setPosition(30,40)
          .setSize(100,100)

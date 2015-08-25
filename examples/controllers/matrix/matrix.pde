@@ -24,7 +24,7 @@ int ny = 10;
 void setup() {
   size(700, 400);
 
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   skatolo.printPublicMethodsFor(Matrix.class);
 
   skatolo.addMatrix("myMatrix")

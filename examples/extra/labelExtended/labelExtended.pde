@@ -19,7 +19,7 @@ int sliderValue = 100;
 void setup() {
   size(400,400);
   noStroke();
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   PFont p = createFont("Georgia",12); 
   skatolo.setControlFont(p,12);
   skatolo.setColorLabel(color(255,128));

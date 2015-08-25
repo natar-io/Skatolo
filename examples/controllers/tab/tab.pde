@@ -23,7 +23,7 @@ int sliderValue = 100;
 void setup() {
   size(700,400);
   noStroke();
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   // By default all controllers are stored inside Tab 'default' 
   // add a second tab with name 'extra'

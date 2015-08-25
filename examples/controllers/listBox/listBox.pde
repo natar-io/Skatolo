@@ -26,7 +26,7 @@ void setup() {
   
   skatolo.printPublicMethodsFor(ListBox.class);
 
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   l = skatolo.addListBox("myList")
          .setPosition(100, 100)
          .setSize(120, 120)

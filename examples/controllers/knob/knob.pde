@@ -26,7 +26,7 @@ void setup() {
   smooth();
   noStroke();
   
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   myKnobA = skatolo.addKnob("knob")
                .setRange(0,255)

@@ -32,7 +32,7 @@ public int slider4 = 255;
 
 void setup() {
   size(400, 600);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   skatolo.printPublicMethodsFor(ControllerProperties.class);
   // add a vertical slider
   skatolo.addSlider("slider1", 0, 255, 20, 100, 128, 20);

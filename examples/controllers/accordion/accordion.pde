@@ -33,7 +33,7 @@ void setup() {
 
 void gui() {
   
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   // group number 1, contains 2 bangs
   Group g1 = skatolo.addGroup("myGroup1")

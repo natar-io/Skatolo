@@ -34,7 +34,7 @@ public int sliderTicks2 = 30;
 
 void setup() {
   size(400,400);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   noStroke();
   // add a vertical slider
   skatolo.addSlider("slider")

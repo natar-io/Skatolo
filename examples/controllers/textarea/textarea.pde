@@ -19,7 +19,7 @@ Textarea myTextarea;
 
 void setup() {
   size(700,400);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   myTextarea = skatolo.addTextarea("txt")
                   .setPosition(100,100)

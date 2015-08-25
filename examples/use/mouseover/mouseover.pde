@@ -25,7 +25,7 @@ public int slider2 = 128;
 void setup() {
   size(700, 400);
   smooth();
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
 
   skatolo.addSlider("slider1", 0, 255, 20, 100, 128, 20);
   skatolo.addSlider("slider2", 0, 255, 20, 150, 128, 20);

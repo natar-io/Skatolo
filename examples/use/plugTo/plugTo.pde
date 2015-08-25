@@ -40,7 +40,7 @@ void setup() {
     testarray[i] = new Test(200 + i*20);
   }
   
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   skatolo.begin(100,20);
   

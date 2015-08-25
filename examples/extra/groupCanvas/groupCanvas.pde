@@ -14,7 +14,7 @@ void setup() {
   size(400,600);
   smooth();
   
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   skatolo.addGroup("myGroup")
      .setLabel("Testing Canvas")
      .setPosition(100,200)

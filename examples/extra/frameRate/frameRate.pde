@@ -18,7 +18,7 @@ Skatolo skatolo;
 void setup() {
   size(400,500);
   frameRate(30);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   skatolo.addFrameRate().setInterval(10).setPosition(0,height - 10);
   
 }

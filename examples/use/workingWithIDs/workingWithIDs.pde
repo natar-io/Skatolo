@@ -20,7 +20,7 @@ void setup() {
   noStroke();
   
   /* new instance of skatolo */
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   /* add 2 controllers and give each of them a unique id. */
   skatolo.addNumberbox("numberbox1")
      .setPosition(100,160)

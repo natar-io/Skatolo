@@ -26,7 +26,7 @@ Pointer pointer1, pointer2;
 void setup() {
   size(400, 600);
 
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   // disable outodraw because we want to draw our 
   // custom cursor on to of skatolo
   skatolo.setAutoDraw(false);

@@ -47,7 +47,7 @@ int n2 = 50;
 void setup() {
   size(600,400);
   noStroke();
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   skatolo.addButton("b1",1);
   skatolo.addButton("b2",2);
   skatolo.addButton("b3",3);

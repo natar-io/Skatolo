@@ -20,7 +20,7 @@ int myColor = color(255, 0, 0);
 void setup() {
   size(400, 400, OPENGL);
   cam = new PeasyCam(this, 100);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   skatolo.addButton("button", 10, 100, 60, 80, 20).setId(1);
   skatolo.addButton("buttonValue", 4, 100, 90, 80, 20).setId(2);
   skatolo.setAutoDraw(false);

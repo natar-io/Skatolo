@@ -22,7 +22,7 @@ ColorPicker cp;
 void setup() {
   size(400, 600);
   noStroke();
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   cp = skatolo.addColorPicker("picker")
           .setPosition(60, 100)
           .setColorValue(color(255, 128, 0, 128))

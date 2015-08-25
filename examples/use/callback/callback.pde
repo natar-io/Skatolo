@@ -29,7 +29,7 @@ CallbackListener cb;
 void setup() {
   size(800, 400);
 
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
 
   
   // create a new instance of class Info

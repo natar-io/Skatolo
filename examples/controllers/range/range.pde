@@ -25,7 +25,7 @@ Range range;
 
 void setup() {
   size(700,400);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   range = skatolo.addRange("rangeController")
              // disable broadcasting since setRange and setRangeValues will trigger an event
              .setBroadcast(false) 

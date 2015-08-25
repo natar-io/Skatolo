@@ -26,7 +26,7 @@ MyCanvas canvas;
 void setup() {
     size(300, 300);
 
-  skatoloGlobal = new skatolo(this);
+  skatoloGlobal = new Skatolo(this);
 
   // change the trigger event, by default it is PRESSED.
   skatoloGlobal.addBang("bang")
@@ -70,7 +70,7 @@ public class MyCanvas{
 	// or use skatoloLocal.draw(pg);
 	pg = createGraphics(200, 200);
 	
-	skatoloLocal = new skatolo(applet, this);
+	skatoloLocal = new Skatolo(applet, this);
 
 	// Manual draw required with offscreens. 
 	skatoloLocal.setAutoDraw(false);

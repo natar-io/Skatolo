@@ -26,7 +26,7 @@ void setup() {
   size(400, 400);
   noStroke();
   
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   skatolo.addNumberbox("n1")
      .setValue(myColorRect)
      .setPosition(100, 160)

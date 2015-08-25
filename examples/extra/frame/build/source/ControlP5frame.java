@@ -47,7 +47,7 @@ int def;
 
 public void setup() {
   
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   // by calling function addControlFrame() a
   // new frame is created and an instance of class
@@ -87,7 +87,7 @@ public class ControlFrame extends PApplet {
     
     public void setup() {
 	frameRate(25);
-	skatolo = new skatolo(this);
+	skatolo = new Skatolo(this);
 	skatolo.addSlider("abc").setRange(0, 255).setPosition(10,10);
 	skatolo.addSlider("def").plugTo(parent,"def").setRange(0, 255).setPosition(10,30);
     }

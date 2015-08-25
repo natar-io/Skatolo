@@ -26,7 +26,7 @@ float n,n1;
 void setup() {
   size(400,600);
   noStroke();
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   // create a new button with name 'buttonA'
   skatolo.addButton("colorA")

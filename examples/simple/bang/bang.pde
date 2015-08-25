@@ -29,7 +29,7 @@ void setup() {
   size(400, 600);
   noStroke();
 
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
 
   for (int i=0;i<col.length;i++) {
     skatolo.addBang("bang"+i)

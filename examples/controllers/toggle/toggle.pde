@@ -24,7 +24,7 @@ boolean toggleValue = false;
 void setup() {
   size(400,400);
   smooth();
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   // create a toggle
   skatolo.addToggle("toggleValue")

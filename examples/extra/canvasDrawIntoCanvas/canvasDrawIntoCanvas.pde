@@ -49,7 +49,7 @@ class MyCanvas extends ControlWindowCanvas {
 void setup() {
   size(400,400);
   frameRate(30);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
 
   cc = new MyCanvas();
   cc.pre();

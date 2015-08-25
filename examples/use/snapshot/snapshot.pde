@@ -27,7 +27,7 @@ public float k = 100;
 void setup() {
   size(400, 400);
   smooth();
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
 
   skatolo.addNumberbox("n")
   .setPosition(10, 10)

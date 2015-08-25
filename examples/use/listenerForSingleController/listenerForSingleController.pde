@@ -16,7 +16,7 @@ void setup() {
   size(700,400);
 
 
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   skatolo.setColor(new CColor(0xffaa0000, 0xff330000, 0xffff0000, 0xffffffff, 0xffffffff));  
   
   skatolo.addSlider("mySlider")

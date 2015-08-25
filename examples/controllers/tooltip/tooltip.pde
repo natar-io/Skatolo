@@ -25,7 +25,7 @@ void setup() {
   size(700,400);
   smooth();
   noStroke();
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   skatolo.begin(100,100);
   skatolo.addSlider("s1",10,200).linebreak();
   skatolo.addSlider("s2",0,150);

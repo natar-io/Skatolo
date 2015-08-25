@@ -45,7 +45,7 @@ class MyCanvas extends Canvas {
 void setup() {
   size(400, 400);
   frameRate(30);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
 
   // create a control window canvas and add it to
   // the previously created control window.  

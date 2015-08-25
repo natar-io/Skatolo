@@ -43,7 +43,7 @@ void setup() {
   size(600, 400);
   noStroke();
 
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   
   // Annotations:
   // addControllersFor(PApplet) checks the main sketch for 

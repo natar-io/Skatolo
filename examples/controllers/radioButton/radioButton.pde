@@ -24,7 +24,7 @@ RadioButton r;
 void setup() {
   size(700,400);
   
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   r = skatolo.addRadioButton("radioButton")
          .setPosition(20,160)
          .setSize(40,20)

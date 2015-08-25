@@ -26,7 +26,7 @@ int myColorBackground;
 void setup() {
   size(700, 400);
   smooth();
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   checkbox = skatolo.addCheckBox("checkBox")
                 .setPosition(100, 200)
                 .setColorForeground(color(120))

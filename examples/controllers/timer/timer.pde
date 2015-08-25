@@ -15,7 +15,7 @@ Textlabel t;
 void setup() {
   size(400,400);
   frameRate(30);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   c = new ControlTimer();
   t = new Textlabel(skatolo,"--",100,100);
   c.setSpeedOfTime(1);

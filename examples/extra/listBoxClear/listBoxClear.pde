@@ -6,7 +6,7 @@ ListBox l;
 
 void setup() {
   size(400,400);
-  skatolo = new skatolo(this);
+  skatolo = new Skatolo(this);
   l = skatolo.addListBox("myList",100,100,120,150);
   // l.actAsPulldownMenu(true);
   l.setItemHeight(23);
