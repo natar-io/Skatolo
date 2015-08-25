@@ -45,7 +45,7 @@
         <dependency>
             <groupId>org.processing</groupId>
             <artifactId>core</artifactId>
-            <version>3.0b3</version>
+            <version>3.0b4</version>
         </dependency>
     </dependencies>
     <properties>
