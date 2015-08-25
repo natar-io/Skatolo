@@ -1,27 +1,27 @@
 require 'jruby/core_ext'
 
-Processing::App.load_library :controlP5
+Processing::App.load_library :skatolo
 
-# module Cp5
-#   include_package 'fr.inria.papart.controlP5'
+# module skatolo
+#   include_package 'fr.inria.papart.skatolo'
 # end
 
 class EventHandler 
   attr_reader :applet
   
-  def initialize cp5
-    @cp5 = cp5
+  def initialize skatolo
+    @skatolo = skatolo
   end
 
-  java_signature 'void controlEvent(fr.inria.controlP5.events.ControlEvent)'
+  java_signature 'void controlEvent(fr.inria.skatolo.events.ControlEvent)'
   def controlEvent(controlEvent)
-    @cp5.sent_event_to_sketch controlEvent
+    @skatolo.sent_event_to_sketch controlEvent
   end
 
   EventHandler.become_java!
 end
 
-class ControlP5 < Java::FrInriaControlP5::ControlP5
+class skatolo < Java::FrInriaskatolo::skatolo
 
   def initialize (applet, events_object = nil)
     @event_handler = EventHandler.new self
@@ -89,8 +89,8 @@ class ControlP5 < Java::FrInriaControlP5::ControlP5
 #    puts "Creating a getter for " + name
 
     @events_object.create_method(name + "_value") do 
-      controller = @cp5.get(name)
-      @cp5.get_controller_value controller
+      controller = @skatolo.get(name)
+      @skatolo.get_controller_value controller
     end
 
   end
@@ -104,8 +104,8 @@ class ControlP5 < Java::FrInriaControlP5::ControlP5
 #    puts "Creating a setter for " + name
     
     @events_object.create_method(name + "_value=") do |value|
-      controller = @cp5.get(name)
-      @cp5.set_controller_value controller, value
+      controller = @skatolo.get(name)
+      @skatolo.set_controller_value controller, value
     end
 
   end
@@ -125,16 +125,16 @@ class ControlP5 < Java::FrInriaControlP5::ControlP5
 
   
   def is_event_class object_class
-    object_class == Java::FrInriaControlP5GuiControllers::Button or 
-      object_class == Java::FrInriaControlP5GuiControllers::Bang
+    object_class == Java::FrInriaskatoloGuiControllers::Button or 
+      object_class == Java::FrInriaskatoloGuiControllers::Bang
   end
 
   def is_value_class object_class
-    object_class == Java::FrInriaControlP5GuiControllers::Slider
+    object_class == Java::FrInriaskatoloGuiControllers::Slider
   end
   
   def is_string_value_class object_class
-    object_class == Java::FrInriaControlP5GuiControllers::Textfield
+    object_class == Java::FrInriaskatoloGuiControllers::Textfield
   end
   
 

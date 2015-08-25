@@ -1,7 +1,7 @@
 <#if licenseFirst??>
 ${licenseFirst}
 </#if>
-${licensePrefix} controlP5 is a processing gui library.
+${licensePrefix} skatolo is a processing gui library.
 ${licensePrefix}
 ${licensePrefix}Copyright (C)  2006-2012 by Andreas Schlegel
 ${licensePrefix}Copyright (C)  2015 by Jeremy Laviole

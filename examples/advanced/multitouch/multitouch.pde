@@ -1,23 +1,23 @@
 /**
-* ControlP5 Multi-Touch
+* skatolo Multi-Touch
 *
 * Default mouse actions use the Pointer class to trigger events.
 * you can manipulate the x and y fields of the Pointer class
 * for customizing input events for example when using a 
 * different input than the mouse.
-* cp5 can now have multiple Pointers !
+* skatolo can now have multiple Pointers !
 *
 * by Jeremy Laviole, 2015
-* https://github.com/potioc/ControlP5
+* https://github.com/potioc/skatolo
 *
 */
 
-import fr.inria.controlP5.*;
-import fr.inria.controlP5.events.*;
-import fr.inria.controlP5.gui.controllers.*;
-import fr.inria.controlP5.gui.Pointer;
+import fr.inria.skatolo.*;
+import fr.inria.skatolo.events.*;
+import fr.inria.skatolo.gui.controllers.*;
+import fr.inria.skatolo.gui.Pointer;
 
-ControlP5 cp5;
+Skatolo skatolo;
 
 int hello;
 
@@ -26,19 +26,19 @@ Pointer pointer1, pointer2;
 void setup() {
   size(400, 600);
 
-  cp5 = new ControlP5(this);
+  skatolo = new skatolo(this);
   // disable outodraw because we want to draw our 
-  // custom cursor on to of controlP5
-  cp5.setAutoDraw(false);
+  // custom cursor on to of skatolo
+  skatolo.setAutoDraw(false);
   
-  cp5.addSlider("hello", 0, 100, 50, 40, 40, 100, 20);
+  skatolo.addSlider("hello", 0, 100, 50, 40, 40, 100, 20);
   
 
   // Disable the mouse 
-  cp5.getMousePointer().disable();
+  skatolo.getMousePointer().disable();
 
-  pointer1 = cp5.addPointer(1);
-  pointer2 = cp5.addPointer(2);
+  pointer1 = skatolo.addPointer(1);
+  pointer2 = skatolo.addPointer(2);
 
   noCursor();
 }
@@ -46,13 +46,13 @@ void setup() {
 
 void draw() {
 
-  background(cp5.get("hello").getValue());
+  background(skatolo.get("hello").getValue());
 
   //  pointer1.updatePosition(mouseX, mouseY - 100);
-   cp5.updatePointer(1, mouseX, mouseY - 100);
-   cp5.updatePointer(2, mouseX, mouseY);
+   skatolo.updatePointer(1, mouseX, mouseY - 100);
+   skatolo.updatePointer(2, mouseX, mouseY);
 
-  for(Pointer p : cp5.getPointerList()){
+  for(Pointer p : skatolo.getPointerList()){
 
       if(!p.isEnabled())
 	  continue;
@@ -77,17 +77,17 @@ void draw() {
       popMatrix();
   }
 
-  // first draw controlP5
-  cp5.draw();
+  // first draw skatolo
+  skatolo.draw();
 
   
 }
 
 void mousePressed() {
-    cp5.updatePointerPress(1, true);
+    skatolo.updatePointerPress(1, true);
 
 }
 
 void mouseReleased() {
-    cp5.updatePointerPress(1, false);
+    skatolo.updatePointerPress(1, false);
 }

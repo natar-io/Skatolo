@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 TMP=tmp
-NAME=controlP5
+NAME=skatolo
 
 mkdir $TMP
 mkdir $TMP/$NAME 
