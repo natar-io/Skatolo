@@ -10,8 +10,9 @@ understanding the code and upgrading to our coding standards required some work.
 
 This library is for an **advanced** use of ControlP5, it is not as convenient to
 use. It is a part of a research and development project involving multi-touch,
-augmented reality and Ruby. Please use the original library in your projects if
-you are not sure which one to use.
+augmented reality and Ruby.
+
+### Please use the original library in your projects if you are not sure which one to use.
 
 ## Why Skatolo ?
 
