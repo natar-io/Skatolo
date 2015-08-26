@@ -21,7 +21,7 @@ class EventHandler
   EventHandler.become_java!
 end
 
-class skatolo < Java::FrInriaskatolo::skatolo
+class Skatolo < Java::FrInriaSkatolo::Skatolo
 
   def initialize (applet, events_object = nil)
     @event_handler = EventHandler.new self
@@ -125,16 +125,16 @@ class skatolo < Java::FrInriaskatolo::skatolo
 
   
   def is_event_class object_class
-    object_class == Java::FrInriaskatoloGuiControllers::Button or 
-      object_class == Java::FrInriaskatoloGuiControllers::Bang
+    object_class == Java::FrInriaSkatoloGuiControllers::Button or 
+      object_class == Java::FrInriaSkatoloGuiControllers::Bang
   end
 
   def is_value_class object_class
-    object_class == Java::FrInriaskatoloGuiControllers::Slider
+    object_class == Java::FrInriaSkatoloGuiControllers::Slider
   end
   
   def is_string_value_class object_class
-    object_class == Java::FrInriaskatoloGuiControllers::Textfield
+    object_class == Java::FrInriaSkatoloGuiControllers::Textfield
   end
   
 

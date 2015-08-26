@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 
-require 'ruby-processing' 
-require 'jruby/core_ext'
+require 'jruby_art'
+require 'jruby_art/app'
 
-Processing::Runner 
-Dir["#{Processing::RP_CONFIG['PROCESSING_ROOT']}/core/library/\*.jar"].each{ |jar| require jar }
-Processing::App::SKETCH_PATH = __FILE__   unless defined? Processing::App::SKETCH_PATH
+Processing::App::SKETCH_PATH = __FILE__
 
-require './skatolo' 
+require_relative 'skatolo'
 
 class MyApp < Processing::App
 
@@ -17,13 +15,13 @@ class MyApp < Processing::App
   def create_method(name, &block)
     self.class.send(:define_method, name, &block)
   end
+
+  def settings
+    size 800, 800, OPENGL
+  end
   
   def setup
-    size 800, 800, OPENGL
-
-    
-    @skatolo = skatolo.new self
-
+    @skatolo = Skatolo.new self
 
     @button = @skatolo.addButton("button")
               .setPosition(40, 200)
