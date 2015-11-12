@@ -39,15 +39,14 @@ import processing.core.PGraphics;
  *
  * @example controllers/skatolobutton
  */
-public class Button extends Controller<Button> {
+public class HoverButton extends Controller<HoverButton> {
 
     public static int autoWidth = 69;
     public static int autoHeight = 19;
 
-    protected int activateBy = RELEASE;
+    protected int activateBy = ACTION_ENTER;
 
     protected boolean isOn = false;
-    protected boolean isPressed;
     protected boolean isSwitch = false;
 
     /**
@@ -57,12 +56,12 @@ public class Button extends Controller<Button> {
      * @param theskatolo
      * @param theName
      */
-    public Button(Skatolo theskatolo, String theName) {
+    public HoverButton(Skatolo theskatolo, String theName) {
         this(theskatolo, theskatolo.getDefaultTab(), theName, 0, 0, 0, autoWidth, autoHeight);
         theskatolo.register(theskatolo.getObjectForIntrospection(), theName, this);
     }
 
-    public Button(Skatolo theskatolo, ControllerGroup<?> theParent, String theName, float theDefaultValue, int theX, int theY, int theWidth, int theHeight) {
+    public HoverButton(Skatolo theskatolo, ControllerGroup<?> theParent, String theName, float theDefaultValue, int theX, int theY, int theWidth, int theHeight) {
         super(theskatolo, theParent, theName, theX, theY, theWidth, theHeight);
         _myValue = theDefaultValue;
         _myCaptionLabel.align(LEFT, CENTER);
@@ -71,18 +70,42 @@ public class Button extends Controller<Button> {
     /**
      * @exclude
      */
-    public Button() {
+    public HoverButton() {
         super(null, null, null, 0, 0, 1, 1);
+    }
+
+    /**
+     * A hover button can be activated by a pointer ENTER or LEAVE. Default
+     * value is ACTION_ENTER.
+     *
+     * @param theValue use skatolo.ACTION_ENTER or skatolo.ACTION_LEAVE as
+     * parameter
+     * @return Button
+     */
+    public HoverButton activateBy(int theValue) {
+        if (theValue == ACTION_ENTER) {
+            activateBy = ACTION_ENTER;
+        } else {
+            activateBy = ACTION_LEAVE;
+        }
+        return this;
     }
 
     @Override
     protected void onEnter() {
         isActive = true;
+
+        if (activateBy == ACTION_ENTER) {
+            activate();
+        }
     }
 
     @Override
     public void onLeave() {
         isActive = false;
+        if (activateBy == ACTION_LEAVE) {
+            activate();
+        }
     }
 
     /**
@@ -90,12 +113,7 @@ public class Button extends Controller<Button> {
      */
     @Override
     public void mousePressed() {
-        isActive = getMouseOver();
-        isPressed = true;
-            System.out.println("Button pressed.");
-        if (activateBy == PRESSED) {
-            activate();
-        }
+        System.out.println("MousePressed/Released is not working with Hover Button.");
     }
 
     /**
@@ -103,40 +121,16 @@ public class Button extends Controller<Button> {
      */
     @Override
     public void mouseReleased() {
-        isPressed = false;
-        if (activateBy == RELEASE) {
-            activate();
-        }
-        isActive = false;
-    }
-
-    /**
-     * A button can be activated by a mouse PRESSED or mouse RELEASE. Default
-     * value is RELEASE.
-     *
-     * @param theValue use skatolo.PRESSED or skatolo.RELEASE as parameter
-     * @return Button
-     */
-    public Button activateBy(int theValue) {
-        if (theValue == PRESSED) {
-            activateBy = PRESSED;
-        } else {
-            activateBy = RELEASE;
-        }
-        return this;
     }
 
     protected void activate() {
-        if (isActive) {
-            isActive = false;
-            if (getParent() instanceof Tab) {
-                setPointerOver(false);
-            }
-            isOn = !isOn;
-            setValue(_myValue);
-            System.out.println("Button deActivated.");
+//        isActive = false;
+        if (getParent() instanceof Tab) {
+            setPointerOver(false);
         }
-                   System.out.println("Button activated.");
+        isOn = !isOn;
+        // This triggers the events ?
+        setValue(_myValue);
     }
 
     /**
@@ -151,7 +145,7 @@ public class Button extends Controller<Button> {
      * {@inheritDoc}
      */
     @Override
-    public Button setValue(float theValue) {
+    public HoverButton setValue(float theValue) {
         _myValue = theValue;
         broadcast(FLOAT);
         return this;
@@ -161,7 +155,7 @@ public class Button extends Controller<Button> {
      * {@inheritDoc}
      */
     @Override
-    public Button update() {
+    public HoverButton update() {
         return setValue(_myValue);
     }
 
@@ -172,19 +166,19 @@ public class Button extends Controller<Button> {
      * @param theFlag turns the button into a switch when true
      * @return Button
      */
-    public Button setSwitch(boolean theFlag) {
+    public HoverButton setSwitch(boolean theFlag) {
         isSwitch = theFlag;
         return this;
     }
 
     /**
      * If the button acts as a switch, setOn will turn on the switch. Use
-     * {@link skatolo.Button#setSwitch(boolean) setSwitch} to turn a Button
-     * into a Switch.
+     * {@link skatolo.Button#setSwitch(boolean) setSwitch} to turn a Button into
+     * a Switch.
      *
      * @return Button
      */
-    public Button setOn() {
+    public HoverButton setOn() {
         if (isSwitch) {
             isOn = false;
             isActive = true;
@@ -195,12 +189,12 @@ public class Button extends Controller<Button> {
 
     /**
      * If the button acts as a switch, setOff will turn off the switch. Use
-     * {@link skatolo.Button#setSwitch(boolean) setSwitch} to turn a Button
-     * into a Switch.
+     * {@link skatolo.Button#setSwitch(boolean) setSwitch} to turn a Button into
+     * a Switch.
      *
      * @return Button
      */
-    public Button setOff() {
+    public HoverButton setOff() {
         if (isSwitch) {
             isOn = true;
             isActive = true;
@@ -214,13 +208,6 @@ public class Button extends Controller<Button> {
      */
     public boolean isOn() {
         return isOn;
-    }
-
-    /**
-     * @return boolean
-     */
-    public boolean isPressed() {
-        return isPressed;
     }
 
     /**
@@ -238,14 +225,14 @@ public class Button extends Controller<Button> {
      * @exclude
      */
     @Override
-    public Button updateDisplayMode(int theMode) {
+    public HoverButton updateDisplayMode(int theMode) {
         return updateViewMode(theMode);
     }
 
     /**
      * @exclude
      */
-    public Button updateViewMode(int theMode) {
+    public HoverButton updateViewMode(int theMode) {
         _myDisplayMode = theMode;
         switch (theMode) {
             case (DEFAULT):
@@ -262,19 +249,15 @@ public class Button extends Controller<Button> {
         return this;
     }
 
-    private class ButtonView implements ControllerView<Button> {
+    private class ButtonView implements ControllerView<HoverButton> {
 
-        public void display(PGraphics graphics, Button theController) {
+        public void display(PGraphics graphics, HoverButton theController) {
             graphics.noStroke();
             if (isOn && isSwitch) {
                 graphics.fill(color.getActive());
             } else {
                 if (getMouseOver()) {
-                    if (isPressed) {
-                        graphics.fill(color.getActive());
-                    } else {
-                        graphics.fill(color.getForeground());
-                    }
+                    graphics.fill(color.getActive());
                 } else {
                     graphics.fill(color.getBackground());
                 }
@@ -286,19 +269,15 @@ public class Button extends Controller<Button> {
         }
     }
 
-    private class ButtonImageView implements ControllerView<Button> {
+    private class ButtonImageView implements ControllerView<HoverButton> {
 
-        public void display(PGraphics graphics, Button theController) {
+        public void display(PGraphics graphics, HoverButton theController) {
             if (isOn && isSwitch) {
                 graphics.image((availableImages[HIGHLIGHT] == true) ? images[HIGHLIGHT] : images[DEFAULT], 0, 0, width, height);
                 return;
             }
-            if(getMouseOver()) {
-                if (isPressed) {
-                    graphics.image((availableImages[ACTIVE] == true) ? images[ACTIVE] : images[DEFAULT], 0, 0, width, height);
-                } else {
-                    graphics.image((availableImages[OVER] == true) ? images[OVER] : images[DEFAULT], 0, 0, width, height);
-                }
+            if (getMouseOver()) {
+                graphics.image((availableImages[ACTIVE] == true) ? images[ACTIVE] : images[DEFAULT], 0, 0, width, height);
             } else {
                 graphics.image(images[DEFAULT], 0, 0, width, height);
             }

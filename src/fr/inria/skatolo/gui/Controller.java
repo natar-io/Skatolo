@@ -174,7 +174,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
 
     // Input 
     protected Pointer currentPointer = Pointer.invalidPointer;
-    protected boolean mouseover;
+    protected boolean isPointerOver;
     protected boolean dragged;
 
     private T me;
@@ -539,6 +539,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
         }
 
         // responds only to one pointer. 
+        // Is the correct pointer, or no active pointer is set. 
         if (currentPointer == controlWindow.getCurrentPointer() || currentPointer == Pointer.invalidPointer) {
 
             if (isMovingController()) {
@@ -553,18 +554,19 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
             boolean goingOut = !computeIsInside();
             boolean goingIn = !goingOut;
 
-            if (isMouseOver()) {
+            if (isPointerOver()) {
                 checkDragging();
+                
                 if (goingOut && !isMousePressed) {
                     onLeave();
-                    setMouseOver(false);
+                    setPointerOver(false);
                 }
 
             } else {
 
                 if (goingIn) {
                     onEnter();
-                    setMouseOver(true);
+                    setPointerOver(true);
                     currentPointer = controlWindow.getCurrentPointer();
                 }
 
@@ -624,7 +626,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
         }
 
         if (theStatus == true) {
-            if (isMouseOver()) {
+            if (isPointerOver()) {
                 setMousePressed();
                 return true;
             }
@@ -717,17 +719,17 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
      *
      * @return boolean
      */
-    public boolean isMouseOver() {
-        return mouseover && controlWindow.getCurrentPointer() == this.currentPointer;
+    public boolean isPointerOver() {
+        return isPointerOver && controlWindow.getCurrentPointer() == this.currentPointer;
     }
 
-    public T setMouseOver(boolean theFlag) {
-        if (mouseover == theFlag) {
+    public T setPointerOver(boolean theFlag) {
+        if (isPointerOver == theFlag) {
             return me;
         }
-        mouseover = theFlag;
+        isPointerOver = theFlag;
 
-        if (mouseover) {
+        if (isPointerOver) {
             controlWindow.setMouseOverController(this);
             skatolo.getControlBroadcaster().invokeAction(new CallbackEvent(this, Skatolo.ACTION_ENTER));
             skatolo.getTooltip().activate(this);
@@ -1042,7 +1044,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
             absolutePosition.add(_myParent.getPosition());
             controlWindow = _myParent.getWindow();
         }
-        setMouseOver(false);
+        setPointerOver(false);
         return me;
     }
 
@@ -1136,7 +1138,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
     }
 
     protected boolean getMouseOver() {
-        return mouseover;
+        return isPointerOver;
     }
 
     /**
@@ -1569,7 +1571,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
      */
     @Override
     public T hide() {
-        setMouseOver(false);
+        setPointerOver(false);
         isVisible = false;
         isActive = false;
         return me;

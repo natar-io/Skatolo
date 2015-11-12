@@ -332,7 +332,7 @@ public final class ControlWindow {
     public void resetMouseOver() {
         isMouseOver = false;
         for (int i = mouseoverList.size() - 1; i >= 0; i--) {
-            mouseoverList.get(i).setMouseOver(false);
+            mouseoverList.get(i).setPointerOver(false);
         }
         mouseoverList.clear();
     }
@@ -355,7 +355,7 @@ public final class ControlWindow {
     // TODO: check if this is useful ?
     private ControlWindow handleMouseOver() {
         for (int i = mouseoverList.size() - 1; i >= 0; i--) {
-            if (!mouseoverList.get(i).isMouseOver() || !isVisible) {
+            if (!mouseoverList.get(i).isPointerOver() || !isVisible) {
                 mouseoverList.remove(i);
             }
         }
@@ -625,13 +625,23 @@ public final class ControlWindow {
                 }
 
                 currentPointer = p;
-                if (p.isPressed()) {
+                
+                if(p.isTouch() || p.isHover()){
+                    // touch and hover do not have a "click" 
+                    
+                    
+                } else {
+                
+                    if (p.isPressed()) {
                     p.eventSent();
                     mousePressedEvent();
                 }
                 if (p.isReleased()) {
                     p.eventSent();
                     mouseReleasedEvent();
+                }
+                    
+                    
                 }
 
                 //***//

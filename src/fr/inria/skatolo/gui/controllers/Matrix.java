@@ -140,7 +140,7 @@ public class Matrix extends Controller<Matrix> {
 
 	public Matrix updateInternalEvents(PApplet theApplet) {
 	// TODO: check this. 	
-            setMouseOver(computeIsInside());
+            setPointerOver(computeIsInside());
 
 		if (getMouseOver()) {
 			if (isPressed) {
@@ -425,7 +425,7 @@ public class Matrix extends Controller<Matrix> {
 					}
 				}
 			}
-			if (isMouseOver()) {
+			if (isPointerOver()) {
                             
                             // TODO: getMouseX() & getMouseY() here ? Why ?!
                             int x = (int) ((getWindow().getPointerX() - position.x) / stepX);

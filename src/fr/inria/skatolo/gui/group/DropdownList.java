@@ -481,7 +481,7 @@ public class DropdownList extends ControlGroup<DropdownList> {
 				}
 				skatolo.getControlBroadcaster().broadcast(myEvent, SkatoloConstants.FLOAT);
 				theEvent.getController().onLeave();
-				theEvent.getController().setMouseOver(false);
+				theEvent.getController().setPointerOver(false);
 			} catch (Exception e) {
 				Skatolo.logger().warning("ListBox.controlEvent exception:" + e);
 			}

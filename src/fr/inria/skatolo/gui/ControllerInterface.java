@@ -138,8 +138,8 @@ public interface ControllerInterface<T> {
 	public T removeProperty(String thePropertyName);
 	public T removeProperty(String theSetter, String theGetter);
 
-	public boolean isMouseOver();
-	public T setMouseOver(boolean theFlag);
+	public boolean isPointerOver();
+	public T setPointerOver(boolean theFlag);
 	public T addListener(ControlListener theListener);
 	public T setCaptionLabel(String theValue);
 	

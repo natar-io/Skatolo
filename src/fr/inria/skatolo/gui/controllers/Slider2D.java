@@ -82,7 +82,7 @@ public class Slider2D extends Controller<Slider2D> {
 	 * @see skatolo.Controller#updateInternalEvents(processing.core.PApplet)
 	 */
 	 public Slider2D updateInternalEvents(PApplet theApplet) {
-		if (isMouseOver()) {
+		if (isPointerOver()) {
 			if (!skatolo.isAltDown()) {
 				float tX = PApplet.constrain(controlWindow.getPointerX() - (_myParent.getAbsolutePosition().x + position.x), 0, width - cursorWidth);
 				float tY = PApplet.constrain(controlWindow.getPointerY() - (_myParent.getAbsolutePosition().y + position.y), 0, height - cursorHeight);
@@ -258,7 +258,7 @@ public class Slider2D extends Controller<Slider2D> {
 
 			graphics.noStroke();
 
-			if (theController.isMouseOver()) {
+			if (theController.isPointerOver()) {
 				graphics.fill(theController.getColor().getForeground());
 			} else {
 				graphics.fill(theController.getColor().getBackground());
@@ -267,7 +267,7 @@ public class Slider2D extends Controller<Slider2D> {
 			graphics.rect(0, 0, getWidth(), getHeight());
 
 			if (isCrosshairs) {
-				if (theController.isMouseOver()) {
+				if (theController.isPointerOver()) {
 					graphics.fill(theController.getColor().getBackground());
 				} else {
 					graphics.fill(theController.getColor().getForeground());

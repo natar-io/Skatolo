@@ -197,7 +197,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Skat
         positionBuffer = new PVector(position.x, position.y);
 
         if (skatolo.getWindow() != null) {
-            setMouseOver(false);
+            setPointerOver(false);
         }
     }
 
@@ -465,7 +465,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Skat
                     if (!isInside) {
                         isInside = true;
                         onEnter();
-                        setMouseOver(true);
+                        setPointerOver(true);
                     }
                 } else {
 
@@ -473,7 +473,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Skat
                     if (isInside && !isMousePressed) {
                         onLeave();
                         isInside = false;
-                        setMouseOver(false);
+                        setPointerOver(false);
                     }
                 }
             }
@@ -509,12 +509,12 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Skat
      *
      * @return boolean
      */
-    public boolean isMouseOver() {
+    public boolean isPointerOver() {
         mouseover = isInside || isInsideGroup || !isBarVisible;
         return mouseover;
     }
 
-    public T setMouseOver(boolean theFlag) {
+    public T setPointerOver(boolean theFlag) {
 
         mouseover = (!isBarVisible) ? false : theFlag;
 
@@ -523,7 +523,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Skat
             isInsideGroup = false;
             skatolo.getWindow().removeMouseOverFor(this);
             for (int i = controllers.size() - 1; i >= 0; i--) {
-                controllers.get(i).setMouseOver(false);
+                controllers.get(i).setPointerOver(false);
             }
             currentPointer = skatolo.getWindow().getCurrentPointer();
         } else {
@@ -686,7 +686,7 @@ public abstract class ControllerGroup<T> implements ControllerInterface<T>, Skat
      */
     public T remove(ControllerInterface<?> theElement) {
         if (theElement != null) {
-            theElement.setMouseOver(false);
+            theElement.setPointerOver(false);
         }
         controllers.remove(theElement);
         return me;

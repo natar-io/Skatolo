@@ -51,6 +51,7 @@ import fr.inria.skatolo.gui.group.Textarea;
 import fr.inria.skatolo.gui.controllers.Button;
 import fr.inria.skatolo.gui.controllers.Chart;
 import fr.inria.skatolo.gui.controllers.Bang;
+import fr.inria.skatolo.gui.controllers.HoverButton;
 import fr.inria.skatolo.gui.group.ControlGroup;
 import fr.inria.skatolo.gui.group.ListBox;
 import fr.inria.skatolo.gui.group.CheckBox;
@@ -122,16 +123,9 @@ public class SkatoloBase implements SkatoloConstants {
 		return myTab;
 	}
 
-	public Button addButton(final Object theObject, String theIndex, final String theName, final float theValue, final int theX, final int theY, final int theW, final int theH) {
-		Button myController = new Button(skatolo, (ControllerGroup<?>) skatolo.controlWindow.getTabs().get(1), theName, theValue, theX, theY, theW, theH);
-		skatolo.register(theObject, theIndex, myController);
-		myController.registerProperty("value");
-		myController.getProperty("value").disable();
-		return myController;
-	}
 
 	public Bang addBang(final String theName) {
-		return addBang(null, "", theName);
+		return addBang(skatolo.getObjectForIntrospection(), "", theName);
 	}
 
 	public Bang addBang(final Object theObject, String theIndex, final String theName, final int theX, final int theY, final int theWidth, final int theHeight) {
@@ -170,11 +164,11 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Matrix addMatrix(final String theName, final int theCellX, final int theCellY, final int theX, final int theY, final int theWidth, final int theHeight) {
-		return addMatrix(null, "", theName, theCellX, theCellY, theX, theY, theWidth, theHeight);
+		return addMatrix(skatolo.getObjectForIntrospection(), "", theName, theCellX, theCellY, theX, theY, theWidth, theHeight);
 	}
 
 	public Slider2D addSlider2D(final String theName) {
-		return addSlider2D(null, "", theName, 0, 99, 0, 99, 0, 0, 0, 0, 99, 99);
+		return addSlider2D(skatolo.getObjectForIntrospection(), "", theName, 0, 99, 0, 99, 0, 0, 0, 0, 99, 99);
 	}
 
 	/**
@@ -207,11 +201,11 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Slider addSlider(String theName, float theMin, float theMax, float theDefaultValue, int theX, int theY, int theW, int theH) {
-		return addSlider(null, "", theName, theMin, theMax, theDefaultValue, theX, theY, theW, theH);
+		return addSlider(skatolo.getObjectForIntrospection(), "", theName, theMin, theMax, theDefaultValue, theX, theY, theW, theH);
 	}
 
 	public Slider addSlider(final String theName, final float theMin, final float theMax, final int theX, final int theY, final int theWidth, final int theHeight) {
-		return addSlider(null, "", theName, theMin, theMax, theMin, theX, theY, theWidth, theHeight);
+		return addSlider(skatolo.getObjectForIntrospection(), "", theName, theMin, theMax, theMin, theX, theY, theWidth, theHeight);
 	}
 
 	public Slider addSlider(Object theObject, final String theIndex, final String theName, float theMin, float theMax, int theX, int theY, int theW, int theH) {
@@ -234,11 +228,11 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Range addRange(String theName, float theMin, float theMax, float theDefaultMinValue, float theDefaultMaxValue, int theX, int theY, int theW, int theH) {
-		return addRange(null, "", theName, theMin, theMax, theDefaultMinValue, theDefaultMaxValue, theX, theY, theW, theH);
+		return addRange(skatolo.getObjectForIntrospection(), "", theName, theMin, theMax, theDefaultMinValue, theDefaultMaxValue, theX, theY, theW, theH);
 	}
 
 	public Range addRange(final String theName, final float theMin, final float theMax, final int theX, final int theY, final int theWidth, final int theHeight) {
-		return addRange(null, "", theName, theMin, theMax, theMin, theMax, theX, theY, theWidth, theHeight);
+		return addRange(skatolo.getObjectForIntrospection(), "", theName, theMin, theMax, theMin, theMax, theX, theY, theWidth, theHeight);
 	}
 
 	public Range addRange(final Object theObject, final String theIndex, final String theName, final float theMin, final float theMax, final int theX, final int theY, final int theWidth,
@@ -255,7 +249,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Numberbox addNumberbox(final String theName, final int theX, final int theY, final int theWidth, final int theHeight) {
-		return addNumberbox(null, "", theName, Float.NaN, theX, theY, theWidth, theHeight);
+		return addNumberbox(skatolo.getObjectForIntrospection(), "", theName, Float.NaN, theX, theY, theWidth, theHeight);
 	}
 
 	public Numberbox addNumberbox(final Object theObject, final String theIndex, final String theName, final int theX, final int theY, final int theWidth, final int theHeight) {
@@ -263,7 +257,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Numberbox addNumberbox(final String theName, final float theDefaultValue, final int theX, final int theY, final int theWidth, final int theHeight) {
-		return addNumberbox(null, "", theName, theDefaultValue, theX, theY, theWidth, theHeight);
+		return addNumberbox(skatolo.getObjectForIntrospection(), "", theName, theDefaultValue, theX, theY, theWidth, theHeight);
 	}
 
 	/**
@@ -280,7 +274,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Knob addKnob(final String theName, final float theMin, final float theMax, final int theX, final int theY, final int theDiameter) {
-		return addKnob(null, "", theName, theMin, theMax, theMin, theX, theY, theDiameter);
+		return addKnob(skatolo.getObjectForIntrospection(), "", theName, theMin, theMax, theMin, theX, theY, theDiameter);
 	}
 
 	public Knob addKnob(final Object theObject, final String theIndex, final String theName, final float theMin, final float theMax, final int theX, final int theY, final int theDiameter) {
@@ -288,7 +282,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Knob addKnob(final String theName, final float theMin, final float theMax, final float theDefaultValue, final int theX, final int theY, final int theDiameter) {
-		return addKnob(null, "", theName, theMin, theMax, theDefaultValue, theX, theY, theDiameter);
+		return addKnob(skatolo.getObjectForIntrospection(), "", theName, theMin, theMax, theDefaultValue, theX, theY, theDiameter);
 	}
 
 	/**
@@ -302,7 +296,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public MultiList addMultiList(final String theName, final int theX, final int theY, final int theWidth, final int theHeight) {
-		return addMultiList(null, "", theName, theX, theY, theWidth, theHeight);
+		return addMultiList(skatolo.getObjectForIntrospection(), "", theName, theX, theY, theWidth, theHeight);
 	}
 
 	public Textlabel addTextlabel(final String theName) {
@@ -317,7 +311,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Textlabel addTextlabel(final String theName, final String theText, final int theX, final int theY) {
-		return addTextlabel(null, "", theName, theText, theX, theY);
+		return addTextlabel(skatolo.getObjectForIntrospection(), "", theName, theText, theX, theY);
 	}
 
 	public Textlabel addTextlabel(final Object theObject, final String theIndex, final String theName, final String theText) {
@@ -325,7 +319,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Textlabel addTextlabel(final String theName, final String theText) {
-		return addTextlabel(null, "", theName, theText, 0, 0);
+		return addTextlabel(skatolo.getObjectForIntrospection(), "", theName, theText, 0, 0);
 	}
 
 	public Textarea addTextarea(final String theName) {
@@ -338,7 +332,7 @@ public class SkatoloBase implements SkatoloConstants {
 	 */
 	public Textarea addTextarea(final String theName, final String theText, final int theX, final int theY, final int theW, final int theH) {
 		Textarea myController = new Textarea(skatolo, (Tab) skatolo.controlWindow.getTabs().get(1), theName, theText, theX, theY, theW, theH);
-		skatolo.register(null, "", myController);
+		skatolo.register(skatolo.getObjectForIntrospection(), "", myController);
 		myController.registerProperty("text");
 		return myController;
 	}
@@ -359,7 +353,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Textfield addTextfield(final String theName, final int theX, final int theY, final int theW, final int theH) {
-		return addTextfield(null, "", theName, theX, theY, theW, theH);
+		return addTextfield(skatolo.getObjectForIntrospection(), "", theName, theX, theY, theW, theH);
 	}
 
 	public Textfield addTextfield(final Object theObject, final String theIndex, final String theName) {
@@ -371,13 +365,13 @@ public class SkatoloBase implements SkatoloConstants {
 
 	public Accordion addAccordion(String theName) {
 		Accordion myController = new Accordion(skatolo, (Tab) skatolo.controlWindow.getTabs().get(1), theName, 0, 0, 200);
-		skatolo.register(null, "", myController);
+		skatolo.register(skatolo.getObjectForIntrospection(), "", myController);
 		return myController;
 	}
 
 	public Accordion addAccordion(String theName, int theX, int theY, int theWidth) {
 		Accordion myController = new Accordion(skatolo, (Tab) skatolo.controlWindow.getTabs().get(1), theName, theX, theY, theWidth);
-		skatolo.register(null, "", myController);
+		skatolo.register(skatolo.getObjectForIntrospection(), "", myController);
 		return myController;
 	}
 
@@ -390,7 +384,7 @@ public class SkatoloBase implements SkatoloConstants {
 
 	public RadioButton addRadioButton(final String theName, final int theX, final int theY) {
 		RadioButton myController = new RadioButton(skatolo, (Tab) skatolo.controlWindow.getTabs().get(1), theName, theX, theY);
-		skatolo.register(null, "", myController);
+		skatolo.register(skatolo.getObjectForIntrospection(), "", myController);
 		myController.registerProperty("arrayValue");
 		return myController;
 	}
@@ -404,7 +398,7 @@ public class SkatoloBase implements SkatoloConstants {
 
 	public RadioButton addRadio(final String theName, final int theX, final int theY) {
 		RadioButton myController = new RadioButton(skatolo, (Tab) skatolo.controlWindow.getTabs().get(1), theName, theX, theY);
-		skatolo.register(null, "", myController);
+		skatolo.register(skatolo.getObjectForIntrospection(), "", myController);
 		myController.registerProperty("arrayValue");
 		return myController;
 	}
@@ -421,7 +415,7 @@ public class SkatoloBase implements SkatoloConstants {
 
 	public CheckBox addCheckBox(final String theName, final int theX, final int theY) {
 		CheckBox myController = new CheckBox(skatolo, (Tab) skatolo.controlWindow.getTabs().get(1), theName, theX, theY);
-		skatolo.register(null, "", myController);
+		skatolo.register(skatolo.getObjectForIntrospection(), "", myController);
 		myController.registerProperty("arrayValue");
 		return myController;
 	}
@@ -439,7 +433,7 @@ public class SkatoloBase implements SkatoloConstants {
 	 */
 	public ListBox addListBox(final String theName, final int theX, final int theY, final int theW, final int theH) {
 		ListBox myController = new ListBox(skatolo, (Tab) skatolo.controlWindow.getTabs().get(1), theName, theX, theY, theW, theH);
-		skatolo.register(null, "", myController);
+		skatolo.register(skatolo.getObjectForIntrospection(), "", myController);
 		myController.registerProperty("listBoxItems").registerProperty("value");
 		return myController;
 	}
@@ -453,7 +447,7 @@ public class SkatoloBase implements SkatoloConstants {
 
 	public DropdownList addDropdownList(final String theName, final int theX, final int theY, final int theW, final int theH) {
 		DropdownList myController = new DropdownList(skatolo, (Tab) skatolo.controlWindow.getTabs().get(1), theName, theX, theY, theW, theH);
-		skatolo.register(null, "", myController);
+		skatolo.register(skatolo.getObjectForIntrospection(), "", myController);
 		myController.registerProperty("listBoxItems").registerProperty("value");
 		return myController;
 	}
@@ -470,7 +464,7 @@ public class SkatoloBase implements SkatoloConstants {
 	 */
 	public ColorPicker addColorPicker(final String theName, final int theX, final int theY, final int theW, final int theH) {
 		ColorPicker myController = new ColorPicker(skatolo, (Tab) skatolo.controlWindow.getTabs().get(1), theName, theX, theY, theW, theH);
-		skatolo.register(null, "", myController);
+		skatolo.register(skatolo.getObjectForIntrospection(), "", myController);
 		myController.registerProperty("arrayValue");
 		return myController;
 	}
@@ -481,7 +475,7 @@ public class SkatoloBase implements SkatoloConstants {
 
 	public FrameRate addFrameRate() {
 		FrameRate myController = new FrameRate(skatolo, (Tab) skatolo.controlWindow.getTabs().get(1), "-", 0, 4);
-		skatolo.register(null, "", myController);
+		skatolo.register(skatolo.getObjectForIntrospection(), "", myController);
 		return myController;
 	}
 
@@ -497,7 +491,7 @@ public class SkatoloBase implements SkatoloConstants {
 	 */
 	public Chart addChart(String theName, int theX, int theY, int theW, int theH) {
 		Chart myController = new Chart(skatolo, (Tab) skatolo.controlWindow.getTabs().get(1), theName, theX, theY, theW, theH);
-		skatolo.register(null, "", myController);
+		skatolo.register(skatolo.getObjectForIntrospection(), "", myController);
 		return myController;
 	}
 
@@ -511,7 +505,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Group addGroup(String theName, int theX, int theY, int theW) {
-		return addGroup(null, "", theName, theX, theY, theW);
+		return addGroup(skatolo.getObjectForIntrospection(), "", theName, theX, theY, theW);
 	}
 
 	public Group addGroup(String theName) {
@@ -519,7 +513,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Group addGroup(String theName, int theX, int theY) {
-		return addGroup(null, "", theName, theX, theY, 99);
+		return addGroup(skatolo.getObjectForIntrospection(), "", theName, theX, theY, 99);
 	}
 
 	public Textlabel getTextlabel(String theText, int theX, int theY) {
@@ -611,7 +605,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Slider addSlider(String theName, float theMin, float theMax) {
-		return addSlider(null, "", theName, theMin, theMax);
+		return addSlider(skatolo.getObjectForIntrospection(), "", theName, theMin, theMax);
 	}
 
 	public Slider addSlider(Object theObject, final String theIndex, String theName, float theMin, float theMax) {
@@ -631,7 +625,7 @@ public class SkatoloBase implements SkatoloConstants {
 	 * Button.autoHeight
 	 */
 	public Button addButton(String theName) {
-		return addButton(null, "", theName, 1);
+		return addButton(skatolo.getObjectForIntrospection(), "", theName, 1);
 	}
 
 	public Button addButton(Object theObject, final String theIndex, String theName) {
@@ -639,7 +633,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Button addButton(String theName, float theValue) {
-		return addButton(null, "", theName, theValue);
+		return addButton(skatolo.getObjectForIntrospection(), "", theName, theValue);
 	}
 
 	public Button addButton(Object theObject, final String theIndex, String theName, float theValue) {
@@ -649,6 +643,46 @@ public class SkatoloBase implements SkatoloConstants {
 		linebreak(b, false, Button.autoWidth, Button.autoHeight, Button.autoSpacing);
 		b.moveTo(currentGroupPointer);
 		return b;
+	}
+        
+        public Button addButton(final Object theObject, String theIndex, final String theName, final float theValue, final int theX, final int theY, final int theW, final int theH) {
+		Button myController = new Button(skatolo, (ControllerGroup<?>) skatolo.controlWindow.getTabs().get(1), theName, theValue, theX, theY, theW, theH);
+		skatolo.register(theObject, theIndex, myController);
+		myController.registerProperty("value");
+		myController.getProperty("value").disable();
+		return myController;
+	}
+	/**
+	 * Adds a default HoverButton, the default value is 1, width and height are set to the default values of HoverButton.autoWidth and
+	 * HoverButton.autoHeight
+	 */
+	public HoverButton addHoverButton(String theName) {
+		return addHoverButton(skatolo.getObjectForIntrospection(), "", theName, 1);
+	}
+
+	public HoverButton addHoverButton(Object theObject, final String theIndex, String theName) {
+		return addHoverButton(theObject, theIndex, theName, 1);
+	}
+
+	public HoverButton addHoverButton(String theName, float theValue) {
+		return addHoverButton(skatolo.getObjectForIntrospection(), "", theName, theValue);
+	}
+
+	public HoverButton addHoverButton(Object theObject, final String theIndex, String theName, float theValue) {
+		int x = (int) currentGroupPointer.autoPosition.x;
+		int y = (int) currentGroupPointer.autoPosition.y;
+		HoverButton b = addHoverButton(theObject, theIndex, theName, theValue, x, y, HoverButton.autoWidth, HoverButton.autoHeight);
+		linebreak(b, false, HoverButton.autoWidth, HoverButton.autoHeight, HoverButton.autoSpacing);
+		b.moveTo(currentGroupPointer);
+		return b;
+	}
+        
+        public HoverButton addHoverButton(final Object theObject, String theIndex, final String theName, final float theValue, final int theX, final int theY, final int theW, final int theH) {
+		HoverButton myController = new HoverButton(skatolo, (ControllerGroup<?>) skatolo.controlWindow.getTabs().get(1), theName, theValue, theX, theY, theW, theH);
+		skatolo.register(theObject, theIndex, myController);
+		myController.registerProperty("value");
+		myController.getProperty("value").disable();
+		return myController;
 	}
 
 	public Bang addBang(Object theObject, final String theIndex, String theName) {
@@ -665,11 +699,11 @@ public class SkatoloBase implements SkatoloConstants {
 	 * Toggle.autoHeight
 	 */
 	public Toggle addToggle(String theName) {
-		return addToggle(null, "", theName);
+		return addToggle(skatolo.getObjectForIntrospection(), "", theName);
 	}
 
 	public Toggle addToggle(String theName, boolean theValue) {
-		return addToggle(null, "", theName, theValue);
+		return addToggle(skatolo.getObjectForIntrospection(), "", theName, theValue);
 	}
 
 	public Toggle addToggle(Object theObject, final String theIndex, String theName) {
@@ -693,7 +727,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Numberbox addNumberbox(String theName) {
-		return addNumberbox(null, "", theName);
+		return addNumberbox(skatolo.getObjectForIntrospection(), "", theName);
 	}
 
 	public Knob addKnob(Object theObject, final String theIndex, String theName, int theMin, int theMax) {
@@ -713,7 +747,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public Knob addKnob(String theName, int theMin, int theMax) {
-		return addKnob(null, "", theName, theMin, theMax);
+		return addKnob(skatolo.getObjectForIntrospection(), "", theName, theMin, theMax);
 	}
 
 	/**
@@ -787,7 +821,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	public <C> C addController(String theName, Class<C> theClass, int theX, int theY) {
-		return addController(null, "", theName, theClass, theX, theY);
+		return addController(skatolo.getObjectForIntrospection(), "", theName, theClass, theX, theY);
 	}
 
 	public SkatoloBase addControllersFor(PApplet theApplet) {
@@ -1215,7 +1249,7 @@ public class SkatoloBase implements SkatoloConstants {
 	}
 
 	@Deprecated public Slider2D addSlider2D(String theName, int theX, int theY, int theW, int theH) {
-		return addSlider2D(null, "", theName, 0, theW, 0, theH, 0, 0, theX, theY, theW, theH);
+		return addSlider2D(skatolo.getObjectForIntrospection(), "", theName, 0, theW, 0, theH, 0, 0, theX, theY, theW, theH);
 	}
 
 	@Deprecated public Slider2D addSlider2D(Object theObject, final String theIndex, final String theName, int theX, int theY, int theW, int theH) {
@@ -1224,27 +1258,27 @@ public class SkatoloBase implements SkatoloConstants {
 
 	@Deprecated public Slider2D addSlider2D(String theName, float theMinX, float theMaxX, float theMinY, float theMaxY, float theDefaultValueX, float theDefaultValueY, int theX, int theY, int theW,
 			int theH) {
-		return addSlider2D(null, "", theName, theMinX, theMaxX, theMinY, theMaxY, theDefaultValueX, theDefaultValueY, theX, theY, theW, theH);
+		return addSlider2D(skatolo.getObjectForIntrospection(), "", theName, theMinX, theMaxX, theMinY, theMaxY, theDefaultValueX, theDefaultValueY, theX, theY, theW, theH);
 	}
 
 	@Deprecated public Button addButton(final String theName, final float theValue, final int theX, final int theY, final int theW, final int theH) {
-		return addButton(null, "", theName, theValue, theX, theY, theW, theH);
+		return addButton(skatolo.getObjectForIntrospection(), "", theName, theValue, theX, theY, theW, theH);
 	}
 
 	@Deprecated public Bang addBang(final String theName, final int theX, final int theY) {
-		return addBang(null, "", theName, theX, theY, 20, 20);
+		return addBang(skatolo.getObjectForIntrospection(), "", theName, theX, theY, 20, 20);
 	}
 
 	@Deprecated public Bang addBang(final String theName, final int theX, final int theY, final int theWidth, final int theHeight) {
-		return addBang(null, "", theName, theX, theY, theWidth, theHeight);
+		return addBang(skatolo.getObjectForIntrospection(), "", theName, theX, theY, theWidth, theHeight);
 	}
 
 	@Deprecated public Toggle addToggle(final String theName, final boolean theDefaultValue, final float theX, final float theY, final int theWidth, final int theHeight) {
-		return addToggle(null, "", theName, theDefaultValue, theX, theY, theWidth, theHeight);
+		return addToggle(skatolo.getObjectForIntrospection(), "", theName, theDefaultValue, theX, theY, theWidth, theHeight);
 	}
 
 	@Deprecated public Toggle addToggle(final String theName, final float theX, final float theY, final int theWidth, final int theHeight) {
-		return addToggle(null, "", theName, false, theX, theY, theWidth, theHeight);
+		return addToggle(skatolo.getObjectForIntrospection(), "", theName, false, theX, theY, theWidth, theHeight);
 	}
 
 	@Deprecated public Toggle addToggle(final Object theObject, final String theIndex, final String theName, final float theX, final float theY, final int theWidth, final int theHeight) {

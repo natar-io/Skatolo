@@ -151,4 +151,12 @@ public class Pointer {
         return this.enabled;
     }
 
+    public boolean isTouch() {
+        return this.type == Type.TOUCH;
+    }
+
+    public boolean isHover() {
+        return this.type == Type.HOVER;
+    }
+
 }
