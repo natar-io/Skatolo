@@ -26,5 +26,5 @@ a base.
 ## Examples
 
 
-* Offscreen buttons: [example](https://github.com/potioc/Skatolo/blob/master/examples/advanced/offscreen/offscreen.pde)
+* Offscreen buttons: [example](https://github.com/poqudrof/Skatolo/blob/master/examples/advanced/offscreen/offscreen.pde)
 * Multi-touch : [example]https://github.com/potioc/Skatolo/blob/master/examples/advanced/multitouch/multitouch.pde)
