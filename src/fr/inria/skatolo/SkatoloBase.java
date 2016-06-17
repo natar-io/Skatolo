@@ -52,6 +52,7 @@ import fr.inria.skatolo.gui.controllers.Button;
 import fr.inria.skatolo.gui.controllers.Chart;
 import fr.inria.skatolo.gui.controllers.Bang;
 import fr.inria.skatolo.gui.controllers.HoverButton;
+import fr.inria.skatolo.gui.controllers.HoverToggle;
 import fr.inria.skatolo.gui.group.ControlGroup;
 import fr.inria.skatolo.gui.group.ListBox;
 import fr.inria.skatolo.gui.group.CheckBox;
@@ -59,6 +60,7 @@ import fr.inria.skatolo.gui.group.RadioButton;
 import fr.inria.skatolo.gui.group.DropdownList;
 import fr.inria.skatolo.gui.group.Group;
 import fr.inria.skatolo.gui.group.Accordion;
+import fr.inria.skatolo.gui.widgets.PixelSelect;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -684,6 +686,36 @@ public class SkatoloBase implements SkatoloConstants {
 		myController.getProperty("value").disable();
 		return myController;
 	}
+        
+		/**
+	 * Adds a default HoverToggle, the default value is false, width and height are set to the default values of HoverToggle.autoWidth and
+	 * HoverToggle.autoHeight
+	 */
+	public HoverToggle addHoverToggle(String theName) {
+		return addHoverToggle(skatolo.getObjectForIntrospection(), "", theName);
+	}
+
+	public HoverToggle addHoverToggle(String theName, boolean theValue) {
+		return addHoverToggle(skatolo.getObjectForIntrospection(), "", theName, theValue);
+	}
+
+	public HoverToggle addHoverToggle(Object theObject, final String theIndex, String theName) {
+		return addHoverToggle(theObject, theIndex, theName, false);
+	}
+
+	public HoverToggle addHoverToggle(Object theObject, final String theIndex, String theName, boolean theValue) {
+		HoverToggle t = addHoverToggle(theObject, theIndex, theName, theValue, currentGroupPointer.autoPosition.x, currentGroupPointer.autoPosition.y, HoverToggle.autoWidth, HoverToggle.autoHeight);
+		linebreak(t, false, HoverToggle.autoWidth, HoverToggle.autoHeight, t.autoSpacing);
+		t.moveTo(currentGroupPointer);
+		return t;
+	}
+        
+        public HoverToggle addHoverToggle(final Object theObject, String theIndex, final String theName, final boolean theDefaultValue, final float theX, final float theY, final int theWidth, final int theHeight) {
+		HoverToggle myController = new HoverToggle(skatolo, (Tab) skatolo.controlWindow.getTabs().get(1), theName, (theDefaultValue == true) ? 1f : 0f, theX, theY, theWidth, theHeight);
+		skatolo.register(theObject, theIndex, myController);
+		myController.registerProperty("value");
+		return myController;
+	}
 
 	public Bang addBang(Object theObject, final String theIndex, String theName) {
 		int x = (int) currentGroupPointer.autoPosition.x;
@@ -749,7 +781,32 @@ public class SkatoloBase implements SkatoloConstants {
 	public Knob addKnob(String theName, int theMin, int theMax) {
 		return addKnob(skatolo.getObjectForIntrospection(), "", theName, theMin, theMax);
 	}
+        
+        /**
+	 * Adds a default PixelSelect, the default value is 1, width and height are set to the default values of PixelSelect.autoWidth and
+	 * PixelSelect.autoHeight
+	 */
+	public PixelSelect addPixelSelect(String theName) {
+		return addPixelSelect(skatolo.getObjectForIntrospection(), "", theName);
+	}
 
+	public PixelSelect addPixelSelect(Object theObject, final String theIndex, String theName) {
+		int x = (int) currentGroupPointer.autoPosition.x;
+		int y = (int) currentGroupPointer.autoPosition.y;
+		PixelSelect b = addPixelSelect(theObject, theIndex, theName, x, y, PixelSelect.autoWidth, PixelSelect.autoHeight);
+		linebreak(b, false, PixelSelect.autoWidth, PixelSelect.autoHeight, PixelSelect.autoSpacing);
+		b.moveTo(currentGroupPointer);
+		return b;
+	}
+        
+        public PixelSelect addPixelSelect(final Object theObject, String theIndex, final String theName, final int theX, final int theY, final int theW, final int theH) {
+		PixelSelect myController = new PixelSelect(skatolo, (ControllerGroup<?>) skatolo.controlWindow.getTabs().get(1), theName, theX, theY, theW, theH);
+		skatolo.register(theObject, theIndex, myController);
+		myController.registerProperty("value");
+		myController.getProperty("value").disable();
+		return myController;
+	}
+        
 	/**
 	 * 
 	 */
