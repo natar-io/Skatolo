@@ -17,17 +17,18 @@ import fr.inria.skatolo.gui.widgets.*;
 
 Skatolo skatolo;
 
+PixelSelect select1, select2;
 
 void setup() {
   size(400,600);
   noStroke();
   skatolo = new Skatolo(this);
 
-  skatolo.addPixelSelect("select1")
+  select1 = skatolo.addPixelSelect("select1")
      .setPosition(100,100)
      ;
 
-  skatolo.addPixelSelect("select2")
+  select2 = skatolo.addPixelSelect("select2")
      .setPosition(100,120)
      ;
 
@@ -36,6 +37,17 @@ void setup() {
 void draw() {
     background(0);
 
+}
+
+boolean key1 = true;
+
+void keyPressed(){
+
+    if(key == 's'){
+        select1.setKeyboardControlled(key1);
+        select2.setKeyboardControlled(!key1);
+        key1 = !key1;
+    }
 }
 
 public void controlEvent(ControlEvent theEvent) {

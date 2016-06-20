@@ -55,8 +55,6 @@ import processing.event.KeyEvent;
 @Skatolo.Layout
 public class PixelSelect extends Controller<PixelSelect> {
 
-    protected int cnt;
-
     protected int triggerId = PRESSED;
     public static int autoWidth = 20;
     public static int autoHeight = 20;
@@ -90,7 +88,6 @@ public class PixelSelect extends Controller<PixelSelect> {
 
     @Override
     protected void onEnter() {
-        cnt = 0;
         isActive = true;
     }
 
@@ -103,7 +100,6 @@ public class PixelSelect extends Controller<PixelSelect> {
     protected void mousePressed() {
         this._myArrayValue[0] = this.currentPointer.getX();
         this._myArrayValue[1] = this.currentPointer.getY();
-        cnt = -3;
         isActive = true;
         update();
     }
@@ -117,10 +113,15 @@ public class PixelSelect extends Controller<PixelSelect> {
         this._myArrayValue[1] = this.currentPointer.getY();
         update();
     }
+    
+    protected boolean isKeyboardControlled = false;
+    
+    public void setKeyboardControlled(boolean control){
+        isKeyboardControlled = control;
+    }
 
     @Override
     protected void mouseReleased() {
-        cnt = -3;
         isActive = true;
 
         update();
@@ -236,7 +237,7 @@ public class PixelSelect extends Controller<PixelSelect> {
     }
 
     public void keyEvent(KeyEvent theKeyEvent) {
-        if (isUserInteraction && isActive && theKeyEvent.getAction() == KeyEvent.PRESS) {
+        if (isUserInteraction && (isActive || isKeyboardControlled) && theKeyEvent.getAction() == KeyEvent.PRESS) {
             if (keyMapping.containsKey(skatolo.getKeyCode())) {
                 keyMapping.get(skatolo.getKeyCode()).execute();
             }
@@ -248,19 +249,21 @@ public class PixelSelect extends Controller<PixelSelect> {
         public void display(PGraphics graphics, PixelSelect theController) {
 
             graphics.noFill();
-            graphics.strokeWeight(2);
+            graphics.strokeWeight(1);
             if (isActive) {
                 graphics.stroke(color.getActive());
-                graphics.strokeWeight(2);
             } else {
                 graphics.stroke(color.getForeground());
             }
 
-            if (cnt < 0) {
-                graphics.stroke(color.getForeground());
-                cnt++;
+            if(isKeyboardControlled){
+                graphics.strokeWeight(2);
+                graphics.stroke(color.getActive());
             }
             graphics.rect(0, 0, width, height);
+            
+            graphics.strokeWeight(1);
+            graphics.ellipse(width/4 , height/4, width/2, height/2);
             if (isLabelVisible) {
                 _myCaptionLabel.draw(graphics, 0, 0, theController);
             }
@@ -275,11 +278,7 @@ public class PixelSelect extends Controller<PixelSelect> {
             } else {
                 graphics.image((availableImages[OVER] == true) ? images[OVER] : images[DEFAULT], 0, 0);
             }
-            if (cnt < 0) {
-                graphics.image((availableImages[OVER] == true) ? images[OVER] : images[DEFAULT], 0, 0);
-                cnt++;
-            }
-            if (!isActive && cnt >= 0) {
+            if (!isActive) {
                 graphics.image(images[DEFAULT], 0, 0);
             }
         }

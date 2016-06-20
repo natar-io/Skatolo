@@ -38,17 +38,18 @@ public class pixelSelect extends PApplet {
 
 Skatolo skatolo;
 
+PixelSelect select1, select2;
 
 public void setup() {
   
   noStroke();
   skatolo = new Skatolo(this);
 
-  skatolo.addPixelSelect("select1")
+  select1 = skatolo.addPixelSelect("select1")
      .setPosition(100,100)
      ;
 
-  skatolo.addPixelSelect("select2")
+  select2 = skatolo.addPixelSelect("select2")
      .setPosition(100,120)
      ;
 
@@ -57,6 +58,17 @@ public void setup() {
 public void draw() {
     background(0);
 
+}
+
+boolean key1 = true;
+
+public void keyPressed(){
+
+    if(key == 's'){
+        select1.setKeyboardControlled(key1);
+        select2.setKeyboardControlled(!key1);
+        key1 = !key1;
+    }
 }
 
 public void controlEvent(ControlEvent theEvent) {
