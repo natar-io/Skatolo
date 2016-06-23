@@ -123,13 +123,12 @@ public class PixelSelect extends Controller<PixelSelect> {
     @Override
     protected void mouseReleased() {
         isActive = true;
-
         update();
     }
 
     @Override
     protected void mouseReleasedOutside() {
-//        onLeave();
+        onLeave();
     }
 
     /**

@@ -134,9 +134,7 @@ public class Button extends Controller<Button> {
             }
             isOn = !isOn;
             setValue(_myValue);
-            System.out.println("Button deActivated.");
         }
-                   System.out.println("Button activated.");
     }
 
     /**
