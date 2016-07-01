@@ -92,7 +92,6 @@ public class Button extends Controller<Button> {
     public void mousePressed() {
         isActive = getMouseOver();
         isPressed = true;
-            System.out.println("Button pressed.");
         if (activateBy == PRESSED) {
             activate();
         }
