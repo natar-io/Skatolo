@@ -252,38 +252,40 @@ public class ControlBroadcaster {
 	}
 
 	public ControlBroadcaster broadcast(final ControlEvent theControlEvent, final int theType) {
-		if (broadcast) {
-			for (ControlListener cl : controlListeners) {
-				cl.controlEvent(theControlEvent);
-			}
-			if (theControlEvent.isTab() == false && theControlEvent.isGroup() == false) {
-				if (theControlEvent.getController().getControllerPlugList().size() > 0) {
-					if (theType == SkatoloConstants.STRING) {
-						for (ControllerPlug cp : theControlEvent.getController().getControllerPlugList()) {
-							callTarget(cp, theControlEvent.getStringValue());
-                                                        return this;
-						}
-					} else if (theType == SkatoloConstants.ARRAY) {
+            if (broadcast) {
+                for (ControlListener cl : controlListeners) {
+                    cl.controlEvent(theControlEvent);
+                }
 
-					} else {
-						for (ControllerPlug cp : theControlEvent.getController().getControllerPlugList()) {
-							if (cp.checkType(SkatoloConstants.EVENT)) {
-								invokeMethod(cp.getObject(), cp.getMethod(), new Object[] { theControlEvent });
-                                                                return this;
-                                                        } else {
-								callTarget(cp, theControlEvent.getValue());
-                                                                return this;
-							}
-						}
-					}
-				}
-			}
-			if (controlEventType == SkatoloConstants.METHOD) {
-				invokeMethod(controlEventPlug.getObject(), controlEventPlug.getMethod(), new Object[] { theControlEvent });
-                                return this;
-			}
-		}
-		return this;
+                boolean called = false;
+                if (theControlEvent.isTab() == false && theControlEvent.isGroup() == false) {
+                    if (theControlEvent.getController().getControllerPlugList().size() > 0) {
+
+                        if (theType == SkatoloConstants.STRING) {
+                            for (ControllerPlug cp : theControlEvent.getController().getControllerPlugList()) {
+                                callTarget(cp, theControlEvent.getStringValue());
+                            }
+                        } else if (theType == SkatoloConstants.ARRAY) {
+
+                        } else {
+                            for (ControllerPlug cp : theControlEvent.getController().getControllerPlugList()) {
+                                if (cp.checkType(SkatoloConstants.EVENT)) {
+                                    invokeMethod(cp.getObject(), cp.getMethod(), new Object[] { theControlEvent });
+                                    called = true;
+                                } else {
+                                    callTarget(cp, theControlEvent.getValue());
+                                }
+                            }
+                        }
+                    }
+                }
+                if(called)
+                    return this;
+                if (controlEventType == SkatoloConstants.METHOD) {
+                    invokeMethod(controlEventPlug.getObject(), controlEventPlug.getMethod(), new Object[] { theControlEvent });
+                }
+            }
+            return this;
 	}
 
 	protected void callTarget(final ControllerPlug thePlug, final float theValue) {
