@@ -1,25 +1,25 @@
-/* 
+/*
  *  skatolo is a processing gui library.
- * 
+ *
  * Copyright (C)  2006-2012 by Andreas Schlegel
  * Copyright (C)  2015 by Jeremy Laviole
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
- * 
- * 
+ *
+ *
  */
 package fr.inria.skatolo.events;
 
@@ -38,13 +38,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * The ControlBroadcaster handles all controller value changes and distributes them accordingly to its listeners. The ControlBroadcaster is
  * primarily for internal use only but can be accessed through an instance of the skatolo class. Instead of accessing the
  * ControlBroadcaster directly, use the convenience methods available from the skatolo class.
- * 
+ *
  * @see skatolo.skatolo#getControlBroadcaster()
  */
 public class ControlBroadcaster {
 
     	private Skatolo skatolo;
-    
+
 	private int controlEventType = SkatoloConstants.INVALID;
 
 	private ControllerPlug controlEventPlug = null;
@@ -67,10 +67,10 @@ public class ControlBroadcaster {
 		skatolo = theskatolo;
 		controlListeners = new ArrayList<ControlListener>();
 		controllerCallbackListeners = new ConcurrentHashMap<CallbackListener, Controller<?>>();
-		
+
                 controlEventPlug =            checkObject(skatolo.getObjectForIntrospection(), controllerCallbackEventMethod, new Class[] { ControlEvent.class });
                 controllerCallbackEventPlug = checkObject(skatolo.getObjectForIntrospection(), controllerCallbackEventMethod, new Class[] { CallbackEvent.class });
-		
+
                 if (controlEventPlug != null) {
 			controlEventType = SkatoloConstants.METHOD;
 		}
@@ -92,7 +92,7 @@ public class ControlBroadcaster {
 
 	/**
 	 * Returns a ControlListener by index
-	 * 
+	 *
 	 * @param theIndex
 	 * @return
 	 */
@@ -105,7 +105,7 @@ public class ControlBroadcaster {
 
 	/**
 	 * Returns the size of the ControlListener list
-	 * 
+	 *
 	 * @return
 	 */
 	public int listenerSize() {
@@ -126,7 +126,7 @@ public class ControlBroadcaster {
 
 	/**
 	 * Adds a CallbackListener for a list of controllers.
-	 * 
+	 *
 	 * @param theListener
 	 * @param theController
 	 */
@@ -150,7 +150,7 @@ public class ControlBroadcaster {
 
 	/**
 	 * Removes a CallbackListener for a particular controller
-	 * 
+	 *
 	 * @param theController
 	 */
 	public ControlBroadcaster removeCallback(Controller<?>... theControllers) {
@@ -261,6 +261,7 @@ public class ControlBroadcaster {
 					if (theType == SkatoloConstants.STRING) {
 						for (ControllerPlug cp : theControlEvent.getController().getControllerPlugList()) {
 							callTarget(cp, theControlEvent.getStringValue());
+                                                        return this;
 						}
 					} else if (theType == SkatoloConstants.ARRAY) {
 
@@ -268,8 +269,10 @@ public class ControlBroadcaster {
 						for (ControllerPlug cp : theControlEvent.getController().getControllerPlugList()) {
 							if (cp.checkType(SkatoloConstants.EVENT)) {
 								invokeMethod(cp.getObject(), cp.getMethod(), new Object[] { theControlEvent });
-							} else {
+                                                                return this;
+                                                        } else {
 								callTarget(cp, theControlEvent.getValue());
+                                                                return this;
 							}
 						}
 					}
@@ -277,6 +280,7 @@ public class ControlBroadcaster {
 			}
 			if (controlEventType == SkatoloConstants.METHOD) {
 				invokeMethod(controlEventPlug.getObject(), controlEventPlug.getMethod(), new Object[] { theControlEvent });
+                                return this;
 			}
 		}
 		return this;
