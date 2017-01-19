@@ -3,8 +3,9 @@ ${licenseFirst}
 </#if>
 ${licensePrefix} skatolo is a processing gui library.
 ${licensePrefix}
+${licensePrefix}Copyright (C)  2017 by RealityTechSASU
+${licensePrefix}Copyright (C)  2015-2016 by Jeremy Laviole
 ${licensePrefix}Copyright (C)  2006-2012 by Andreas Schlegel
-${licensePrefix}Copyright (C)  2015 by Jeremy Laviole
 ${licensePrefix}
 ${licensePrefix}This library is free software; you can redistribute it and/or
 ${licensePrefix}modify it under the terms of the GNU Lesser General Public
