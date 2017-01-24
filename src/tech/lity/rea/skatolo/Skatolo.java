@@ -323,7 +323,7 @@ public class Skatolo extends SkatoloBase {
     static int welcome = 0;
 
     private void welcome() {
-        System.out.println("skatolo " + VERSION + " " + "infos, comments, questions at https://github.com/potioc/skatolo");
+        System.out.println("skatolo " + VERSION + " " + "infos, comments, questions at https://github.com/rea-lity-tech/skatolo");
     }
 
     /**

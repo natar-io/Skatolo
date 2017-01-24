@@ -30,7 +30,7 @@ import java.util.HashMap;
  * Pointer List handle multi-touch and mouse as input. To get the mouse, you can
  * get get
  *
- * @author Jeremy Laviole <jeremy.laviole@inria.fr>
+ * @author Jeremy Laviole <laviole@rea.lity.tech>
  */
 public class PointerList extends HashMap<Integer, Pointer> {
 
