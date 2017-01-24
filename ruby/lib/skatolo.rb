@@ -1,10 +1,7 @@
 require 'jruby/core_ext'
 
+# TODO: follow the toxicgem and geomerativgem examples.
 Processing::App.load_library :skatolo
-
-# module skatolo
-#   include_package 'fr.inria.papart.skatolo'
-# end
 
 class EventHandler
 
@@ -12,7 +9,7 @@ class EventHandler
     @skatolo = skatolo
   end
 
-  java_signature 'void controlEvent(fr.inria.skatolo.events.ControlEvent)'
+  java_signature 'void controlEvent(tech.lity.rea.skatolo.events.ControlEvent)'
   def controlEvent(controlEvent)
     @skatolo.send_event_to_sketch controlEvent
   end
@@ -20,7 +17,7 @@ class EventHandler
   EventHandler.become_java!
 end
 
-class Skatolo < Java::FrInriaSkatolo::Skatolo
+class Skatolo < Java::TechLityReaSkatolo::Skatolo
 
   def initialize (applet, events_object = nil)
     @event_handler = EventHandler.new self
@@ -124,17 +121,17 @@ class Skatolo < Java::FrInriaSkatolo::Skatolo
 
 
   def is_event_class object_class
-    object_class == Java::FrInriaSkatoloGuiControllers::Button or
-      object_class == Java::FrInriaSkatoloGuiControllers::Bang
+    object_class == Java::TechLityReaSkatoloGuiControllers::Button or
+      object_class == Java::TechLityReaSkatoloGuiControllers::Bang
   end
 
   def is_value_class object_class
-    object_class == Java::FrInriaSkatoloGuiControllers::Slider or
-      object_class == Java::FrInriaSkatoloGuiControllers::Numberbox
+    object_class == Java::TechLityReaSkatoloGuiControllers::Slider or
+      object_class == Java::TechLityReaSkatoloGuiControllers::Numberbox
   end
 
   def is_string_value_class object_class
-    object_class == Java::FrInriaSkatoloGuiControllers::Textfield
+    object_class == Java::TechLityReaSkatoloGuiControllers::Textfield
   end
 
 

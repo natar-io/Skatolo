@@ -42,10 +42,9 @@
         </license>
     </licenses>
     
-      
     <scm>
         <tag>5740a45f76b1df7001935b430bf78b165ce3b86e</tag> 
-        <url>https://github.com/potioc/Skatolo</url>
+        <url>https://github.com/Rea-lity-Tech/Skatolo</url>
     </scm> 
     
     <distributionManagement>
@@ -137,7 +136,21 @@
                 </executions>
             </plugin>
             
-            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin> 
+                    
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -189,7 +202,7 @@
         <dependency>
             <groupId>org.processing</groupId>
             <artifactId>core</artifactId>
-            <version>3.0b4</version>
+            <version>3.2.3</version>
         </dependency>
     </dependencies>
     <properties>
