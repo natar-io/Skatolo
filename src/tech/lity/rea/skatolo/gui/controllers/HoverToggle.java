@@ -257,11 +257,11 @@ public class HoverToggle extends Controller<HoverToggle> {
 
         public void display(PGraphics graphics, HoverToggle theController) {
             if (isActive) {
-                graphics.image((availableImages[ACTIVE] == true) ? images[ACTIVE] : images[DEFAULT], 0, 0);
+                graphics.image((availableImages[ACTIVE] == true) ? images[ACTIVE] : images[DEFAULT], 0, 0, width, height);
             } else if (isOn) {
-                graphics.image((availableImages[ACTIVE] == true) ? images[ACTIVE] : images[DEFAULT], 0, 0);
+                graphics.image((availableImages[ACTIVE] == true) ? images[ACTIVE] : images[DEFAULT], 0, 0, width, height);
             } else {
-                graphics.image(images[DEFAULT], 0, 0);
+                graphics.image(images[DEFAULT], 0, 0, width, height);
             }
             graphics.rect(0, 0, width, height);
         }

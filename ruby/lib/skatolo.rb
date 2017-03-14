@@ -122,11 +122,13 @@ class Skatolo < Java::TechLityReaSkatolo::Skatolo
 
   def is_event_class object_class
     object_class == Java::TechLityReaSkatoloGuiControllers::Button or
+      object_class == Java::TechLityReaSkatoloGuiControllers::HoverButton or
       object_class == Java::TechLityReaSkatoloGuiControllers::Bang
   end
 
   def is_value_class object_class
     object_class == Java::TechLityReaSkatoloGuiControllers::Slider or
+      object_class == Java::TechLityReaSkatoloGuiControllers::HoverToggle or
       object_class == Java::TechLityReaSkatoloGuiControllers::Numberbox
   end
 
