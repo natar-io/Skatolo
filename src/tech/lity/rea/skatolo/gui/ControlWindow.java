@@ -535,7 +535,7 @@ public final class ControlWindow {
     public void keyEvent(KeyEvent theKeyEvent) {
 
         int eventKeyCode = theKeyEvent.getKeyCode();
-        if (eventKeyCode >= NB_KEYS) {
+        if (eventKeyCode >= NB_KEYS || eventKeyCode < 0) {
             // invalid keyCode for reasons. 
             return;
         }

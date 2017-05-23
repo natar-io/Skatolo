@@ -54,20 +54,19 @@ import processing.event.KeyEvent;
 /**
  * <p>
  * Controller is an abstract class that is extended by any available controller
- * within skatolo. this is the full documentation list for all methods
- * available for a controller. An event triggered by a controller will be
- * forwarded to the main program. If a void controlEvent(ControlEvent theEvent)
- * {} method is available, this method will be called.
+ * within skatolo. this is the full documentation list for all methods available
+ * for a controller. An event triggered by a controller will be forwarded to the
+ * main program. If a void controlEvent(ControlEvent theEvent) {} method is
+ * available, this method will be called.
  * </p>
  * <p>
  * A Controller can notify the main program in 2 different ways:
  * </p>
  * <ul>
  * <li>(1) add method controlEvent(ControlEvent theEvent) to your sketch.
- * skatolo will automatically detect this method and will used it to forward
- * any controlEvent triggered by a controller - you can disable forwarding by
- * using setBroadcast(false)
- * {@link skatolo.Controller#setBroadcast(boolean)}</li>
+ * skatolo will automatically detect this method and will used it to forward any
+ * controlEvent triggered by a controller - you can disable forwarding by using
+ * setBroadcast(false) {@link skatolo.Controller#setBroadcast(boolean)}</li>
  * <li>(2) each controller requires a unique name when being create. In case an
  * existing name is used for a newly created Controller, the existing one will
  * be overwritten. each unique name can be used to automatically link a
@@ -539,6 +538,11 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
             return me;
         }
 
+        
+        //
+        // !computeIsInside();
+        
+        
         // responds only to one pointer. 
         // Is the correct pointer, or no active pointer is set. 
         if (currentPointer == controlWindow.getCurrentPointer() || currentPointer == Pointer.invalidPointer) {
@@ -557,7 +561,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
 
             if (isPointerOver()) {
                 checkDragging();
-                
+
                 if (goingOut && !isMousePressed) {
                     onLeave();
                     setPointerOver(false);
@@ -579,6 +583,25 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
             }
         }
 
+        
+        // Current Pointer has died
+        if (currentPointer != controlWindow.getMousePointer() && 
+                !controlWindow.getPointers().containsValue(currentPointer)) {
+            onLeave();
+            setPointerOver(false);
+            return me;
+        }
+        
+//        boolean anySelect = false;
+//        for(Pointer p : controlWindow.getPointers().values()){
+//               anySelect = anySelect || computeIsPointerInside(p);
+//        }
+//        if(!anySelect){
+//              onLeave();
+//            setPointerOver(false);
+//            System.out.println("No selection ");
+//            return me;
+//        }
         return me;
     }
 
@@ -1078,8 +1101,17 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
         return (controlWindow.getPointerX() > position.x + _myParent.getAbsolutePosition().x && controlWindow.getPointerX() < position.x + _myParent.getAbsolutePosition().x + width
                 && controlWindow.getPointerY() > position.y + _myParent.getAbsolutePosition().y && controlWindow.getPointerY() < position.y + _myParent.getAbsolutePosition().y + height);
     }
-    
-    public boolean isInside(){
+    /**
+     * checks if the mouse is within the area of a controller.
+     *
+     * @return boolean
+     */
+    protected boolean computeIsPointerInside(Pointer p) {
+        return (p.getX() > position.x + _myParent.getAbsolutePosition().x && p.getX() < position.x + _myParent.getAbsolutePosition().x + width
+                && p.getY() > position.y + _myParent.getAbsolutePosition().y && p.getY() < position.y + _myParent.getAbsolutePosition().y + height);
+    }
+
+    public boolean isInside() {
         return computeIsInside();
     }
 
