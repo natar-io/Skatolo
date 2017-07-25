@@ -22,9 +22,17 @@ special inputs, and for [JRubyArt](https://github.com/ruby-processing/JRubyArt).
 As ControlP5 is a very convenient and good library, it was natural to use it as
 a base.
 
+## Features
+
+### New widgets
+
+** PixelSelect** - Select a pixel in the screen.
+
+### Controllers for Multi-touch
+
+* HoverButton and HoverToggle. They are used in [PapARt examples](https://github.com/poqudrof/Papart-examples/tree/unstable/first-examples/ProCamDepth/Gui). 
 
 ## Examples
 
-
 * Offscreen buttons: [example](https://github.com/poqudrof/Skatolo/blob/master/examples/advanced/offscreen/offscreen.pde)
-* Multi-touch : [example]https://github.com/potioc/Skatolo/blob/master/examples/advanced/multitouch/multitouch.pde)
+* Multi-touch : [example](https://github.com/potioc/Skatolo/blob/master/examples/advanced/multitouch/multitouch.pde)
