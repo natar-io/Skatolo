@@ -43,6 +43,7 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PVector;
 import processing.event.KeyEvent;
+import static tech.lity.rea.skatolo.SkatoloConstants.ARRAY;
 
 /**
  * <p>
@@ -114,10 +115,10 @@ public class PixelSelect extends Controller<PixelSelect> {
         this._myArrayValue[1] = this.currentPointer.getY();
         update();
     }
-    
+
     protected boolean isKeyboardControlled = false;
-    
-    public void setKeyboardControlled(boolean control){
+
+    public void setKeyboardControlled(boolean control) {
         isKeyboardControlled = control;
     }
 
@@ -212,6 +213,8 @@ public class PixelSelect extends Controller<PixelSelect> {
 
         public void execute() {
             setPosition(getPosition().x - 1, getPosition().y);
+            _myArrayValue[0] = _myArrayValue[0] - 1;
+            broadcast(ARRAY);
         }
     }
 
@@ -219,6 +222,9 @@ public class PixelSelect extends Controller<PixelSelect> {
 
         public void execute() {
             setPosition(getPosition().x + 1, getPosition().y);
+            _myArrayValue[0] = _myArrayValue[0] + 1;
+            broadcast(ARRAY);
+
         }
     }
 
@@ -226,6 +232,8 @@ public class PixelSelect extends Controller<PixelSelect> {
 
         public void execute() {
             setPosition(getPosition().x, getPosition().y - 1);
+            _myArrayValue[1] = _myArrayValue[1] - 1;
+            broadcast(ARRAY);
         }
     }
 
@@ -233,6 +241,8 @@ public class PixelSelect extends Controller<PixelSelect> {
 
         public void execute() {
             setPosition(getPosition().x, getPosition().y + 1);
+            _myArrayValue[1] = _myArrayValue[1] + 1;
+            broadcast(ARRAY);
         }
     }
 
@@ -256,14 +266,14 @@ public class PixelSelect extends Controller<PixelSelect> {
                 graphics.stroke(color.getForeground());
             }
 
-            if(isKeyboardControlled){
+            if (isKeyboardControlled) {
                 graphics.strokeWeight(2);
                 graphics.stroke(color.getActive());
             }
             graphics.rect(0, 0, width, height);
-            
+
             graphics.strokeWeight(1);
-            graphics.ellipse(width/4 , height/4, width/2, height/2);
+            graphics.ellipse(width / 4, height / 4, width / 2, height / 2);
             if (isLabelVisible) {
                 _myCaptionLabel.draw(graphics, 0, 0, theController);
             }
