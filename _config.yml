@@ -1,5 +1,5 @@
 theme: jekyll-theme-cayman
 
-title: RealityTech projets.
-description: List and description of RealityTech open source projects.
-show_downloads: "false"
+title: Skatolo library
+description: A fork of ControlP5 for multi-Touch and Augmented Reality.
+show_downloads: true
