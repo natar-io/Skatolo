@@ -1,0 +1,36 @@
+<!-- Index Layout Start -->
+
+<!DOCTYPE html>
+<html lang="{{ site.lang }}">
+
+  {% include head.html %}
+
+  <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top"  data-offset="151">
+
+    {% include navigation.html %}
+
+    {% include header.html %}
+
+    <!-- * `site.pages` -->
+    <!-- {% for page in site.pages %} -->
+    <!-- *   <p>`{{ page.path }}`              =>    [{{ page.url }}]({{ page.url }})</p> -->
+    <!-- {% endfor %} -->
+
+    {% assign current_language = page.language %}
+
+    {% for p in site.pages_list %}
+      {% for page in site.pages_by_language[current_language]  %}
+        {% if p[1] == page.section-type %}
+          {% include {{ page.path }} %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+
+    {% include footer.html %}
+
+    {% include js.html %}
+
+  </body>
+</html>
+
+<!-- Index Layout End -->

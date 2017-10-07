@@ -1,0 +1,64 @@
+<!-- HEAD Start -->
+
+<head>
+  {% include force-https.html %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{site.description}}">
+  <meta name="author" content="{{site.author}}">
+  <meta name="keywords" content="{{site.keywords}}">
+  <link rel="canonical" href="{{page.url | replace:'index.html','' | prepend: site.baseurl}}">
+  <title>{{site.title}}{% if page.title %} | {{page.title}}{% endif %}</title>
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="{{ site.baseurl }}/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link href="{{site.baseurl}}/css/grayscale.css" rel="stylesheet">
+  {% if page.section-type == "index" %}
+  <link href="{{site.baseurl}}/css/timeline.css" rel="stylesheet">
+  {% endif %}
+
+  <!-- Custom Fonts -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="{{site.baseurl}}/css/rrssb.css" />
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  {% if site.favicon %}
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="{{site.baseurl}}{{site.favicon}}"> -->
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{{site.baseurl}}/img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{site.baseurl}}/img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{site.baseurl}}/img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{site.baseurl}}/img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{site.baseurl}}/img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{site.baseurl}}/img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{site.baseurl}}/img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{site.baseurl}}/img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{site.baseurl}}/img/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{site.baseurl}}/img/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href"={{site.baseurl}}/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{site.baseurl}}/img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{site.baseurl}}/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileImage" content="{{site.baseurl}}/img/favicon/ms-icon-144x144.png">
+  {% endif %}
+
+  {% if page.url == "/404.html" | prepend: {{site.baseurl}} %}
+    <meta http-equiv="refresh" content="20; url={{site.baseurl}}/">
+  {% endif %}
+
+  {% include web-app.html %}
+
+  {% include syntax-highlight.html %}
+
+</head>
+
+<!-- HEAD End -->

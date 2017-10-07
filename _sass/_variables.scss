@@ -1,0 +1,18 @@
+// Variables
+
+$primary: #e3bb61;
+$dark: #192835; // #4c8785;
+$light: #ededed;
+
+$navbar-text-shadow: true;
+$header-text-shadow: true;
+
+$header-background-color: $dark;
+$intro-text-color: $light;
+$navbar-color: $light;
+
+$navbar-lg-collapse-background-color: #4c8785; // $header-background-color;
+$navbar-lg-background: transparent;
+$navbar-sm-background-color: $navbar-lg-collapse-background-color;
+
+$social-buttons-color: $light; // primary;
