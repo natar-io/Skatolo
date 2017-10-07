@@ -3,3 +3,99 @@ theme: jekyll-theme-cayman
 title: Skatolo library
 description: A fork of ControlP5 for multi-Touch and Augmented Reality.
 show_downloads: true
+
+google-tracking-id: "UA-73807553-1"
+
+lang: "en"
+author: "SASU RealityTech"
+title: "RealityTech"
+description: "RealiyTech Augmented Reality start-up in Bordeaux, France"
+keywords: "augmented reality, mapping, interactive projection, start-up, france, bordeaux, board games, video games, technology, interactive table, touch surfaces"
+favicon: "/img/favicon-bug.ico"
+404-img: "/img/labtocat.png"
+
+black-favicon: "/img/black-lab-glass.ico"
+background-img: "../img/dandelion2.png"
+
+
+# dynamic-typing: True
+shuffle: True # Shuffle the lines.
+loop: True
+loop-count: False # Set False for infinite loop, or set any number for finite loop.
+type-speed: 10
+start-delay: 200
+delete-delay: 5000
+
+lines: # You can add HTML Tags in the Text
+  - text: "Augment your daily activity with interactive content."
+  - text: "Project anywhere, and everywhere."
+
+me-img: "/img/logo-no-text.svg"
+
+web-app-mode: True
+
+# Icons for Web App mode
+
+icon-36p: "/img/web-app/icon-36p.png"
+icon-48p: "/img/web-app/icon-48p.png"
+icon-72p: "/img/web-app/icon-72p.png"
+icon-96p: "/img/web-app/icon-96p.png"
+icon-144p: "/img/web-app/icon-144p.png"
+icon-192p: "/img/web-app/icon-192p.png"
+
+
+post-preview-words: 96
+
+paginate: 5
+
+email-share: True
+fb-share: True
+twitter-share: True
+linkedin-share: True
+google-plus-share: True
+tumblr-share: False
+reddit-share: False
+pinterest-share: False
+pocket-share: False
+vkontakte-share: False
+
+# disqus-shortname: "panossakkos"
+
+syntax-highlight: True
+
+
+email: "laviole@rea.lity.tech"
+
+social:
+  - title: "facebook"
+    url: "https://facebook.com/"
+  - title: "twitter"
+    url: "https://twitter.com/rea_lity_tech/"
+  - title: "github"
+    url: "https://github.com/poqudrof"
+
+
+404-img: "/img/racoon.jpg"
+
+
+pages_list:
+  Activity: 'activity'
+  Contact: 'contact'
+
+  #Timeline: 'timeline'
+
+
+# Exclusion list from the generated _site
+
+exclude: ["LICENSE", "README.md", "CONTRIBUTING", "CONTRIBUTORS", "scripts", "ressources", "Gemfile", "Gemfile.lock", "deploy", "build-test", "build-prod"]
+
+
+# Pagination path
+paginate_path: "blog/page:num/"
+
+
+sass:
+  style: compressed
+
+gems:
+  - jekyll-paginate
