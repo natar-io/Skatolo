@@ -1,5 +1,3 @@
-theme: jekyll-theme-cayman
-
 title: Skatolo library
 tagline: A fork of ControlP5 for multi-Touch and Augmented Reality.
 description: A fork of ControlP5 for multi-Touch and Augmented Reality.
@@ -13,7 +11,7 @@ google-tracking-id: "UA-73807553-1"
 
 lang: "en"
 author: "SASU RealityTech"
-description: "RealiyTech Augmented Reality start-up in Bordeaux, France"
+
 keywords: "augmented reality, mapping, interactive projection, start-up, france, bordeaux, board games, video games, technology, interactive table, touch surfaces"
 favicon: "/img/favicon-bug.ico"
 404-img: "/img/labtocat.png"
