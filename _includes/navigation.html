@@ -6,6 +6,9 @@
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
         <i class="fa fa-bars"></i>
       </button>
+
+      <!-- Top left section -->
+      
       {% if page.section-type == "index" %}
         <a class="navbar-brand page-scroll" href="#page-top">
       {% else %}
@@ -16,43 +19,27 @@
           </div>
         </a>
     </div>
+
+    
+    <!-- Top Right section -->
+    
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
       <ul class="nav navbar-nav">
 
-        <li>
-           <a class="page-scroll" href="{{ site.baseurl }}/../">[EN]</a>
+	<li>
+	  <a href="http://github.com/{{ site.owner_name}}/{{ site.lib_name }}">GitHub page</a>
+	</li> 
 
+	<li>
+          <a href="https://rea-lity-tech.github.io/">Other Projects</a>
         </li>
 
-        {% if page.section-type == "index" %}
+        <li>
+          <a href="http://rea.lity.tech/">RealityTech</a>
+        </li>
 
-          <!-- Scroll to section for each page in index -->
-          {% for p in site.pages_list %}
-            <li>
-              {%  assign name = p[0] %}
-              <a class="page-scroll" href="#{{ p[1] }}"> {{ name }} </a>
-            </li>
-          {% endfor %}
-
-        {% else %}
-
-            <!-- Project pages ? -->
-            <!-- Blog, Post, Tag and Error pages -->
-          {% for p in site.pages_list %}
-            <li>
-            {% if p[1] == "latest-post" %}
-              {% if page.url == "/blog/index.html" | prepend: {{site.baseurl}} %}
-                <a class="page-scroll" href="#page"> {{p[0]}} </a>
-              {% else %}
-                <a href="{{site.baseurl}}/blog/"> {{p[0]}} </a>
-              {% endif %}
-            {% else %}
-                <a href="{{site.baseurl}}/#{{ p[1] }}"> {{p[0]}} </a>
-            {% endif %}
-            </li>
-          {% endfor %}
-        {% endif %}
+	<!-- <a class="page-scroll" href="{{ site.baseurl }}/../">[RealityTech]</a> -->
       </ul>
     </div>
   </div>

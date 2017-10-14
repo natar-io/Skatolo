@@ -26,7 +26,7 @@ a base.
 
 ### New widgets
 
-** PixelSelect** - Select a pixel in the screen.
+*PixelSelect* - Select a pixel in the screen.
 
 ### Controllers for Multi-touch
 
@@ -35,4 +35,4 @@ a base.
 ## Examples
 
 * Offscreen buttons: [example](https://github.com/poqudrof/Skatolo/blob/master/examples/advanced/offscreen/offscreen.pde)
-* Multi-touch : [example](https://github.com/potioc/Skatolo/blob/master/examples/advanced/multitouch/multitouch.pde)
+* Multi-touch : [example](https://github.com/poqudrof/Skatolo/blob/master/examples/advanced/multitouch/multitouch.pde)

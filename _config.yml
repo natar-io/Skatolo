@@ -1,21 +1,28 @@
 theme: jekyll-theme-cayman
 
 title: Skatolo library
+tagline: A fork of ControlP5 for multi-Touch and Augmented Reality.
 description: A fork of ControlP5 for multi-Touch and Augmented Reality.
+
 show_downloads: true
+show_fork: true
+lib_name: Skatolo
+owner_name: Rea-lity-Tech
 
 google-tracking-id: "UA-73807553-1"
 
 lang: "en"
 author: "SASU RealityTech"
-title: "RealityTech"
 description: "RealiyTech Augmented Reality start-up in Bordeaux, France"
 keywords: "augmented reality, mapping, interactive projection, start-up, france, bordeaux, board games, video games, technology, interactive table, touch surfaces"
 favicon: "/img/favicon-bug.ico"
 404-img: "/img/labtocat.png"
 
 black-favicon: "/img/black-lab-glass.ico"
-background-img: "../img/dandelion2.png"
+background-img: "../img/bois2.jpg"
+
+# Background credits
+# https://www.flickr.com/photos/postneutralicus/30839878074/in/photostream/
 
 
 # dynamic-typing: True
@@ -99,3 +106,6 @@ sass:
 
 gems:
   - jekyll-paginate
+
+markdown:    kramdown
+

@@ -25,12 +25,17 @@ html {
 
 h1,
 h2,
-h3,
-h4,
 h5,
 h6 {
     margin: 0 0 35px;
     text-transform: uppercase;
+    font-family: "Montserrat","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+h3,h4 {
+    margin: 0 0 35px;
     font-family: "Montserrat","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
     letter-spacing: 1px;
@@ -221,7 +226,7 @@ a {
 }
 
 .content-section {
-    margin-top: 100px;
+    margin-top: 20px;
     padding-top: 100px;
     @media(min-width:767px) {
         margin-top: 125px;
@@ -258,12 +263,12 @@ a {
     }
 }
 
-.about {
+.readme {
   background-color: #365974;
   line-height: 0px;
 }
 
-.about  >svg.separation{
+.readme  >svg.separation{
 //  background-color:#4dFFff;
 line-height: 0px;
 }

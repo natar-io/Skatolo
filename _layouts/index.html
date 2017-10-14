@@ -7,21 +7,17 @@
 
   <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top"  data-offset="151">
 
+    {% if site.show_fork  %}
+    <a class="github-fork-ribbon left-top" href="http://github.com/{{ site.owner_name}}/{{ site.lib_name }}" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+    {% endif %}
+	 
     {%  include navigation.html %}
 
     {% include header.html %}
 
-    {% for p in site.pages_list %}
-      {% for page in site.pages  %}
-        {% if p[1] == page.section-type %}
-          {% include {{ page.path }} %}
-        {% endif %}
-      {% endfor %}
-    {% endfor %}
-
     {{ content }}
 
-    
+
     {% include footer.html %}
 
     {% include js.html %}

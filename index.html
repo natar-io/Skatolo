@@ -1,0 +1,46 @@
+---
+layout: index
+section-type: index
+---
+
+<section id="main" class="container content-section ">
+  <div class="row">
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-8 ">
+      <p> Skatolo is fork of <a target="_blank" href="https://github.com/sojamo/controlp5" >ControlP5</a>. If you just want to create graphical user interfaces for Processing please use the original library. </p>
+    </div>
+    <div class="col-md-2 ">
+    </div>
+    
+  </div>
+  
+  <div class="row">
+    <div class="col-md-4 ">
+      <p>
+	<b>Multi-touch input</b>: you can feed "pointers" from your own sources to the library.
+	</p>
+    </div>
+    <div class="col-md-4 ">
+      <p>
+	<b>Hovering buttons</b>: buttons to use without the possiblity to click.  
+	</p>
+    </div>
+    <div class="col-md-4 ">
+      <p>
+	<b>New widget</b>: PixelSelect to pick a point in the window.
+      </p>
+    </div>
+  </div>
+</section>
+
+{% include section_start.html %}
+      
+{% capture readme %}
+{% include_relative README.md %}
+{% endcapture %}
+{{ readme | markdownify }}
+
+{% include section_end.html %}
+
+
