@@ -228,8 +228,11 @@ a {
     margin-top: 20px;
     padding-top: 100px;
     @media(min-width:767px) {
-        margin-top: 125px;
-        padding-top: 125px;
+        margin-top: 0px;
+        padding-top: 75px;
+
+        // margin-top: 125px;
+        // padding-top: 125px;
     }
     /* Added in { Personal } for responsive images in posts and section contents */
     img {
@@ -265,6 +268,7 @@ a {
 .readme {
   background-color: #365974;
   line-height: 0px;
+  padding-top: 0px;
 }
 
 .readme  >svg.separation{

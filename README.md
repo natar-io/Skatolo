@@ -1,6 +1,7 @@
 
 ###  Skatolo is a GUI library for Processing, forked from [ControlP5](https://github.com/sojamo/controlp5)
 
+
 ## Why a fork ?
 
 ControlP5 is an old but still maintained library.  We wanted to develop new

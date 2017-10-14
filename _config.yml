@@ -92,7 +92,7 @@ pages_list:
 
 # Exclusion list from the generated _site
 
-exclude: ["LICENSE", "README.md", "CONTRIBUTING", "CONTRIBUTORS", "scripts", "ressources", "Gemfile", "Gemfile.lock", "deploy", "build-test", "build-prod"]
+exclude: ["LICENSE", "CONTRIBUTING", "CONTRIBUTORS", "scripts", "ressources", "Gemfile", "Gemfile.lock", "deploy", "build-test", "build-prod"]
 
 
 # Pagination path
