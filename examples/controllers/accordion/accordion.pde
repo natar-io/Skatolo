@@ -15,8 +15,8 @@
  *
  */
 
-import fr.inria.skatolo.*;
-import fr.inria.skatolo.gui.group.*;
+import tech.lity.rea.skatolo.*;
+import tech.lity.rea.skatolo.gui.group.*;
 
 Skatolo skatolo;
 
@@ -267,6 +267,3 @@ java.lang.Object : boolean equals(Object)
 
 
 */
-
-
-

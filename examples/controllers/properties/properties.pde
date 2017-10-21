@@ -34,9 +34,9 @@
  *
  */
 
-import fr.inria.skatolo.*;
-import fr.inria.skatolo.gui.controllers.*;
-import fr.inria.skatolo.gui.*;
+import tech.lity.rea.skatolo.*;
+import tech.lity.rea.skatolo.gui.controllers.*;
+import tech.lity.rea.skatolo.gui.*;
 
 Skatolo skatolo;
 public int myColor = color(0, 0, 0);
