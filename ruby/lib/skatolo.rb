@@ -1,11 +1,16 @@
 require 'jruby/core_ext'
+require_relative 'skatolo.jar'
 
-# TODO: follow the toxicgem and geomerativgem examples.
-Processing::App.load_library :skatolo
+%w[
+    Bang Button HoverButton Slider Textfield HoverToggle Textfield Numberbox
+  ].each do |widget|
+  java_import "tech.lity.rea.skatolo.gui.controllers.#{widget}"
+end
 
+# A reflective Event Handler
 class EventHandler
 
-  def initialize skatolo
+  def initialize(skatolo)
     @skatolo = skatolo
   end
 
@@ -19,25 +24,22 @@ end
 
 class Skatolo < Java::TechLityReaSkatolo::Skatolo
 
-  def initialize (applet, events_object = nil)
+  def initialize(applet, events_object = nil)
     @event_handler = EventHandler.new self
-    @events_object = events_object if events_object != nil
-    @events_object = applet if events_object == nil
-
+    @events_object = events_object unless events_object.nil?
+    @events_object = applet if events_object.nil?
     super(applet, @event_handler)
-#    @applet = applet
+    # @applet = applet
   end
 
   def update
-    getAll.to_a.each do |controller|
+    getAll.each do |controller|
       name = controller.name
       ## There is a method with this name...
-
-      if not (@events_object.respond_to? name + "_value")
-        #        puts "please declare a method for " + name
-        create_getter_for name
-        create_setter_for name
-      end
+      return if @events_object.respond_to?(name + "_value")
+      # puts "please declare a method for " + name
+      create_getter_for name
+      create_setter_for name
     end
   end
 
@@ -47,94 +49,65 @@ class Skatolo < Java::TechLityReaSkatolo::Skatolo
     name = controlEvent.getName
     value = controlEvent.getValue
     string_value = controlEvent.getStringValue
-
-#    puts controller.object_id.to_s
-
+    # puts controller.object_id.to_s
     ## There is a method with this name...
-    if @events_object.respond_to? name
-
-      ## Buttons usually, not arguments.
-      if is_event_class controller.class
-        @events_object.send(name)
-        return
-      end
-
-      ## Sliders, check arity
-      if is_value_class controller.class
-
-        ## try to send the value
-        @events_object.send(name, value)
-        return
-      end
-
-      ## Text
-      ## Sliders, check arity
-      if is_string_value_class controller.class
-        ## try to send the value
-        @events_object.send(name, string_value)
-        return
-      end
-    end
+    return unless @events_object.respond_to? name
+    ## Buttons usually, not arguments.
+    return @events_object.send(name) if event_class? controller.class
+    ## Sliders, check arity
+    ## try to send the value
+    return @events_object.send(name, value) if value_class? controller.class
+    ## Text
+    ## Sliders, check arity
+    return unless string_value_class? controller.class
+    ## try to send the value
+    @events_object.send(name, string_value)
   end
 
-
-  def create_getter_for name
+  def create_getter_for(name)
     controller = get(name)
-    return if is_event_class controller.class
-
+    return if event_class? controller.class
     value = get_controller_value(controller)
-
     @events_object.create_method(name + "_value") do
       controller = @skatolo.get(name)
       @skatolo.get_controller_value controller
     end
-
   end
 
-  def create_setter_for name
-
+  def create_setter_for(name)
     controller = get(name)
-    return if is_event_class controller.class
-
-    value = get_controller_value controller
-#    puts "Creating a setter for " + name
-
+    return if event_class? controller.class
+    value = get_controller_value(controller)
+    # puts "Creating a setter for " + name
     @events_object.create_method(name + "_value=") do |value|
       controller = @skatolo.get(name)
       @skatolo.set_controller_value controller, value
     end
-
   end
 
-
-  def get_controller_value controller
-    return 1 if is_event_class controller.class
-    return controller.getValue if is_value_class controller.class
-    return controller.getStringValue  if is_string_value_class controller.class
+  def get_controller_value(controller)
+    return 1 if event_class? controller.class
+    return controller.getValue if value_class? controller.class
+    return unless string_value_class? controller.class
+    controller.getStringValue
   end
 
-  def set_controller_value controller, value
-    return if is_event_class controller.class
-    return controller.setValue value  if is_value_class controller.class
-    return controller.setStringValue value  if is_string_value_class controller.class
+  def set_controller_value(controller, value)
+    return if event_class? controller.class
+    return controller.setValue value  if value_class? controller.class
+    return unless string_value_class? controller.class
+    controller.setStringValue value
   end
 
-
-  def is_event_class object_class
-    object_class == Java::TechLityReaSkatoloGuiControllers::Button or
-      object_class == Java::TechLityReaSkatoloGuiControllers::HoverButton or
-      object_class == Java::TechLityReaSkatoloGuiControllers::Bang
+  def event_class?(object_class)
+    [Button, HoverButton, Bang].any? { |klass| object_class == klass }
   end
 
-  def is_value_class object_class
-    object_class == Java::TechLityReaSkatoloGuiControllers::Slider or
-      object_class == Java::TechLityReaSkatoloGuiControllers::HoverToggle or
-      object_class == Java::TechLityReaSkatoloGuiControllers::Numberbox
+  def value_class?(object_class)
+    [Slider, HoverToggle, Numberbox].any? { |klass| object_class == klass }
   end
 
-  def is_string_value_class object_class
-    object_class == Java::TechLityReaSkatoloGuiControllers::Textfield
+  def string_value_class?(object_class)
+    object_class == Textfield
   end
-
-
 end
