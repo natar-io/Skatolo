@@ -30,9 +30,9 @@ a base.
 
 ### Controllers for Multi-touch
 
-* HoverButton and HoverToggle. They are used in [PapARt examples](https://github.com/poqudrof/Papart-examples/tree/unstable/first-examples/ProCamDepth/Gui). 
+* HoverButton and HoverToggle. They are used in [PapARt examples](https://github.com/poqudrof/Papart-examples/tree/unstable/first-examples/ProCamDepth/Gui).
 
 ## Examples
 
 * Offscreen buttons: [example](https://github.com/poqudrof/Skatolo/blob/master/examples/advanced/offscreen/offscreen.pde)
-* Multi-touch : [example](https://github.com/potioc/Skatolo/blob/master/examples/advanced/multitouch/multitouch.pde)
+* Multi-touch : [example](https://github.com/Rea-lity-Tech/Skatolo/blob/master/examples/advanced/multitouch/multitouch.pde)
