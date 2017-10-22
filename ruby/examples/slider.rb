@@ -12,11 +12,11 @@ def setup
   sketch_title 'Skatolo Slider'
   @skatolo = Skatolo.new(self)
   skatolo.add_slider('background_color')
-	       .set_position(10, 10)
-	       .set_size(150, 20)
-	       .set_range(80, 255)
+	 .set_position(10, 10)
+	 .set_size(150, 20)
+	 .set_range(80, 255)
          .set_value(180)
-	       .set_label('Background color')
+	 .set_label('Background color')
    skatolo.update # this step is important
 end
 
