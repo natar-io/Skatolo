@@ -2,7 +2,7 @@ require 'jruby/core_ext'
 require_relative 'skatolo.jar'
 
 %w[
-    Bang Button HoverButton Slider Textfield HoverToggle Textfield Numberbox
+    Bang Button HoverButton Slider Textfield HoverToggle Numberbox
   ].each do |widget|
   java_import "tech.lity.rea.skatolo.gui.controllers.#{widget}"
 end
