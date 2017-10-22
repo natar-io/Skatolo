@@ -3,3 +3,4 @@ tmp
 distribution
 /target/
 ruby/lib/skatolo.jar
+*.gem
