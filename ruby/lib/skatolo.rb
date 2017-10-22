@@ -103,11 +103,11 @@ class Skatolo < Java::TechLityReaSkatolo::Skatolo
     [Button, HoverButton, Bang].any? { |klass| object.java_kind_of? klass }
   end
 
-  def value_class?(object_class)
+  def value_class?(object)
     [Slider, HoverToggle, Numberbox].any? { |klass| object.java_kind_of? klass }
   end
 
-  def string_value_class?(object_class)
+  def string_value_class?(object)
     object.java_kind_of? Textfield
   end
 end
