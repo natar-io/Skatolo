@@ -2,6 +2,8 @@ require 'skatolo'
 # In this simple sketch we attach two buttons to skatolo in the regular way,
 # named buttons 'press_me' and 'reset' thanks to some fancy metaprogramming
 # we can create methods :press_me and :reset for the buttons
+
+include MagicMethod
 attr_reader :skatolo, :back_color
 
 def settings
@@ -10,21 +12,9 @@ end
 
 def setup
   sketch_title 'Skatolo Buttons'
-  @skatolo = Skatolo.new(self)
-  skatolo.add_button('press_me')
-	       .set_position(10, 10)
-         .set_size(50, 20)
-	       .set_label('Press Me!')
-  skatolo.add_button('reset')
-       	 .set_position(10, 40)
-         .set_size(50, 20)
-       	 .set_label('Reset!')
-   skatolo.update # this step is important
-   @back_color = color(200, 0, 200)
-end
-
-def create_method(name, &block)
-  self.class.send(:define_method, name, &block)
+  create_gui
+  skatolo.update # this step is important
+  @back_color = color(200, 0, 200)
 end
 
 def draw
@@ -37,4 +27,16 @@ end
 
 def press_me
   @back_color = color(200, 0, 0)
+end
+
+def create_gui
+  @skatolo = Skatolo.new(self)
+  skatolo.add_button('press_me')
+         .set_position(10, 10)
+         .set_size(50, 20)
+         .set_label('Press Me!')
+  skatolo.add_button('reset')
+         .set_position(10, 40)
+         .set_size(50, 20)
+         .set_label('Reset!')
 end
