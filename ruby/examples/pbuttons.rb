@@ -5,7 +5,7 @@ require 'skatolo'
 # named buttons 'press_me' and 'reset' thanks to some fancy metaprogramming
 # we can create methods :press_me and :reset for the buttons
 class SkatoloButtons < Propane::App
-
+  include MagicMethod
   attr_reader :skatolo, :back_color
 
   def settings
@@ -25,10 +25,6 @@ class SkatoloButtons < Propane::App
          	 .set_label('Reset!')
      skatolo.update # this step is important
      @back_color = color(200, 0, 200)
-  end
-
-  def create_method(name, &block)
-    self.class.send(:define_method, name, &block)
   end
 
   def draw

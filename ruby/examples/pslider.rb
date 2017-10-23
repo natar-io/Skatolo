@@ -5,7 +5,7 @@ require 'skatolo'
 # a named slider 'background_color' and thanks to some fancy metaprogramming
 # we can read the result from background_color_value
 class SkatoloSlider < Propane::App
-    
+  include MagicMethod
   attr_reader :skatolo
 
   def settings
@@ -22,10 +22,6 @@ class SkatoloSlider < Propane::App
            .set_value(180)
   	       .set_label('Background color')
      skatolo.update # this step is important
-  end
-
-  def create_method(name, &block)
-    self.class.send(:define_method, name, &block)
   end
 
   def draw
