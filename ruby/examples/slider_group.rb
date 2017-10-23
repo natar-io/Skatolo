@@ -3,7 +3,7 @@ require 'skatolo'
 # named buttons 'press_me' and 'reset' thanks to some fancy metaprogramming
 # we can create methods :press_me and :reset for the buttons
 
-include MagicMethod
+include EventMethod
 attr_reader :skatolo, :back_color
 
 def settings

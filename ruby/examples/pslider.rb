@@ -5,7 +5,7 @@ require 'skatolo'
 # a named slider 'background_color' and thanks to some fancy metaprogramming
 # we can read the result from background_color_value
 class SkatoloSlider < Propane::App
-  include MagicMethod
+  include EventMethod
   attr_reader :skatolo
 
   def settings
