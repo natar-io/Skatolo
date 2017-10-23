@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Jeremy Laviole"]
   s.email       = 'laviole@rea.lity.tech'
   s.add_runtime_dependency "jruby_art",  '~> 1.2', '>= 1.2.4'
-  s.files       = FileList['lib/**/*',  'samples/**/*'].exclude(/jar/).to_a
+  s.files       = FileList['lib/**/*',  'examples/**/*'].exclude(/jar/).to_a
   s.files << 'lib/skatolo.jar'
   s.homepage    = 'https://github.com/Rea-lity-Tech/skatolo'
   s.license     = 'LGPL-3.0'
