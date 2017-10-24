@@ -46,11 +46,14 @@ class Skatolo < Java::TechLityReaSkatolo::Skatolo
   def send_event_to_sketch(controlEvent)
     controller = get(controlEvent.getName)
     name = controlEvent.getName
-    value = controlEvent.getValue
-    string_value = controlEvent.getStringValue
-    # puts controller.object_id.to_s
+
     ## There is a method with this name...
     return unless @events_object.respond_to? name
+
+    value = controlEvent.getValue
+    return  @events_object.send(name, value) if controlEvent.isGroup
+
+    # puts controller.object_id.to_s
     ## Buttons usually, not arguments.
     return @events_object.send(name) if event_class? controller
     ## Sliders, check arity
@@ -60,6 +63,7 @@ class Skatolo < Java::TechLityReaSkatolo::Skatolo
     ## Sliders, check arity
     return unless string_value_class? controller
     ## try to send the value
+    string_value = controlEvent.getStringValue
     @events_object.send(name, string_value)
   end
 
