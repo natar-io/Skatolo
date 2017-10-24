@@ -3,10 +3,10 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
-import fr.inria.skatolo.*; 
-import fr.inria.skatolo.events.*; 
-import fr.inria.skatolo.gui.group.*; 
-import fr.inria.skatolo.gui.widgets.*; 
+import tech.lity.rea.skatolo.*; 
+import tech.lity.rea.skatolo.events.*; 
+import tech.lity.rea.skatolo.gui.group.*; 
+import tech.lity.rea.skatolo.gui.widgets.*; 
 
 import java.util.HashMap; 
 import java.util.ArrayList; 

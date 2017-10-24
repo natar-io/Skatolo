@@ -29,9 +29,9 @@
 // by andreas schlegel 2010
 //
 
-import fr.inria.skatolo.*;
-import fr.inria.skatolo.events.*;
-import fr.inria.skatolo.gui.controllers.*;
+import tech.lity.rea.skatolo.*;
+import tech.lity.rea.skatolo.events.*;
+import tech.lity.rea.skatolo.gui.controllers.*;
 
 Skatolo skatolo;
 

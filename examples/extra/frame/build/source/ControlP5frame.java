@@ -5,9 +5,9 @@ import processing.opengl.*;
 
 import java.awt.Frame; 
 import java.awt.BorderLayout; 
-import fr.inria.skatolo.*; 
-import fr.inria.skatolo.events.*; 
-import fr.inria.skatolo.gui.controllers.*; 
+import tech.lity.rea.skatolo.*; 
+import tech.lity.rea.skatolo.events.*; 
+import tech.lity.rea.skatolo.gui.controllers.*; 
 
 import java.util.HashMap; 
 import java.util.ArrayList; 

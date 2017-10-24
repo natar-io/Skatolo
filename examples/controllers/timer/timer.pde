@@ -3,9 +3,9 @@
  * by andreas schlegel, 2009
  */
 
-import fr.inria.skatolo.*;
-import fr.inria.skatolo.extra.ControlTimer;
-import fr.inria.skatolo.gui.controllers.*;
+import tech.lity.rea.skatolo.*;
+import tech.lity.rea.skatolo.extra.ControlTimer;
+import tech.lity.rea.skatolo.gui.controllers.*;
 
 
 Skatolo skatolo;

@@ -9,10 +9,10 @@
  *
  */
 
-import fr.inria.skatolo.*;
-import fr.inria.skatolo.events.*;
-import fr.inria.skatolo.gui.group.*;
-import fr.inria.skatolo.extra.Println;
+import tech.lity.rea.skatolo.*;
+import tech.lity.rea.skatolo.events.*;
+import tech.lity.rea.skatolo.gui.group.*;
+import tech.lity.rea.skatolo.extra.Println;
 
 Skatolo skatolo;
 
