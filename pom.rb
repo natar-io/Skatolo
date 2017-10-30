@@ -35,16 +35,16 @@ project 'skatolo', 'https://github.com/potioc/Skatolo' do
 
   plugin( :jar, '2.3.2',
           'finalName' =>  'skatolo' )
-  plugin( :compiler, '2.3.2',
+  plugin( :compiler, '3.7.0',
           'source' =>  '${maven.compiler.source}',
           'target' =>  '${maven.compiler.target}' )
-  plugin( :javadoc, '2.10.1',
+  plugin( :javadoc, '2.10.4',
           'additionalparam' =>  '-Xdoclint:none' ) do
     execute_goals( 'jar',
                    :id => 'attach-javadocs' )
   end
 
-  plugin :jar, '2.6'
+  plugin :jar, '3.0.2'
   plugin :source, '2.4' do
     execute_goals( 'jar',
                    :id => 'attach-sources' )
