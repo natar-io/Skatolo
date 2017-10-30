@@ -72,7 +72,7 @@ DO NOT MODIFIY - GENERATED CODE
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
+        <version>3.7.0</version>
         <configuration>
           <source>${maven.compiler.source}</source>
           <target>${maven.compiler.target}</target>
@@ -80,7 +80,7 @@ DO NOT MODIFIY - GENERATED CODE
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.1</version>
+        <version>2.10.4</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -95,7 +95,7 @@ DO NOT MODIFIY - GENERATED CODE
       </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>2.6</version>
+        <version>3.0.2</version>
       </plugin>
       <plugin>
         <artifactId>maven-source-plugin</artifactId>
