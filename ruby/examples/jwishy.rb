@@ -1,5 +1,5 @@
 require 'skatolo'
-include EventMethod
+# include EventMethod
 
 VIEWPORT_W = 600
 VIEWPORT_H = 600

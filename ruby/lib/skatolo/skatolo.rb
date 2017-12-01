@@ -1,4 +1,5 @@
 require 'jruby/core_ext'
+require_relative 'event_method'
 
 %w[
     Bang Button HoverButton Slider Textfield HoverToggle Numberbox
@@ -113,4 +114,6 @@ class Skatolo < Java::TechLityReaSkatolo::Skatolo
   def string_value_class?(object)
     object.java_kind_of? Textfield
   end
+
+  Processing::App.include(EventMethod)
 end
