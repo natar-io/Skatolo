@@ -1,8 +1,7 @@
 require 'skatolo'
 # In this simple sketch we attach a slider to skatolo in the regular way, with
 # a named slider 'background_color' and thanks to some fancy metaprogramming
-# we can read the result from background_color_value
-include EventMethod
+# we can read the result from background_color_value in the sketch
 attr_reader :skatolo
 
 def settings
