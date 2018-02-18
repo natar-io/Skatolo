@@ -42,6 +42,7 @@ import tech.lity.rea.skatolo.gui.controllers.Textfield;
 import tech.lity.rea.skatolo.gui.group.Tab;
 import tech.lity.rea.skatolo.gui.group.ControlGroup;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -174,6 +175,8 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
 
     // Input 
     protected Pointer currentPointer = Pointer.invalidPointer;
+    protected ArrayList<Pointer> currentPointers = new ArrayList<Pointer>();
+    protected boolean activationType[] = new boolean[Pointer.Type.values().length];
     protected boolean isPointerOver;
     protected boolean dragged;
 
@@ -227,6 +230,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
         _myArrayValue = new float[0];
         _myDebugView = new DebugView();
         setView(_myDebugView);
+        Arrays.fill(activationType, true);
     }
 
     public List<Controller<?>> getSubelements() {
@@ -534,64 +538,126 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
      */
     public final T updateEvents() {
 
-        if (!isVisible()) {
+        if (!isVisible() || isLock) {
             return me;
         }
 
-        
-        //
-        // !computeIsInside();
-        
-        
-        // responds only to one pointer. 
-        // Is the correct pointer, or no active pointer is set. 
-        if (currentPointer == controlWindow.getCurrentPointer() || currentPointer == Pointer.invalidPointer) {
+        boolean isInside = computeIsInside();
+
+        Pointer p = controlWindow.getCurrentPointer();
+
+        // Known pointer
+        if (currentPointers.contains(p)) {
+            // going out 
+            if (!isInside) {
+                currentPointers.remove(p);
+
+                // removed the last one...
+                if (currentPointers.isEmpty()) {
+                    onLeave();
+                    setPointerOver(false);
+                }
+            }
+        }
+
+        // Not known, and this one is acceptable
+        if (isActivableBy(p)
+                && isInside) {
+            currentPointer = p;
+
+            // Add it do the list of pointers. 
+            if (!currentPointers.contains(p)) {
+                // first to enter
+                if (currentPointers.isEmpty()) {
+                    onEnter();
+                    setPointerOver(true);
+                }
+                currentPointers.add(p);
+            }
 
             if (isMovingController()) {
                 moveToPointer();
                 return me;
             }
 
-            if (isLock) {
-                return me;
+            checkDragging();
+
+//                if (goingOut && !isMousePressed) {
+//                }
+        }
+
+        // Check for pointers that timed out, instead of leaving.
+        if (currentPointer != controlWindow.getMousePointer()) {
+//  optimisation to do here, to do it once, and not for each pointers.
+            // check if the pointers still exists    
+            for (Pointer knownP : currentPointers) {
+                // Pointer disappeared
+                if (!controlWindow.getPointers().containsValue(knownP)) {
+                    // remove it
+                    currentPointers.remove(knownP);
+                }
             }
+        }
 
-            boolean goingOut = !computeIsInside();
-            boolean goingIn = !goingOut;
-
-            if (isPointerOver()) {
-                checkDragging();
-
-                if (goingOut && !isMousePressed) {
-                    onLeave();
-                    setPointerOver(false);
-                }
-
-            } else {
-
-                if (goingIn) {
-                    onEnter();
-                    setPointerOver(true);
-                    currentPointer = controlWindow.getCurrentPointer();
-                }
-
-//            // check for mouseOver flag to update
-//            if (mouseover) {
-//                System.out.println("MouseOver flag forgotten ?");
-//                setMouseOver(false);
+        // check if any pointers are left
+//            {
+//                                onLeave();
+//                    setPointerOver(false);
+//        }
+//            return me;
+        // responds only to one pointer. 
+//        // Is the correct pointer, or no active pointer is set. 
+//        if (currentPointer == controlWindow.getCurrentPointer() || currentPointer == Pointer.invalidPointer) {
+//
+//            if (isMovingController()) {
+//                moveToPointer();
+//                return me;
 //            }
-            }
-        }
+//
+//            if (isLock) {
+//                return me;
+//            }
+//
+//            boolean goingOut = !computeIsInside();
+//            boolean goingIn = !goingOut;
+//
+//            // Already activated
+//            if (isPointerOver()) {
+//                checkDragging();
+//
+//                if (goingOut && !isMousePressed) {
+//                    onLeave();
+//                    setPointerOver(false);
+//                }
+//
+//            } else {
+//                // Activation ?
+//                if (goingIn) {
+//
+//                    // Check if pointer has the right type.
+//                    if (isActivableBy(controlWindow.getCurrentPointer())) {
+//                        onEnter();
+//                        setPointerOver(true);
+//                        currentPointer = controlWindow.getCurrentPointer();
+//                    }
+//                }
+//
+////            // check for mouseOver flag to update
+////            if (mouseover) {
+////                System.out.println("MouseOver flag forgotten ?");
+////                setMouseOver(false);
+////            }
+//            }
+//        }
+//
+//        // Current Pointer has died
+//        if (currentPointer != controlWindow.getMousePointer()
+//                && !controlWindow.getPointers().containsValue(currentPointer)) {
+//            onLeave();
+//            setPointerOver(false);
+//            return me;
+//        }
 
-        
-        // Current Pointer has died
-        if (currentPointer != controlWindow.getMousePointer() && 
-                !controlWindow.getPointers().containsValue(currentPointer)) {
-            onLeave();
-            setPointerOver(false);
-            return me;
-        }
-        
 //        boolean anySelect = false;
 //        for(Pointer p : controlWindow.getPointers().values()){
 //               anySelect = anySelect || computeIsPointerInside(p);
@@ -1101,6 +1167,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
         return (controlWindow.getPointerX() > position.x + _myParent.getAbsolutePosition().x && controlWindow.getPointerX() < position.x + _myParent.getAbsolutePosition().x + width
                 && controlWindow.getPointerY() > position.y + _myParent.getAbsolutePosition().y && controlWindow.getPointerY() < position.y + _myParent.getAbsolutePosition().y + height);
     }
+
     /**
      * checks if the mouse is within the area of a controller.
      *
@@ -1132,6 +1199,38 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
      */
     public boolean isMousePressed() {
         return isMousePressed && currentPointer == controlWindow.getCurrentPointer();
+    }
+
+    /**
+     * Set only activation profile. Default is activable by everything.
+     *
+     * @param t
+     */
+    public void setActivationType(Pointer.Type t) {
+        clearActivationTypes();
+        addActivationType(t);
+    }
+
+    /**
+     * Add activation profile. Default, all is activated. Clear activations
+     * before adding new ones.
+     *
+     * @param t
+     */
+    public void addActivationType(Pointer.Type t) {
+        activationType[t.ordinal()] = true;
+    }
+
+    /**
+     * Clear all activation profiles, remember to activate one after.
+     */
+    public void clearActivationTypes() {
+        Arrays.fill(activationType, false);
+    }
+
+    public boolean isActivableBy(Pointer p) {
+        int id = p.getType().ordinal();
+        return activationType[id];
     }
 
     protected void onEnter() {
