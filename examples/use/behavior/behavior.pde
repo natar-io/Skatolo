@@ -15,7 +15,10 @@
  *
  */
 
-import skatolo.*;
+import tech.lity.rea.skatolo.*;
+import tech.lity.rea.skatolo.events.*;
+import tech.lity.rea.skatolo.gui.controllers.*;
+
 
 
 Skatolo skatolo;
@@ -89,6 +92,10 @@ class TimedEvent extends ControlBehavior {
   }
   void reset() { 
     myTime = millis() + interval;
+    if(getController() != null){
+	boolean  b =  getController().isInside();
+	println("Inside ?"  + b);
+    }
   }
 
   public void update() {
