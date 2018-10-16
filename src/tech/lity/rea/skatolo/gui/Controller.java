@@ -542,7 +542,6 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
         //
         // !computeIsInside();
         
-        
         // responds only to one pointer. 
         // Is the correct pointer, or no active pointer is set. 
         if (currentPointer == controlWindow.getCurrentPointer() || currentPointer == Pointer.invalidPointer) {
@@ -628,7 +627,9 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
         // First check  dragging & movement.  
         if (moved()) {
 
-            if (isMousePressed) {
+            // Mouse pressed, or the pointer did move inside the controller.
+            if (isMousePressed || 
+                    (controlWindow.getCurrentPointer() != controlWindow.getMousePointer()) && isPointerOver() ) {
                 onDrag();
                 dragged = true;
             } else {
@@ -1104,6 +1105,7 @@ public abstract class Controller<T> implements ControllerInterface<T>, CDrawable
     /**
      * checks if the mouse is within the area of a controller.
      *
+     * @param p
      * @return boolean
      */
     protected boolean computeIsPointerInside(Pointer p) {

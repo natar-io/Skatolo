@@ -76,6 +76,7 @@ import java.util.TreeSet;
 import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.Event;
+import tech.lity.rea.skatolo.gui.controllers.HoverKnob;
 
 /**
  * The skatoloBase supports the skatolo class and implements all adder methods to add controllers to skatolo.
@@ -286,6 +287,31 @@ public class SkatoloBase implements SkatoloConstants {
 
 	public Knob addKnob(final String theName, final float theMin, final float theMax, final float theDefaultValue, final int theX, final int theY, final int theDiameter) {
 		return addKnob(skatolo.getObjectForIntrospection(), "", theName, theMin, theMax, theDefaultValue, theX, theY, theDiameter);
+	}
+
+	/**
+	 * Knobs can use limited and endless revolutions, custom angles and starting points. There are 2 control areas for a knob, an area
+	 * closer to the edge allows 'click-and-adjust' control, a click and drag action at the inside allows to gradually change the value of a
+	 * know when dragged. A knob can be controller by mouse click, drag or mouse-wheel.
+	 */
+	public HoverKnob addHoverKnob(final Object theObject, final String theIndex, final String theName, final float theMin, final float theMax, final float theDefaultValue, final int theX, final int theY,
+			final int theDiameter) {
+		HoverKnob myController = new HoverKnob(skatolo, (Tab) skatolo.controlWindow.getTabs().get(1), theName, theMin, theMax, theDefaultValue, theX, theY, theDiameter);
+		skatolo.register(theObject, theIndex, myController);
+		myController.registerProperty("value");
+		return myController;
+	}
+
+	public HoverKnob addHoverKnob(final String theName, final float theMin, final float theMax, final int theX, final int theY, final int theDiameter) {
+		return addHoverKnob(skatolo.getObjectForIntrospection(), "", theName, theMin, theMax, theMin, theX, theY, theDiameter);
+	}
+
+	public HoverKnob addHoverKnob(final Object theObject, final String theIndex, final String theName, final float theMin, final float theMax, final int theX, final int theY, final int theDiameter) {
+		return addHoverKnob(theObject, theIndex, theName, theMin, theMax, theX, theY, theDiameter);
+	}
+
+	public HoverKnob addHoverKnob(final String theName, final float theMin, final float theMax, final float theDefaultValue, final int theX, final int theY, final int theDiameter) {
+		return addHoverKnob(skatolo.getObjectForIntrospection(), "", theName, theMin, theMax, theDefaultValue, theX, theY, theDiameter);
 	}
 
 	/**
@@ -781,6 +807,24 @@ public class SkatoloBase implements SkatoloConstants {
 
 	public Knob addKnob(String theName, int theMin, int theMax) {
 		return addKnob(skatolo.getObjectForIntrospection(), "", theName, theMin, theMax);
+	}
+	public HoverKnob addHoverKnob(Object theObject, final String theIndex, String theName, int theMin, int theMax) {
+		HoverKnob n = addHoverKnob(theObject, theIndex, theName, theMin, theMax, theMin, (int) currentGroupPointer.autoPosition.x, (int) currentGroupPointer.autoPosition.y, HoverKnob.autoWidth);
+		linebreak(n, false, HoverKnob.autoWidth, HoverKnob.autoHeight, n.autoSpacing);
+		n.moveTo(currentGroupPointer);
+		return n;
+	}
+
+	public HoverKnob addHoverKnob(String theName) {
+		return addHoverKnob(theName, 0, 100);
+	}
+
+	public HoverKnob addHoverKnob(Object theObject, final String theIndex, String theName) {
+		return addHoverKnob(theObject, theIndex, theName, 0, 100);
+	}
+
+	public HoverKnob addHoverKnob(String theName, int theMin, int theMax) {
+		return addHoverKnob(skatolo.getObjectForIntrospection(), "", theName, theMin, theMax);
 	}
         
         /**
