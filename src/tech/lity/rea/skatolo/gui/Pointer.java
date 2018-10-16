@@ -36,8 +36,7 @@ public class Pointer {
 
     public enum Type {
 
-        MOUSE, ARM, HAND, SMALL_OBJECT, FINGER,
-        COLOR0, COLOR1, COLOR2, COLOR3, COLOR4 
+        MOUSE, TOUCH, HOVER
     }
 
     public enum Status {
@@ -176,16 +175,12 @@ public class Pointer {
         return this.enabled;
     }
 
-    public boolean canClick(){
-        return !(isTouch() || isHand());
-    }
-    
     public boolean isTouch() {
-        return this.type == Type.FINGER;
+        return this.type == Type.TOUCH;
     }
 
-    public boolean isHand() {
-        return this.type == Type.HAND;
+    public boolean isHover() {
+        return this.type == Type.HOVER;
     }
 
 }

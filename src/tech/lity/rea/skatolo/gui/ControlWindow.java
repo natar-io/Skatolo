@@ -625,23 +625,26 @@ public final class ControlWindow {
                     continue;
                 }
 
-                // 1. Set the current Pointer
                 currentPointer = p;
-
-                // 2. check the clicks 
-                if (p.canClick()) {
+                
+                if(p.isTouch() || p.isHover()){
+                    // touch and hover do not have a "click" 
+                    
+                    
+                } else {
+                
                     if (p.isPressed()) {
-                        p.eventSent();
-                        mousePressedEvent();
-                    }
-                    if (p.isReleased()) {
-                        p.eventSent();
-                        mouseReleasedEvent();
-                    }
-
+                    p.eventSent();
+                    mousePressedEvent();
+                }
+                if (p.isReleased()) {
+                    p.eventSent();
+                    mouseReleasedEvent();
+                }
+                    
+                    
                 }
 
-                // 3. Check the movements
                 //***//
                 updateEvents();
                 //***//
@@ -1058,11 +1061,12 @@ public final class ControlWindow {
     }
 
     public void delete() {
-
+    
         this.applet.unregisterMethod("pre", this);
         this.applet.unregisterMethod("draw", this);
         this.applet.unregisterMethod("keyEvent", this);
         this.applet.unregisterMethod("mouseEvent", this);
     }
+    
 
 }

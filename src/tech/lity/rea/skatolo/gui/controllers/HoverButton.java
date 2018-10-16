@@ -94,7 +94,6 @@ public class HoverButton extends Controller<HoverButton> {
 
     @Override
     protected void onEnter() {
-        // Active changes the color, e.g. with mouseover 
         isActive = true;
 
         if (activateBy == ACTION_ENTER) {
@@ -131,7 +130,7 @@ public class HoverButton extends Controller<HoverButton> {
             setPointerOver(false);
         }
         isOn = !isOn;
-        // This triggers the events !
+        // This triggers the events ?
         setValue(_myValue);
     }
 
