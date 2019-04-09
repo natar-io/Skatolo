@@ -50,11 +50,11 @@ project 'skatolo', 'https://github.com/potioc/Skatolo' do
                    :id => 'attach-sources' )
   end
 
-  plugin :gpg, '1.6' do
-    execute_goals( 'sign',
-                   :id => 'sign-artifacts',
-                   :phase => 'verify' )
-  end
+#  plugin :gpg, '1.6' do
+#    execute_goals( 'sign',
+#                   :id => 'sign-artifacts',
+#                   :phase => 'verify' )
+#  end
 
   plugin( 'org.sonatype.plugins:nexus-staging-maven-plugin:1.6.8', :extensions => true,
           'serverId' =>  'ossrh',
