@@ -26,7 +26,7 @@ a base.
 
 ### New widgets
 
-** PixelSelect** - Select a pixel in the screen.
+**PixelSelect** - Select a pixel in the screen.
 
 ### Controllers for Multi-touch
 
